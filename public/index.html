@@ -23,6 +23,11 @@
 }
 /* Visada šviesi smėlio tema: tamsi tema išjungta sąmoningai (vartotojo pasirinkimas 2026-11-13). */
 *{box-sizing:border-box}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;margin-top:12px}
+.dtile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 6px;text-align:center}
+.dtile b{font-family:var(--display);font-size:20px;display:block;margin:2px 0}.dtile .small{font-size:12px}
+.dwhy{margin:8px 0 10px;padding-left:20px;font-size:.92rem}.dwhy li{margin:3px 0}.dwhy li.w{color:var(--warn);font-weight:600}
+.btn.waze{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#33ccff;border-color:#33ccff;color:#06283a;font-weight:700;text-decoration:none;min-height:48px}
 .sl-g{margin-bottom:14px}
 .sl-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid;padding-bottom:6px;margin-bottom:2px}
 .sl-h b{font-family:var(--display);font-size:17px}
@@ -373,7 +378,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.6 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.6 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1286,7 +1291,7 @@ VIEWS.more=function(){
 async function startTrip(){
   if(S.activeTrip){S.tab='trip';renderAll();return}
   const b=S.brief,p=b?b.p:S.plan;
-  if(!p.waterId){S._dir=S.tab==='trip'?0:1;S.tab='trip';renderAll();toast('Pasirink vandenį');Motion.shake($('[data-p="waterId"]'));return}
+  if(!p.waterId){S._dir=S.tab==='trip'?0:1;S.tab='trip';S.planOpen=true;renderAll();toast('Pasirink vandenį');Motion.shake($('[data-p="waterId"]'));return}
   const w=waterById(p.waterId);const t=newTrip();const bid=S.brief&&S.brief.id;if(bid)t.briefId=bid;
   t.active=true;t.date=today();t.start=nowHM();t.type=p.type;t.waterId=w?w.id:'';t.waterName=w?w.name:'';t.recent=p.recent||'';
   ['temp','wind','dir','sky','wtemp','pressure'].forEach(k=>{if(p[k])t.w[k]=p[k]});
@@ -2004,7 +2009,8 @@ VIEWS.trip=function(){
   const b=curBrief();
   if(b&&!S.planOpen&&b.loading)return `<div class="hero"><div class="eyebrow">Ruošiu brifą</div><h1>${esc(b.water?b.water.name:'')}</h1></div>${recSumHTML(b)}`;
   if(b&&!S.planOpen)return hubReady(b);
-  return planForm()};
+  if(!S.planOpen)return dashHTML();
+  return `<button class="btn sm" data-dash="back">← Pradžia</button>`+planForm()};
 
 VIEWS.today=function(){
   const ts=[...S.trips].sort((a,b)=>(b.date+(b.start||'')).localeCompare(a.date+(a.start||'')));
@@ -2187,6 +2193,57 @@ function compassOpen(lat,lon,name){
     else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else{dirB.hidden=true;note.textContent='Claude programa šiam langui telefono krypties neduoda. Naudok telefono Compass programą.'}}).catch(()=>{dirB.hidden=true;note.textContent='Telefono kryptis šiame lange neprieinama. Naudok telefono Compass programą.'})});
   q('[data-x="close"]').focus()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-compass]');if(!b)return;const [la,lo]=b.dataset.compass.split(',').map(Number);compassOpen(la,lo,b.dataset.name||'Vieta')});
+/* ---------- Pradžia: kur važiuoti. Pasiūlymas iš reljefo, sezono gylių, tavo žurnalo ir atstumo; ne iš žuvų kiekio duomenų. ---------- */
+const VILNIUS=[54.6872,25.2797];
+const kmFrom=(lk,o)=>{const la=(lk.bbox[1]+lk.bbox[3])/2,lo=(lk.bbox[0]+lk.bbox[2])/2;return Math.hypot((la-o[0])*111,(lo-o[1])*111*Math.cos(la*Math.PI/180))};
+const dashSpecies=()=>{const s=(S.plan.species||[]).filter(x=>['Lydeka','Ešerys','Starkis'].includes(x));return s.length?s:['Ešerys']};
+function dashCands(){if(!BATHY.lakes)return [];const out=[],seen=new Set();
+  S.waters.forEach(w=>{const l=bathyFor(w);if(l&&!seen.has(l.id)){seen.add(l.id);out.push({lk:l,w})}});
+  BATHY.lakes.map(l=>[l,kmFrom(l,VILNIUS)]).filter(x=>x[1]<=70&&x[0].maxd>=6).sort((a,b)=>a[1]-b[1]).some(([l])=>{if(out.length>=5)return true;if(!seen.has(l.id)){seen.add(l.id);out.push({lk:l,w:null})}});
+  if(S.dashLake&&!seen.has(S.dashLake)){const l=BATHY.lakes.find(x=>x.id===S.dashLake);if(l)out.push({lk:l,w:S.waters.find(w=>bathyFor(w)===l)||null})}
+  out.forEach(c=>{if(!c.lk._ok&&!c.lk._err)loadLake(c.lk)});return out}
+function dashScore(c){const lk=c.lk,p={date:today(),species:dashSpecies()},se=seasonOf(p),why=[],warn=[];let sc=0;
+  if(!lk._ok)return {sc:-99,why:[],warn:[],load:true};
+  const sp=spotsFor(lk,p);
+  p.species.forEach(k=>{const [lo,hi]=se.B[k],cov=Math.max(0,Math.min(1,(Math.min(hi,lk.maxd)-lo)/(hi-lo)));sc+=3*cov/p.species.length;
+    why.push(cov>=.99?`${k}: sezono gyliai ${fmt1(lo)}–${fmt1(hi)} m čia yra visi (ežeras iki ${fmt1(lk.maxd)} m).`:cov>0?`${k}: sezono gylių ${fmt1(lo)}–${fmt1(hi)} m yra tik dalis (ežeras iki ${fmt1(lk.maxd)} m).`:`${k}: ežeras per seklus sezono gyliams ${fmt1(lo)}–${fmt1(hi)} m (max ${fmt1(lk.maxd)} m).`)});
+  const top=sp.filter(x=>x.slope).map(x=>x.slope).sort((a,b)=>b-a).slice(0,4),avg=top.length?top.reduce((a,b)=>a+b,0)/top.length:0;sc+=Math.min(3,avg/5);
+  if(top.length)why.push(`Reljefas: ${top.length} statūs kritimai sezono gyliuose, iki ${fmt1(Math.round(top[0]))}°.`);else why.push('Reljefas: ryškių kritimų sezono gyliuose plane nerasta.');
+  const tr=S.trips.filter(t=>c.w&&(t.waterId===c.w.id||bkey(t.waterName)===bkey(c.w.name))),hrs=tr.reduce((a,t)=>a+tripHours(t),0),fish=tr.reduce((a,t)=>a+(t.catches||[]).length,0);
+  if(tr.length>=2&&hrs>0){const r=fish/hrs;sc+=Math.min(2,r);why.push(`Jūsų žurnalas: ${tr.length} žvejybos, ${fmt1(r)} žuvies per valandą.`)}else why.push(tr.length?'Jūsų žurnalas: tik 1 žvejyba, išvadoms per mažai.':'Jūsų žurnale šio ežero dar nėra.');
+  const km=kmFrom(lk,VILNIUS);sc-=Math.min(2,km/50);why.push(`Apie ${Math.round(km)} km nuo Vilniaus tiesia linija.`);
+  const st=c.w&&c.w.legal&&c.w.legal.status||'';
+  if(['išnuomotas','limituota','uždraustas'].includes(st)){sc-=5;warn.push(`Statusas „${st}“: patikrink, ar galima žvejoti.`)}else if(!st)warn.push('Teisinis statusas nepatikrintas: pažiūrėk ALIS prieš važiuodamas.');
+  return {sc,why,warn,sp,se}}
+function dashHTML(){
+  if(!BATHY.lakes){if(!BATHY.err)loadBathy();return heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:''})+`<div class="panel small muted">${BATHY.err?'Ežerų duomenys neužsikrovė: '+esc(BATHY.err):'Kraunami ežerai…'}</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`}
+  const cs=dashCands().map(c=>({...c,r:dashScore(c)})).sort((a,b)=>b.r.sc-a.r.sc);
+  const best=cs.find(c=>!c.r.load),cur=cs.find(c=>c.lk.id===S.dashLake)||best||cs[0];
+  const fishes=dashSpecies(),short=n=>esc(n.replace(/^ež\.\s*/,''));
+  const head=heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:cur&&cur.w?cur.w.id:''});
+  if(!cur)return head+`<div class="panel small muted">Ežerų su gylių planais netoli nerasta.</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`;
+  const lk=cur.lk,r=cur.r,L=launchesFor(lk)[0],dest=L?[L.lat,L.lon]:[+((lk.bbox[1]+lk.bbox[3])/2).toFixed(5),+((lk.bbox[0]+lk.bbox[2])/2).toFixed(5)];
+  const f=(S.fcFile||[]).find(x=>x.date===today()),W=waterTempFor({date:today()});
+  const tile=(k,v,sub)=>`<div class="dtile"><div class="small muted">${k}</div><b>${v}</b><div class="small muted">${sub}</div></div>`;
+  const cond=f||W?`<div class="dgrid">${f?tile('Oras',esc(f.tMin.split(',')[0]+'…'+f.tMax.split(',')[0])+'°',esc((f.cloud||'').split(' (')[0].toLowerCase()))+tile('Vėjas',esc(f.windDir+' '+f.windMs.split(',')[0]),'gūsiai '+esc(f.gustMs.split(',')[0])+' m/s')+tile('Slėgis',esc((f.pressure||'').split(' ')[0]),esc((f.pressure||'').split(', ')[1]||'hPa')):''}${W?tile('Vanduo','~'+Math.round(W.t)+'°','įvertis'):''}</div>
+    <div class="small muted" style="margin:6px 2px 0">${f?'Prognozė Trakų apylinkėms (LHMT, Open-Meteo), ne būtinai šiam ežerui. ':''}${W?'Vanduo matuotas upėse, ne ežere.':''}</div>`:'';
+  return head+`<div class="chips" style="margin:2px 0 10px">${cs.map(c=>`<button class="chip" data-dash="lake" data-v="${c.lk.id}" aria-pressed="${c===cur}">${c===best?'★ ':''}${short(c.lk.name)}</button>`).join('')}<button class="chip" data-dash="other">＋ Kitas</button></div>
+  <div class="panel" style="padding:10px">${r.load?`<div class="small muted" style="text-align:center;padding:40px 12px">${lk._err?'Gylių duomenys neužsikrovė: '+esc(lk._err):'Kraunami gyliai…'}</div>`:bathyMapSVG(lk,r.sp,{mine:cur.w?mineOn(cur.w,lk):[]})}
+    <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
+  ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
+    <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
+    <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
+    <a class="btn waze" href="https://waze.com/ul?ll=${dest[0]},${dest[1]}&navigate=yes" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg> Važiuoti su Waze</a>
+    <div class="small muted" style="margin-top:6px">${L?`Ves į įleidimo vietą „${esc(L.name)}“.`:'Ves prie ežero vidurio, iki artimiausio kelio. Pažymėk įleidimo vietą žemėlapyje ir ves tiksliai į ją.'}</div></div>`}
+  ${cond}
+  <button class="btn hot big" style="margin-top:14px" data-act="${cur.w?'lakeBrief':'lakeAdd'}" data-v="${cur.w?cur.w.id:lk.id}">${cur.w?'Parengti brifą šiam ežerui':'Pridėti ežerą ir parengti brifą'}</button>
+  <button class="btn" style="margin-top:8px;align-self:center" data-act="planOpen">Planuoti kitaip</button>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-dash]');if(!b)return;const a=b.dataset.dash,v=b.dataset.v;
+  if(a==='lake')S.dashLake=v;
+  else if(a==='fish'){const s=S.plan.species,i=s.indexOf(v);if(i>=0){if(dashSpecies().length>1||!dashSpecies().includes(v))s.splice(i,1)}else s.push(v)}
+  else if(a==='other'){S.tab='more';S.more='lakes';S.lake='';renderAll();window.scrollTo(0,0);return}
+  else if(a==='back'){S.planOpen=false;window.scrollTo(0,0)}
+  renderMain()});
 /* Valties įleidimo vietos: žymi patys (bendra kolekcija launches), duomenų iš kitur nėra */
 const launchesFor=lk=>(S.launches||[]).filter(l=>l.lakeId===lk.id);
 async function addLaunch(lk,lat,lon,name){const o={lakeId:lk.id,lake:lk.name,lat:+(+lat).toFixed(5),lon:+(+lon).toFixed(5),name:(name||'').trim()||'Įleidimo vieta',by:S.who||''};
