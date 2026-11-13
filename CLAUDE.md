@@ -79,3 +79,8 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - `public/claude-shim.js`: viena bendra apklausa (lokaliai 4 s, Netlify 30 s + atnaujinimas grįžus į skirtuką), PIN klausiama per `prompt()` ir laikoma localStorage `zz_pin`.
 - Patikrinta: funkcijos logika su imituotomis Blobs/Anthropic (PIN, id/kolekcijų validacija, nuotraukų filtras). NEPATIKRINTA realiame Netlify: Blobs, deploy su function'u, tikras Anthropic. Lokaliame `server.py` PIN nereikia (127.0.0.1).
 - Netlify Functions apribojimai: nėra node lokaliai, todėl funkcijos negalima paleisti čia; testuoti deploy'intą.
+
+### Patikrinta gyvame Netlify (2026-11-13)
+- Veikia: PIN užraktas, db ant Blobs (įrašymas, skaitymas, trynimas), AI per Netlify AI Gateway (ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL įdeda pati Netlify; funkcija naudoja abu). Nuotraukų atpažinimas gyvame dar NEPATIKRINTAS.
+- ZVEJO_PIN turi būti ilgas/atsitiktinis: trumpas PIN atsitiktinai sutampa su ežerų duomenų skaičiais ir Netlify secrets scan numuša deploy. Neišjunk secrets scan.
+- Svetainė (zvejybele) vis dar Private (reikia Netlify prisijungimo). "Make public" tik Arnas.
