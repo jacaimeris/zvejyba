@@ -6,10 +6,13 @@ Pakeičia tai, ką anksčiau teikė claude.ai artifact'as:
   sample    -> Anthropic Messages API (su nuotraukomis)  (/api/sample, /api/limits)
 Statika: public/ (tas pats katalogas, kurį publikuoja Netlify).
 
-Paleidimas:  python3 server.py   ->  http://127.0.0.1:8765
+Paleidimas:  python3 server.py           ->  http://127.0.0.1:8765
+             python3 server.py --sync    ->  kas 30 s paima naujausią main iš GitHub (tik fast-forward,
+                                             tik jei nėra neišsaugotų vietinių pakeitimų) ir pats
+                                             perkrauna naršyklės langą, kai pasikeičia commit'as.
 Raktas:      ANTHROPIC_API_KEY aplinkoje arba .env faile (žr. .env.example).
 """
-import json, mimetypes, os, re, sys, threading, urllib.error, urllib.request
+import json, mimetypes, os, re, subprocess, sys, threading, time, urllib.error, urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import unquote, urlparse
@@ -22,6 +25,55 @@ ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}$")
 HOST, PORT = "127.0.0.1", int(os.environ.get("PORT", "8765"))
 MODEL = os.environ.get("ZVEJO_MODEL", "claude-sonnet-5-5")
 LOCK = threading.Lock()
+SYNC = {"on": False, "status": "sinchronizacija išjungta", "checked": 0}
+SYNC_EVERY = 30
+RELOAD_JS = (
+    "<script>(()=>{let c=null;const p=document.createElement('div');"
+    "p.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99999;font:11px/1.2 ui-monospace,monospace;"
+    "background:#000a;color:#fff;padding:3px 7px;border-radius:6px;pointer-events:none';document.body.appendChild(p);"
+    "const t=async()=>{try{const v=await (await fetch('/api/version',{cache:'no-store'})).json();"
+    "if(c&&v.commit!==c){location.reload();return}c=v.commit;p.textContent='main@'+v.commit+' · '+v.status}catch(e){}};"
+    "t();setInterval(t,8000)})()</script>"
+)
+
+
+def git(*args, cwd=None, timeout=30):
+    r = subprocess.run(["git", *args], cwd=cwd or ROOT, capture_output=True, text=True, timeout=timeout)
+    return r.returncode, (r.stdout or "").strip(), (r.stderr or "").strip()
+
+
+def head_info(cwd=None):
+    _, h, _ = git("rev-parse", "--short", "HEAD", cwd=cwd)
+    _, s, _ = git("log", "-1", "--format=%s", cwd=cwd)
+    return h, s
+
+
+def sync_once(cwd=None):
+    """Paima origin/main, jei įmanoma be konfliktų. Grąžina trumpą būsenos tekstą."""
+    try:
+        rc, _, err = git("fetch", "-q", "origin", "main", cwd=cwd, timeout=60)
+        if rc:
+            return "GitHub nepasiekiamas"
+        _, behind, _ = git("rev-list", "--count", "HEAD..origin/main", cwd=cwd)
+        _, ahead, _ = git("rev-list", "--count", "origin/main..HEAD", cwd=cwd)
+        if behind == "0":
+            return "naujausia" if ahead == "0" else f"vietinė, +{ahead} neįkelta"
+        _, dirty, _ = git("status", "--porcelain", cwd=cwd)
+        if dirty:
+            return f"yra {behind} nauji, bet vietiniai pakeitimai neleidžia atnaujinti"
+        if ahead != "0":
+            return f"išsiskyrė nuo GitHub (+{ahead}/-{behind}), atnaujink ranka"
+        rc, _, err = git("merge", "--ff-only", "-q", "origin/main", cwd=cwd)
+        return "atnaujinta iš GitHub" if rc == 0 else "nepavyko atnaujinti: " + err[:80]
+    except Exception as e:  # tinklas, timeout ir pan.
+        return "sinchronizacijos klaida: " + str(e)[:60]
+
+
+def sync_loop():
+    while True:
+        SYNC["status"] = sync_once()
+        SYNC["checked"] = int(time.time())
+        time.sleep(SYNC_EVERY)
 
 
 def load_env():
@@ -110,6 +162,9 @@ class H(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = unquote(urlparse(self.path).path)
+        if path == "/api/version":
+            h, s = head_info()
+            return self.send_json(200, {"commit": h, "subject": s, "status": SYNC["status"], "sync": SYNC["on"], "checked": SYNC["checked"]})
         if path == "/api/limits":
             return self.send_json(200, {"images": True, "ai": bool(os.environ.get("ANTHROPIC_API_KEY")), "model": MODEL, "ready": True, "pin": False})
         if path == "/api/db":  # visos kolekcijos viena užklausa (kaip Netlify funkcija)
@@ -169,6 +224,8 @@ class H(BaseHTTPRequestHandler):
             f = (base / rel).resolve()
             if base.resolve() in f.parents and f.is_file():
                 data = f.read_bytes()
+                if SYNC["on"] and f.name == "index.html" and f.parent == STATIC[0].resolve():
+                    data = data.replace(b"</body>", RELOAD_JS.encode() + b"</body>", 1)
                 ctype = mimetypes.guess_type(f.name)[0] or "application/octet-stream"
                 self.send_response(200)
                 self.send_header("Content-Type", ctype + ("; charset=utf-8" if ctype.startswith("text/") or ctype.endswith("json") or ctype.endswith("javascript") else ""))
@@ -182,8 +239,12 @@ class H(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     load_env()
+    if "--sync" in sys.argv:
+        SYNC["on"] = True
+        SYNC["status"] = "tikrinama…"
+        threading.Thread(target=sync_loop, daemon=True).start()
     srv = ThreadingHTTPServer((HOST, PORT), H)
-    print(f"Žvejo žurnalas: http://{HOST}:{PORT}  (modelis {MODEL}, API raktas: {'yra' if os.environ.get('ANTHROPIC_API_KEY') else 'NĖRA'})")
+    print(f"Žvejo žurnalas: http://{HOST}:{PORT}  (modelis {MODEL}, API raktas: {'yra' if os.environ.get('ANTHROPIC_API_KEY') else 'NĖRA'}, GitHub sinchronizacija: {'ĮJUNGTA' if SYNC['on'] else 'išjungta'})")
     try:
         srv.serve_forever()
     except KeyboardInterrupt:
