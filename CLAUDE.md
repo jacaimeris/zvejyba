@@ -70,3 +70,5 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - Ežerų duomenys: `bathy.json` (šaknyje, 4,45 MB) yra ŠALTINIS, į Netlify nekeliamas. `python3 scripts/split_bathy.py` sugeneruoja `public/lakes-index.json` (79 KB, ~16 KB gzip) ir `public/lakes/<id>.json` (vid. 12 KB, kontūrai/taškai/vietos). Programa kraunasi indeksą iškart, o ežerą tik jį atidarius (`loadLake`). Pakeitus `bathy.json` paleisk skriptą iš naujo ir commit'ink.
 - Neskaityk `bathy.json` ar `public/lakes/*` visų: žiūrėk `public/lakes-index.json` arba vieną ežero failą.
 - Be backend'o (Netlify dabar) veikia tik skaitymas: db ir AI grąžina null, programa rodo savo "nepasiekiama" pranešimą. Toliau: Netlify Functions (/api/sample su raktu ir PIN, /api/weather), Netlify Blobs vietoj `data/store`, tada shim rodys į juos.
+
+- Versija rodoma viršuje (`#appVer` public/index.html antraštėje, pvz. "v0.4 · 2026-11-13"). Keisk ranka prieš kiekvieną reikšmingą push.

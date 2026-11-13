@@ -36,6 +36,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 header.top{padding:10px 20px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:640px;margin:0 auto}
 header.top h1{font-size:.95rem;font-weight:700;color:var(--muted);letter-spacing:.02em}
 header.top small{color:var(--muted);font-size:.75rem}
+header.top .ver{font-family:var(--body);font-weight:500;font-size:.72rem;letter-spacing:0;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--soft);color:var(--muted);white-space:nowrap}
 main{max-width:640px;margin:0 auto;padding:8px 20px 120px;display:flex;flex-direction:column;gap:18px}
 nav#tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
 nav#tabs button{flex:1;max-width:214px;border:0;background:none;padding:14px 4px 13px;font-size:.95rem;font-weight:600;color:var(--muted);cursor:pointer;position:relative}
@@ -336,7 +337,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas</h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
