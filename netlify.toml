@@ -2,6 +2,9 @@
 # sugeneruojami lokaliai (python3 scripts/split_bathy.py) ir įkeliami į git.
 [build]
   publish = "public"
+  # Praleisk deploy (15 kreditų), jei nepasikeitė nieko, kas keliauja į svetainę:
+  # išėjimo kodas 0 = praleisti, 1 = kurti.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- public netlify package.json netlify.toml"
 
 [functions]
   directory = "netlify/functions"

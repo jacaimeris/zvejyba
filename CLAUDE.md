@@ -84,3 +84,10 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - Veikia: PIN užraktas, db ant Blobs (įrašymas, skaitymas, trynimas), AI per Netlify AI Gateway (ANTHROPIC_API_KEY + ANTHROPIC_BASE_URL įdeda pati Netlify; funkcija naudoja abu). Nuotraukų atpažinimas gyvame dar NEPATIKRINTAS.
 - ZVEJO_PIN turi būti ilgas/atsitiktinis: trumpas PIN atsitiktinai sutampa su ežerų duomenų skaičiais ir Netlify secrets scan numuša deploy. Neišjunk secrets scan.
 - Svetainė (zvejybele) vis dar Private (reikia Netlify prisijungimo). "Make public" tik Arnas.
+
+## Artifact versija (claude.ai), bandymas 2026-11-13
+- Naujas privatus artifact "Žvejyba": https://claude.ai/artifact/5qM6RPkKKSuLGG8qpaafAk (senasis "Žvejo žurnalas" UY7Zzfmh3EjPfoKLJuHj9Y neliestas, jo duomenys liko jame).
+- Surinkimas: `python3 scripts/build_artifact.py <katalogas>` iš `public/` (be claude-shim.js, ežerai sujungti į vieną `lakes-all.json`). Publikuoti Artifact įrankiu: `index.html` + files `forecast.json`, `lakes-index.json`, `lakes-all.json`; capabilities `db, user, dictation, sample{images}, downloads`. Atnaujinti tą patį URL, ne kurti naują.
+- Artifact'o db atskiras nuo Netlify Blobs: duomenys tarp jų nesusiję. Dalijimasis: tik per puslapio Share meniu (Arnas).
+- Patikrinta: puslapis kraunasi, db "saugoma", ežerų sąrašas ir žemėlapis. NEPATIKRINTA: AI/nuotraukos (reikia vartotojo sutikimo pirmam iškvietimui), dictation, bendras db tarp Arno ir Roko, viešas nuorodos dalijimasis.
+- netlify.toml `ignore`: deploy praleidžiamas, jei nepasikeitė public/, netlify/, package.json ar netlify.toml (taupo Netlify kreditus, 15 už deploy).
