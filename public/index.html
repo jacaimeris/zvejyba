@@ -28,6 +28,21 @@
   --bg:#101a18; --surface:#182623; --ink:#e6eeeb; --muted:#8fa39d; --line:#27403b;
   --accent:#5cbf9f; --accent-ink:#08201a; --hot:#ee8a58; --good:#63c28b; --warn:#e2b255; --bad:#ec8472; --soft:#1e312d; color-scheme:dark;}
 *{box-sizing:border-box}
+.bmapw{position:relative;cursor:zoom-in;border-radius:10px}
+.bmapw:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.bmapz{position:absolute;right:8px;top:8px;background:rgba(255,255,255,.92);color:#16425b;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;box-shadow:0 2px 8px -4px rgba(0,0,0,.4);pointer-events:none}
+.mapfs{position:fixed;inset:0;z-index:60;background:#ede3d1;display:flex;flex-direction:column}
+.mapfs-top{display:flex;align-items:center;gap:10px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top));background:var(--surface);border-bottom:1px solid var(--line)}
+.mapfs-top b{font-family:var(--display);font-size:18px}.mapfs-top .btn{margin-left:auto;min-width:44px}
+.mapfs-stage{position:relative;flex:1;overflow:hidden;touch-action:none;cursor:grab}
+.mapfs-in{position:absolute;left:0;top:0;transform-origin:0 0}.mapfs-in>svg:first-child{width:100%!important;height:100%!important}
+.mapfs-in .ks{transform-box:view-box}
+.mapfs-in svg[data-t="1"] .lt2,.mapfs-in svg[data-t="1"] .lt4,.mapfs-in svg[data-t="2"] .lt4{display:none}
+.mapfs-in .pt{font-weight:500;font-style:italic;fill:#3d5566}
+.mapfs-pin{position:absolute;left:0;top:0;transform-origin:12px 12px;pointer-events:none;overflow:visible}
+.mapfs-info{padding:10px 14px;background:var(--surface);border-top:1px solid var(--line);min-height:44px}
+.mapfs-ctl{position:absolute;right:12px;bottom:calc(64px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:6px}
+.mapfs-ctl .btn{min-width:44px;min-height:44px;font-size:18px;background:var(--surface)}
 html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
 h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.15}
 h1{font-size:2rem;letter-spacing:-.01em} h2{font-size:1.4rem} h3{font-size:1.05rem} h4{font-size:1rem}
@@ -344,7 +359,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.7 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.8 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2025,9 +2040,7 @@ const spotWhy=s=>s.sp==='Žiema'?`giliausia žinoma vieta (${fmt1(s.d)} m)`
   :`${fmt1(s.d)} m kritimo kraštas (~${s.slope}°): starkio/gilesnė briauna`;
 function bathyMapSVG(lk,spots,opt={}){
   if(!lk._ok)return `<div class="small muted panel" style="text-align:center;padding:40px 12px">${lk._err?'Gylių duomenys neužsikrovė: '+esc(lk._err):'Kraunami gyliai…'}</div>`;
-  const [x0,y0,x1,y1]=lk.bbox,c=Math.cos((y0+y1)/2*Math.PI/180),W=640,pad=14;
-  const sx=(W-2*pad)/((x1-x0)*c||1e-6),sy=sx;const H=Math.round(((y1-y0)*sy)+2*pad);
-  const X=lon=>(pad+(lon-x0)*c*sx).toFixed(1),Y=lat=>(pad+(y1-lat)*sy).toFixed(1);
+  const {W,H,pad,X,Y}=bathyProj(lk),full=!!opt.full;
   const md=lk.maxd||1;
   /* Gylis kaip popieriaus sluoksniai: kiekvienas uždaras kontūras užpildomas savo gylio spalva
      (šviesu ties krantu, tamsu gilumoje) ir meta šešėlį ant seklesnio sluoksnio po juo.
@@ -2040,10 +2053,78 @@ function bathyMapSVG(lk,spots,opt={}){
   const glow=R.order.map((r,i)=>r.par?'':`<use href="#${uid}r${i}" fill="#f4efe4" stroke="#f4efe4" stroke-width="10"/>`).join('');
   const lines=R.open.map(r=>`<path d="${'M'+r.c.map(p=>X(p[0])+' '+Y(p[1])).join('L')}" fill="none" stroke="${col(r.d)}" stroke-width="1" stroke-linejoin="round"><title>${fmt1(r.d)} m</title></path>`).join('');
   const paths=`<defs>${defs}<filter id="${uid}f" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter><linearGradient id="${uid}g">${[0,.25,.5,.75,1].map(t=>`<stop offset="${t}" stop-color="${col(t*md)}"/>`).join('')}</linearGradient></defs><g filter="url(#${uid}f)" opacity=".8">${glow}</g>${layers}${lines}`;
-  const dots=lk.pts.length<=140?lk.pts.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="1.8" fill="#16425b" opacity=".55"><title>${p[2]==null?'':fmt1(Math.abs(p[2]))+' m'}</title></circle>`).join(''):'';
-  const mk=(spots||[]).map(s=>`<g><circle cx="${X(s.lon)}" cy="${Y(s.lat)}" r="9" fill="${SPCOL[s.sp]}" stroke="#fff" stroke-width="2"/><text x="${X(s.lon)}" y="${(+Y(s.lat)+3.6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">${s.n}</text></g>`).join('');
-  const my=(opt.mine||[]).map(p=>`<path d="M${X(p.lon)} ${(+Y(p.lat)-7).toFixed(1)}l5 7-5 7-5-7z" fill="#111" stroke="#fff" stroke-width="1.2"><title>${esc(p.t||'laimikis')}</title></path>`).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#ede3d1;border-radius:10px;display:block">${paths}${dots}${my}${mk}<g font-size="11" fill="#16425b"><rect x="${pad}" y="${H-pad-5}" width="70" height="7" rx="3.5" fill="url(#${uid}g)"/><text x="${pad+76}" y="${H-pad+2}">0–${fmt1(md)} m</text><text x="${W-pad}" y="${H-pad+2}" text-anchor="end">šiaurė ↑</text></g></svg>`}
+  const dots=lk.pts.length<=(full?2000:140)?lk.pts.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="1.8" fill="#16425b" opacity=".55"><title>${p[2]==null?'':fmt1(Math.abs(p[2]))+' m'}</title></circle>`).join(''):'';
+  const at=(x,y)=>full?`class="ks" style="transform:translate(${x}px,${y}px) scale(var(--k,1))"`:`transform="translate(${x} ${y})"`;
+  const mk=(spots||[]).map(s=>`<g ${at(X(s.lon),Y(s.lat))}><circle r="9" fill="${SPCOL[s.sp]}" stroke="#fff" stroke-width="2"/><text y="3.6" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">${s.n}</text></g>`).join('');
+  const my=(opt.mine||[]).map(p=>`<g ${at(X(p.lon),Y(p.lat))}><path d="M0 -7l5 7-5 7-5-7z" fill="#111" stroke="#fff" stroke-width="1.2"><title>${esc(p.t||'laimikis')}</title></path></g>`).join('');
+  /* didinant: gylio skaičiai ant kontūrų, kas ~110 vienetų perimetro, nepersidengiantys */
+  /* trys lygiai (t1, t2, t4): didinant atsiranda tankesni užrašai, ekrane jie lieka tokio pat dydžio */
+  let lab='';if(full){const got=[];
+    [1,2,4].forEach(t=>{const sp=34/t,step=110/t,ok=(x,y)=>got.every(q=>(q[0]-x)**2+(q[1]-y)**2>sp*sp);
+      [...R.order].sort((a,b)=>b.area-a.area).forEach(r=>{let acc=step/2+(r.d*37)%(step/2);
+        for(let i=1;i<r.c.length&&got.length<900;i++){const a=r.c[i-1],b=r.c[i];acc+=Math.hypot(X(b[0])-X(a[0]),Y(b[1])-Y(a[1]));
+          if(acc>=step){const x=+X(b[0]),y=+Y(b[1]);if(ok(x,y)){got.push([x,y]);lab+=`<text class="lt${t}" ${at(x,y)} dy="4" text-anchor="middle">${fmt1(r.d)}</text>`;acc=0}else acc=step*.8}}});
+      if(t===4&&lk.pts.length<=2000)lk.pts.forEach(p=>{if(p[2]==null)return;const x=+X(p[0]),y=+Y(p[1])-9;if(ok(x,y)){got.push([x,y]);lab+=`<text class="lt4 pt" ${at(x,y)} dy="4" text-anchor="middle">${fmt1(Math.abs(p[2]))}</text>`}})});
+    lab=`<g font-size="11" font-weight="700" fill="#0d3550" stroke="#f4efe4" stroke-width="3" paint-order="stroke" stroke-linejoin="round" pointer-events="none">${lab}</g>`}
+  const leg=full?'':`<g font-size="11" fill="#16425b"><rect x="${pad}" y="${H-pad-5}" width="70" height="7" rx="3.5" fill="url(#${uid}g)"/><text x="${pad+76}" y="${H-pad+2}">0–${fmt1(md)} m</text><text x="${W-pad}" y="${H-pad+2}" text-anchor="end">šiaurė ↑</text></g>`;
+  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#ede3d1;border-radius:${full?0:10}px;display:block">${paths}${dots}${lab}${my}${mk}${leg}</svg>`;
+  if(full)return svg;
+  const MR=bathyMapSVG.reg=bathyMapSVG.reg||{};MR[uid]={lk,spots,opt};const ks=Object.keys(MR);if(ks.length>30)delete MR[ks[0]];
+  return `<div class="bmapw" data-act="mapZoom" data-v="${uid}" role="button" tabindex="0" aria-label="Padidinti gylių žemėlapį">${svg}<span class="bmapz">⤢ Padidinti</span></div>`}
+/* ežero projekcija: lon/lat -> SVG vienetai ir atgal (plotis 640) */
+function bathyProj(lk){if(lk._proj)return lk._proj;
+  const [x0,y0,x1,y1]=lk.bbox,c=Math.cos((y0+y1)/2*Math.PI/180),W=640,pad=14;
+  const sx=(W-2*pad)/((x1-x0)*c||1e-6),sy=sx;const H=Math.round(((y1-y0)*sy)+2*pad);
+  return lk._proj={W,H,pad,X:lon=>(pad+(lon-x0)*c*sx).toFixed(1),Y:lat=>(pad+(y1-lat)*sy).toFixed(1),
+    lon:u=>x0+(u-pad)/(c*sx),lat:v=>y1-(v-pad)/sy}}
+/* gylis taške: tiksliai tik šalia išmatuoto taško; kitaip intervalas tarp kontūrų */
+function depthAt(lk,lon,lat,tolDeg){
+  const near=lk.pts.filter(p=>p[2]!=null).map(p=>[p,Math.hypot((p[0]-lon)*Math.cos(lat*Math.PI/180),p[1]-lat)]).sort((a,b)=>a[1]-b[1])[0];
+  if(near&&near[1]<tolDeg)return {exact:Math.abs(near[0][2])};
+  const R=bathyRings(lk);const inside=(pt,poly)=>{let o=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if((a[1]>pt[1])!==(b[1]>pt[1])&&pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0])o=!o}return o};
+  let r=null;for(const q of R.order){if(lon>=q.bb[0]&&lon<=q.bb[2]&&lat>=q.bb[1]&&lat<=q.bb[3]&&inside([lon,lat],q.c))r=q}
+  if(!r)return null;
+  const lv=[...new Set(R.order.map(q=>q.d))].sort((a,b)=>a-b),i=lv.indexOf(r.d);
+  if(r.par&&r.d<r.par.d)return {lo:i>0?lv[i-1]:0,hi:r.d};
+  const deeper=r.kids.filter(k=>k.d>r.d).map(k=>k.d);return {lo:r.d,hi:deeper.length?Math.min(...deeper):(i<lv.length-1?lv[i+1]:null)}}
+/* viso ekrano žemėlapis: tempimas, dviejų pirštų ir ratuko mastelis, bakstelėjimas rodo gylį */
+function mapOpen(id){const m=(bathyMapSVG.reg||{})[id];if(!m)return;const lk=m.lk,pr=bathyProj(lk);
+  const ov=document.createElement('div');ov.className='mapfs';ov.setAttribute('role','dialog');ov.setAttribute('aria-label',lk.name+' gylių žemėlapis');
+  ov.innerHTML=`<div class="mapfs-top"><b>${esc(lk.name)}</b><span class="muted small">gyliai metrais</span><button class="btn sm" data-x="close" aria-label="Uždaryti">✕</button></div>
+   <div class="mapfs-stage"><div class="mapfs-in">${bathyMapSVG(lk,m.spots,{...m.opt,full:true})}<svg class="mapfs-pin" viewBox="-12 -12 24 24" width="24" height="24" hidden><circle r="7" fill="none" stroke="#c4501b" stroke-width="3"/><circle r="2" fill="#c4501b"/></svg></div></div>
+   <div class="mapfs-info small" aria-live="polite">Bakstelėk vietą, kad pamatytum gylį. Tempk ir didink dviem pirštais.</div>
+   <div class="mapfs-ctl"><button class="btn sm" data-x="in" aria-label="Didinti">+</button><button class="btn sm" data-x="out" aria-label="Mažinti">−</button><button class="btn sm" data-x="fit">Visas</button></div>`;
+  document.body.appendChild(ov);const prevOv=document.body.style.overflow;document.body.style.overflow='hidden';
+  const st=ov.querySelector('.mapfs-stage'),inn=ov.querySelector('.mapfs-in'),svg=inn.querySelector('svg'),pin=ov.querySelector('.mapfs-pin'),info=ov.querySelector('.mapfs-info');
+  let fit=1,z=1,tx=0,ty=0,pu=null;
+  const size=()=>{const r=st.getBoundingClientRect();fit=Math.min(r.width/pr.W,r.height/pr.H);inn.style.width=pr.W*fit+'px';inn.style.height=pr.H*fit+'px';return r};
+  const clamp=()=>{const r=st.getBoundingClientRect(),w=pr.W*fit*z,h=pr.H*fit*z;
+    tx=w<=r.width?(r.width-w)/2:Math.min(0,Math.max(r.width-w,tx));ty=h<=r.height?(r.height-h)/2:Math.min(0,Math.max(r.height-h,ty))};
+  const apply=()=>{clamp();inn.style.transform=`translate(${tx}px,${ty}px) scale(${z})`;svg.style.setProperty('--k',(1/(fit*z)).toFixed(4));svg.dataset.t=z>=3.2?4:z>=1.7?2:1;
+    if(pu){pin.removeAttribute('hidden');pin.style.transform=`translate(${pu[0]*fit-12}px,${pu[1]*fit-12}px) scale(${1/z})`}};
+  const zoomAt=(nz,cx,cy)=>{nz=Math.max(1,Math.min(10,nz));tx=cx-(cx-tx)*nz/z;ty=cy-(cy-ty)*nz/z;z=nz;apply()};
+  const reset=()=>{size();z=1;tx=0;ty=0;apply()};reset();
+  const P=new Map();let moved=0,last=null;
+  const rel=e=>{const r=st.getBoundingClientRect();return [e.clientX-r.left,e.clientY-r.top]};
+  st.addEventListener('pointerdown',e=>{st.setPointerCapture(e.pointerId);P.set(e.pointerId,rel(e));moved=P.size>1?99:0;last=null});
+  st.addEventListener('pointermove',e=>{if(!P.has(e.pointerId))return;const p=rel(e),o=P.get(e.pointerId);
+    if(P.size===1){tx+=p[0]-o[0];ty+=p[1]-o[1];moved+=Math.abs(p[0]-o[0])+Math.abs(p[1]-o[1]);P.set(e.pointerId,p);apply();return}
+    P.set(e.pointerId,p);const [a,b]=[...P.values()];const d=Math.hypot(a[0]-b[0],a[1]-b[1]),c=[(a[0]+b[0])/2,(a[1]+b[1])/2];
+    if(last){tx+=c[0]-last.c[0];ty+=c[1]-last.c[1];zoomAt(z*d/last.d,c[0],c[1])}last={d,c}});
+  const up=e=>{if(!P.has(e.pointerId))return;const p=P.get(e.pointerId);P.delete(e.pointerId);last=null;
+    if(e.type==='pointerup'&&moved<8&&!P.size){const u=(p[0]-tx)/(z*fit),v=(p[1]-ty)/(z*fit);pu=[u,v];apply();
+      const lon=pr.lon(u),lat=pr.lat(v),tol=12/(z*fit)/((pr.W-2*pr.pad))*(lk.bbox[2]-lk.bbox[0])*Math.cos(lat*Math.PI/180);
+      const d=depthAt(lk,lon,lat,tol);
+      info.innerHTML=!d?'Čia kontūrų nėra: seklu prie kranto arba duomenų nėra.':d.exact!=null?`Gylis <b>${fmt1(d.exact)} m</b> (išmatuotas taškas).`:d.hi==null?`Gylis <b>daugiau nei ${fmt1(d.lo)} m</b> (giliausias kontūras).`:`Gylis <b>tarp ${fmt1(d.lo)} ir ${fmt1(d.hi)} m</b> (tarp kontūrų, ne matavimas).`}};
+  st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
+  st.addEventListener('wheel',e=>{e.preventDefault();const p=rel(e);zoomAt(z*Math.exp(-e.deltaY*0.0015),p[0],p[1])},{passive:false});
+  const close=()=>{ov.remove();document.body.style.overflow=prevOv;removeEventListener('keydown',key);removeEventListener('resize',reset)};
+  const key=e=>{if(e.key==='Escape')close()};addEventListener('keydown',key);addEventListener('resize',reset);
+  ov.addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(!b)return;const x=b.dataset.x,r=st.getBoundingClientRect();
+    if(x==='close')close();else if(x==='fit')reset();else zoomAt(z*(x==='in'?1.6:1/1.6),r.width/2,r.height/2)});
+  ov.querySelector('[data-x="close"]').focus()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act="mapZoom"]');if(b)mapOpen(b.dataset.v)});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-act="mapZoom"]')){e.preventDefault();mapOpen(e.target.dataset.v)}});
 /* Kontūrų medis vienam ežerui (skaičiuojama kartą): kiekvienas uždaras kontūras gauna mažiausią jį
    gaubiantį kontūrą (tėvą). Jei kontūras seklesnis už tėvą, tai povandeninė kalva: jo vidus seklesnis,
    todėl dažomas ankstesnio (seklesnio) lygio spalva. Atviros linijos (nutrūkę kontūrai) piešiamos tik linija. */
