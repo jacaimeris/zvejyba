@@ -216,11 +216,18 @@ details.hyp{padding:8px 14px}
 .seg2 button[aria-pressed="true"]{color:var(--accent)}
 .swap{animation:fadeswap .35s ease both}
 .thumbs.big img{width:64px;height:64px;border-radius:12px}
-/* Ko ieškai */
-.ftiles{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;margin:0 -2px}
-.ftile{flex:none;width:112px;scroll-snap-align:start;border:2px solid transparent;border-radius:16px;padding:8px 6px 8px;background:linear-gradient(160deg,var(--a),var(--b));color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55}
-.ftile svg{width:100%}.ftile span{font-size:.8rem;font-weight:600}
-.ftile[aria-pressed="true"]{opacity:1;border-color:var(--hot);translate:0 -3px}
+/* Ko ieškai: visos plytelės įskaitomos; pasirinkta = ryški spalva + žiedas + varnelė (ne vien spalva).
+   Juosta slenka: plona slinkties juosta ir dešinio krašto išblukimas rodo, kad yra daugiau. */
+.ftiles{display:flex;gap:10px;overflow-x:auto;padding:6px 6px 10px;margin:-6px -6px 0;scroll-snap-type:x proximity;scroll-padding-inline:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+.ftiles::after{content:"";flex:0 0 24px}
+.ftiles::-webkit-scrollbar{height:6px}.ftiles::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}.ftiles::-webkit-scrollbar-track{background:transparent}
+.ftile{position:relative;flex:none;width:112px;scroll-snap-align:start;border:0;border-radius:16px;padding:10px 6px 9px;background:linear-gradient(160deg,var(--a),var(--b));color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;filter:saturate(.5) brightness(1.06);box-shadow:0 4px 12px -8px rgba(0,0,0,.45)}
+.ftile svg{width:100%}.ftile span{font-size:.85rem;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.ftile::after{content:"";position:absolute;top:7px;right:7px;width:20px;height:20px;border-radius:50%;background:var(--hot) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.6 6.3l2.2 2.2 4.6-4.9' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;box-shadow:0 0 0 2px rgba(255,255,255,.9);scale:0;transition:scale .35s var(--k-spring)}
+.ftile[aria-pressed="true"]{filter:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--hot),0 8px 18px -10px rgba(0,0,0,.6)}
+.ftile[aria-pressed="true"]::after{scale:1}
+.ftile:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+@media (hover:hover){.ftile[aria-pressed="false"]:hover{filter:saturate(.85)}}
 .mini{display:flex;flex:none}.mini svg{width:54px;margin-right:-14px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
 .summary{align-items:center}
 .chip-lite{display:inline-block}
@@ -328,7 +335,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
  .rv{transform:none;filter:none;transition:opacity .2s ease}
  #stage,#stage.open{transform:none;transition:opacity .16s ease}
  .btn:active,.chip:active,.item:active,.fcard:active,.ftile:active,.tile-big:active,.xbtn:active,nav#tabs button:active,.seg2 button:active{scale:1}
- .ftile[aria-pressed="true"]{translate:none}
+ .ftile[aria-pressed="true"]{translate:none}.ftile::after{transition:none}
  .tabind.ready,.seg-thumb,details>summary::before,details>summary::after,.kdot{transition-duration:.01ms}
  #toast,#toast.show{transform:translate(-50%,0)}
  ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation-duration:.01ms!important}
@@ -1197,7 +1204,7 @@ VIEWS.today=function(){
     return head+`<div class="summary"><div class="mini">${(b.p.species||[]).slice(0,3).map(n=>idOfName(n)?fishSVG(idOfName(n),'mini'):'').join('')}</div><div class="grow"><b>${esc(b.water?b.water.name:'')}</b><div class="muted small">${esc(b.p.type)} · ${esc(b.p.date)}</div></div><button class="btn sm" data-act="planOpen">Keisti</button></div>`+briefHTML(b)}
   return head+quickBox()+`<div class="panel list">
     ${waterSelect()}${typeChips()}
-    <div><div class="sect" style="margin-bottom:8px">Ko ieškai</div><div class="ftiles">${Object.entries(FISH_NAME).map(([id,n])=>`<button class="ftile" data-act="tgt" data-v="${n}" aria-pressed="${p.species.includes(n)}" ${fishWater(id)}>${fishSVG(id)}<span>${n}</span></button>`).join('')}</div></div>
+    <div><div class="sect" style="margin-bottom:8px">Ko ieškai <span class="muted small" style="font-family:var(--body);font-weight:400">· gali rinktis kelias</span></div><div class="ftiles" role="group" aria-label="Ko ieškai">${Object.entries(FISH_NAME).map(([id,n])=>`<button class="ftile" data-act="tgt" data-v="${n}" aria-pressed="${p.species.includes(n)}" ${fishWater(id)}>${fishSVG(id)}<span>${n}</span></button>`).join('')}</div></div>
     <details class="fold"><summary>Sąlygos <span class="muted small">neprivaloma</span></summary><div class="list" style="margin-top:10px">
      <div class="grid3"><label class="f">Data<input type="date" data-p="date" value="${esc(p.date)}"></label>
       <label class="f">Pradžia<input type="time" data-p="time" value="${esc(p.time)}"></label>
