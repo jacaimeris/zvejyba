@@ -359,7 +359,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.8 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.9 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2048,8 +2048,11 @@ function bathyMapSVG(lk,spots,opt={}){
   const col=d=>{const t=Math.pow(Math.min(1,Math.abs(d)/md),1.1);return `hsl(${(203+15*t).toFixed(0)} ${(45+40*t).toFixed(0)}% ${(92-72*t).toFixed(0)}%)`};
   const R=bathyRings(lk),uid='bm'+(bathyMapSVG.n=(bathyMapSVG.n||0)+1);
   const P=c=>'M'+c.map(p=>X(p[0])+' '+Y(p[1])).join('L')+'Z';
-  const defs=R.order.map((r,i)=>`<path id="${uid}r${i}" d="${P(r.c)}"/>`).join('');
-  const layers=R.order.map((r,i)=>`<use href="#${uid}r${i}" transform="translate(.8 2.6)" fill="rgba(6,34,62,.12)"/><use href="#${uid}r${i}" transform="translate(.4 1.2)" fill="rgba(6,34,62,.2)"/><use href="#${uid}r${i}" fill="${col(r.fd)}" stroke="rgba(255,255,255,.65)" stroke-width=".8" stroke-linejoin="round"><title>${fmt1(r.d)} m</title></use>`).join('');
+  /* Įdubimas: šviesa iš viršaus kairės, todėl kiekvieno gilesnio sluoksnio viršutinis vidinis kraštas šešėlyje
+     (šlaitas meta šešėlį į duobę), o apatinis kraštas šviesesnis. Šešėlis apkerpamas paties kontūro viduje. */
+  const defs=R.order.map((r,i)=>`<path id="${uid}r${i}" d="${P(r.c)}"/><clipPath id="${uid}c${i}"><use href="#${uid}r${i}"/></clipPath>`).join('');
+  const layers=R.order.map((r,i)=>{const rise=r.par&&r.d<r.par.d,dy=rise?-1:1;
+    return `<use href="#${uid}r${i}" fill="${col(r.fd)}"><title>${fmt1(r.d)} m</title></use><g clip-path="url(#${uid}c${i})" fill="none" stroke-linejoin="round" pointer-events="none"><use href="#${uid}r${i}" transform="translate(${.9*dy} ${2.8*dy})" stroke="rgba(6,34,62,.13)" stroke-width="6"/><use href="#${uid}r${i}" transform="translate(${.4*dy} ${1.3*dy})" stroke="rgba(6,34,62,.2)" stroke-width="2.6"/><use href="#${uid}r${i}" transform="translate(${-.6*dy} ${-1.6*dy})" stroke="rgba(255,255,255,.35)" stroke-width="2"/></g><use href="#${uid}r${i}" fill="none" stroke="rgba(255,255,255,.55)" stroke-width=".7" stroke-linejoin="round" pointer-events="none"/>`}).join('');
   const glow=R.order.map((r,i)=>r.par?'':`<use href="#${uid}r${i}" fill="#f4efe4" stroke="#f4efe4" stroke-width="10"/>`).join('');
   const lines=R.open.map(r=>`<path d="${'M'+r.c.map(p=>X(p[0])+' '+Y(p[1])).join('L')}" fill="none" stroke="${col(r.d)}" stroke-width="1" stroke-linejoin="round"><title>${fmt1(r.d)} m</title></path>`).join('');
   const paths=`<defs>${defs}<filter id="${uid}f" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter><linearGradient id="${uid}g">${[0,.25,.5,.75,1].map(t=>`<stop offset="${t}" stop-color="${col(t*md)}"/>`).join('')}</linearGradient></defs><g filter="url(#${uid}f)" opacity=".8">${glow}</g>${layers}${lines}`;
