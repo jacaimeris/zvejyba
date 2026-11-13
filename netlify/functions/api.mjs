@@ -57,7 +57,9 @@ async function sample(req) {
   content.push({ type: "text", text: prompt });
   let r;
   try {
-    r = await fetch("https://api.anthropic.com/v1/messages", {
+    // Netlify AI Gateway įdeda ANTHROPIC_API_KEY kartu su ANTHROPIC_BASE_URL: raktas galioja tik per tą adresą.
+    const base = (env("ANTHROPIC_BASE_URL") || "https://api.anthropic.com").replace(/\/+$/, "");
+    r = await fetch(base + "/v1/messages", {
       method: "POST",
       headers: { "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json" },
       body: JSON.stringify({
