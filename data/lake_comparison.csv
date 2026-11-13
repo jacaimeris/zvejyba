@@ -1,0 +1,369 @@
+lake_id,name,arcgis_name,graktas,in_zip,in_arcgis,match,area_ha,year_zip,contributor_zip,year_arcgis,plan_source_arcgis,pts_zip,pts_arcgis,lines_zip,lines_arcgis,maxdepth_zip,maxdepth_arcgis,levels_zip,levels_arcgis,step_zip_m,step_arcgis_m,preferred_source,preferred_reason,maxdepth_diff_m,depth_conflict,has_depth
+Z0000,ež. Gėjus,,,True,False,,24.56,2017.0,Gamtos tyrimų centras (GTC),,,100,0,9,0,5.5,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0001,ež. Strėvytė,,,True,False,,2.5,2017.0,Vytauto Didžiojo universitetas (VDU),,,35,0,7,0,6.1,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0002,ež. Dusynas,ež. Dusynas,12231560,True,True,vardas+erdvė,17.79,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietmetyje sudarytas 1:10 000 mastelio batimetrinis planas (GTC),0,0,6,9,11.8,11.8,6,7,3.0,2.3499999999999996,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0003,ež. Liminas,ež. Liminas,12231561,True,True,vardas+erdvė,1.22,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietmetyje sudarytas 1:10 000 mastelio batimetrinis planas (GTC),0,0,4,4,2.8,2.8,4,3,0.6000000000000001,1.4,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0004,ež. Kamužėlis,,,True,False,,4.82,2017.0,Gamtos tyrimų centras (GTC),,,0,0,2,0,2.0,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0005,ež. Balsis,,,True,False,,45.76,2017.0,Vytauto Didžiojo universitetas (VDU),,,20,0,27,0,37.5,,19,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0006,ež. Lynelis,ež. Lynelis,11030146,True,True,vardas+erdvė,21.02,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:2 500 mastelio batimetrinio plano kopija ant kalkės (GTC),14,14,8,8,11.1,11.1,5,5,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0007,ež. Šlavantėlis,,,True,False,,57.71,2017.0,Gamtos tyrimų centras (GTC),,,1,0,21,0,28.1,,15,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0008,ež. Apsingis,,,True,False,,12.62,2017.0,Vytauto Didžiojo universitetas (VDU),,,9,0,10,0,8.6,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0009,ež. Luokesai,,,True,False,,107.46,2017.0,Gamtos tyrimų centras (GTC),,,2,0,47,0,43.8,,19,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0010,ež. Gulbis,,,True,False,,14.14,2017.0,Gamtos tyrimų centras (GTC),,,1,0,5,0,14.0,,4,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0011,ež. Vilkas,,,True,False,,85.03,2017.0,Vytauto Didžiojo universitetas (VDU),,,38,0,11,0,5.9,,8,0,0.9999999999999999,,ZIP,vienintelis šaltinis,,False,True
+Z0012,Senkiškės ežeras,,,True,False,,2.48,2017.0,Vytauto Didžiojo universitetas (VDU),,,39,0,6,0,5.1,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0013,ež. Juodžiukas,,,True,False,,7.67,2017.0,Vytauto Didžiojo universitetas (VDU),,,61,0,8,0,15.1,,8,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0014,ež. Spindžiukas,,,True,False,,11.52,2017.0,Vytauto Didžiojo universitetas (VDU),,,78,0,8,0,7.0,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0015,ež. Gilužis,ež. Gilūšis,10030641,True,True,panašus vardas+erdvė (rašyba),5.5,2017.0,Gamtos tyrimų centras (GTC),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),4,4,3,7,5.5,5.5,3,4,1.75,1.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0016,ež. Gilandis,ež. Gilandis,10030642,True,True,vardas+erdvė,4.91,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),4,4,3,8,3.8,3.8,3,3,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0017,ež. Akis,,,True,False,,1.38,2017.0,Gamtos tyrimų centras (GTC),,,31,0,7,0,8.6,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0018,ež. Solis,ež. Solis,10030659,True,True,vardas+erdvė,15.09,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),9,9,12,12,23.0,23.0,12,12,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0019,ež. Asonas,ež. Asonas,10031093,True,True,vardas+erdvė,40.9,2017.0,Vytauto Didžiojo universitetas (VDU),2015,VŪPI 1969 m. sudaryto 1:5000 mastelio batimetrinio plano kopija (GTC),37,37,30,30,15.4,15.4,16,16,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0020,ež. Gelužis,ež. Gelužis,10030770,True,True,vardas+erdvė,29.29,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),14,14,18,18,32.6,32.6,17,17,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0021,ež. Skrebys,ež. Skrebys,10030645,True,True,vardas+erdvė,17.73,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Tarpukaryje sudarytas 1:5000 mastelio batimetrinis planas (GTC),28,28,10,10,16.2,16.2,9,9,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0022,ež. Juodis,,,True,False,,47.94,2017.0,Vytauto Didžiojo universitetas (VDU),,,59,0,36,0,16.0,,16,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0023,Didžiarauliškių ežeras,Didžiarauliškių ežeras,10031080,True,True,vardas+erdvė,25.72,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5000 mastelio batimetrinio plano kopija ant kalkės (GTC),6,7,8,8,13.0,13.0,7,7,2.0,2.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0024,ež. Veršiukas,ež. Veršiukas,10030773,True,True,vardas+erdvė,42.1,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),9,9,13,13,25.9,25.9,13,13,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0025,ež. Luka,,,True,False,,89.37,2017.0,GIS-Centras,,,6,0,14,0,20.3,,7,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0026,Antakmenių ežeras,,,True,False,,84.71,2017.0,Gamtos tyrimų centras (GTC),,,16,0,12,0,12.5,,5,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0027,ež. Alaušai,,,True,False,,262.91,2017.0,Gamtos tyrimų centras (GTC),,,1,0,6,0,15.5,,6,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0028,Kliepšių ežeras,,,True,False,,38.21,2018.0,Vytauto Didžiojo universitetas (VDU),,,15,0,16,0,22.6,,12,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0029,ež. Lėnas,,,True,False,,240.09,2017.0,Gamtos tyrimų centras (GTC),,,139,0,104,0,5.7,,19,0,0.2999999999999998,,ZIP,vienintelis šaltinis,,False,True
+Z0030,ež. Bevardis,Bevardis ež.,12030129,True,True,vardas+erdvė,1.71,2017.0,Gamtos tyrimų centras (GTC),2013,Batimetrinio plano kopija (GTC),1,1,2,3,2.4,2.4,2,3,,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0031,ež. Bevardis,Bevardis ež.,12030114,True,True,vardas+erdvė,0.25,2017.0,Gamtos tyrimų centras (GTC),2013,Batimetrinio plano kopija (GTC),1,1,3,4,3.2,3.2,3,4,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0032,ež. Spengla,,,True,False,,37.38,2018.0,Vytauto Didžiojo universitetas (VDU),,,26,0,5,0,2.1,,5,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0033,ež. Ažvintaitis,,,True,False,,31.61,2017.0,Gamtos tyrimų centras (GTC),,,0,0,7,0,5.0,,3,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0034,ež. Malkėstas,,,True,False,,106.46,2017.0,Gamtos tyrimų centras (GTC),,,1,0,25,0,25.0,,11,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0035,ež. Ilmėdas,ež. Ilmėdas,12131528,True,True,vardas+erdvė,83.72,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),9,9,15,15,17.5,17.5,7,7,2.5,2.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0036,ež. Lukštynas,,,True,False,,34.97,2018.0,Vytauto Didžiojo universitetas (VDU),,,17,0,20,0,20.8,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0037,Rubikių ežeras,Rubikių ežeras,12241553,True,True,vardas+erdvė,953.19,2017.0,Gamtos tyrimų centras (GTC),2011,Sovietmetyje sudarytas 1:10 000 mastelio batimetrinis planas (GTC),0,1,76,77,14.8,16.1,6,7,3.0,3.0,ArcGIS,daugiau taškų+izolinijų,-1.3,False,True
+Z0038,ež. Salotis,,,True,False,,33.88,2018.0,Vytauto Didžiojo universitetas (VDU),,,27,0,13,0,6.4,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0039,ež. Olauka,,,True,False,,1.53,2017.0,Gamtos tyrimų centras (GTC),,,1,0,2,0,4.5,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0040,ež. Viešintas,,,True,False,,202.27,2017.0,Gamtos tyrimų centras (GTC),,,86,0,29,0,7.7,,16,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0041,ež. Žaugėda,,,True,False,,44.79,2018.0,Vytauto Didžiojo universitetas (VDU),,,14,0,9,0,4.7,,9,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0042,Kurėnų ežeras,,,True,False,,92.72,2017.0,Gamtos tyrimų centras (GTC),,,5,0,10,0,2.8,,5,0,0.6499999999999999,,ZIP,vienintelis šaltinis,,False,True
+Z0043,ež. Ažvintis,,,True,False,,268.98,2017.0,Gamtos tyrimų centras (GTC),,,3,0,29,0,23.0,,10,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0044,ež. Drabužaitis,ež. Drabužaitis,10031030,True,True,vardas+erdvė,30.39,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Schema iš sovietinės vandens išteklių knygos (GTC),98,2,11,6,5.4,5.9,10,6,0.5,1.0,ZIP,daugiau taškų+izolinijų,-0.5,False,True
+Z0045,ež. Giedavardys,,,True,False,,54.48,2017.0,Vytauto Didžiojo universitetas (VDU),,,15,0,9,0,8.8,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0046,ež. Kriaunelis,,,True,False,,31.89,2018.0,Vytauto Didžiojo universitetas (VDU),,,2,0,6,0,6.2,,4,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0047,ež. Alaušas,,,True,False,,49.77,2017.0,Gamtos tyrimų centras (GTC),,,17,0,13,0,7.6,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0048,ež. Rašai,ež. Rašai,12230018,True,True,vardas+erdvė,162.87,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),5,5,16,19,7.8,7.8,6,6,1.4,1.4,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0049,ež. Glūkas,ež. Glūkas,11030138,True,True,vardas+erdvė,69.17,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),18,18,12,12,36.9,36.9,8,8,5.0,5.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0050,ež. Varėnis,,,True,False,,24.47,2018.0,Vytauto Didžiojo universitetas (VDU),,,15,0,9,0,9.0,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0051,Lizdų ežeras,Lizdų ežeras,10030486,True,True,vardas+erdvė,29.08,2017.0,Vytauto Didžiojo universitetas (VDU),2015,VŪPI 1967 m. sudaryto 1:5000 mastelio batimetrinio plano kopija (GTC),11,11,19,19,12.0,12.0,12,12,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0052,ež. Seirijis,,,True,False,,511.1,2017.0,Gamtos tyrimų centras (GTC),,,1,0,33,0,19.2,,10,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0053,ež. Rašia,,,True,False,,188.73,2017.0,Gamtos tyrimų centras (GTC),,,0,0,37,0,25.0,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0054,ež. Zaduojys,ež. Zaduojys,12230942,True,True,vardas+erdvė,143.03,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),6,6,18,18,23.0,23.0,10,10,2.5,2.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0055,ež. Suvingis,ež. Suvingis,11030231,True,True,vardas+erdvė,110.84,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),27,27,10,10,13.1,13.1,6,6,3.0,3.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0056,ež. Drabužis,,,True,False,,54.96,2017.0,Vytauto Didžiojo universitetas (VDU),,,1,0,8,0,28.5,,7,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0057,ež. Alaušas,ež. Alaušas,12231126,True,True,vardas+erdvė,1077.5,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija ant kalkės (GTC),5,5,38,41,42.0,42.0,11,12,4.0,4.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0058,ež. Obelija,,,True,False,,575.1,2017.0,Gamtos tyrimų centras (GTC),,,354,0,17,0,7.5,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0059,ež. Nevėža,,,True,False,,163.03,2017.0,Gamtos tyrimų centras (GTC),,,76,0,15,0,9.6,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0060,ež. Sagavas,,,True,False,,79.14,2017.0,Vytauto Didžiojo universitetas (VDU),,,40,0,20,0,14.9,,15,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0061,ež. Peršokšnai,,,True,False,,217.66,2017.0,Gamtos tyrimų centras (GTC),,,146,0,86,0,32.5,,17,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0062,ež. Baltajis Bilsas,,,True,False,,41.37,2017.0,Vytauto Didžiojo universitetas (VDU),,,103,0,9,0,7.5,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0063,ež. Želva,,,True,False,,152.53,2017.0,Gamtos tyrimų centras (GTC),,,52,0,19,0,19.1,,7,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0064,ež. Vadokšnas,,,True,False,,48.13,2018.0,Vytauto Didžiojo universitetas (VDU),,,14,0,10,0,6.7,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0065,ež. Malkėstaitis,,,True,False,,16.01,2017.0,Gamtos tyrimų centras (GTC),,,0,0,12,0,55.0,,12,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0066,ež. Almajas,,,True,False,,106.44,2017.0,Gamtos tyrimų centras (GTC),,,0,0,7,0,10.0,,5,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0067,ež. Gruodiškis,,,True,False,,23.08,2017.0,Vytauto Didžiojo universitetas (VDU),,,57,0,13,0,11.0,,12,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0068,ež. Ilgynas,ež. Ilgynas,12231914,True,True,vardas+erdvė,26.14,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5000 mastelio batimetrinio plano kopija (GTC),2,2,10,10,11.7,11.7,6,6,2.5,2.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0069,ež. Dūriai,,,True,False,,278.44,2017.0,Gamtos tyrimų centras (GTC),,,1,0,27,0,25.0,,15,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0070,ež. Stirniai,,,True,False,,872.46,2017.0,Gamtos tyrimų centras (GTC),,,11,0,67,0,35.1,,14,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0071,ež. Ukojas,,,True,False,,193.6,2017.0,Gamtos tyrimų centras (GTC),,,56,0,17,0,30.0,,7,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0072,ež. Pakalas,,,True,False,,69.36,2017.0,Gamtos tyrimų centras (GTC),,,8,0,16,0,20.5,,8,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0073,ež. Lamėstas,,,True,False,,59.42,2017.0,Gamtos tyrimų centras (GTC),,,30,0,8,0,5.8,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0074,ež. Lūšykštis,,,True,False,,43.26,2017.0,Gamtos tyrimų centras (GTC),,,0,0,5,0,10.0,,3,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0075,ež. Svėdasas (Beragis),,,True,False,,122.38,2017.0,GIS-Centras,,,43,0,27,0,23.5,,17,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0076,ež. Šventas,ež. Šventas,12130512,True,True,vardas+erdvė,42.07,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),12,12,16,17,30.0,30.0,10,11,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0077,ež. Šventas,,,True,False,,62.32,2018.0,Vytauto Didžiojo universitetas (VDU),,,1,0,2,0,6.7,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0078,ež. Šaminis,,,True,False,,12.12,2017.0,Vytauto Didžiojo universitetas (VDU),,,2,0,11,0,23.7,,10,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0079,ež. Galuonis,,,True,False,,240.43,2017.0,Gamtos tyrimų centras (GTC),,,15,0,21,0,22.0,,9,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0080,ež. Kretuonas,,,True,False,,861.3,2017.0,Gamtos tyrimų centras (GTC),,,0,0,27,0,10.0,,5,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0081,ež. Nedzingis,,,True,False,,278.69,2017.0,Gamtos tyrimų centras (GTC),,,0,0,7,0,6.0,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0082,ež. Žuvintas,ež. Žuvintas,15040125,True,True,vardas+erdvė,941.44,2017.0,Vytauto Didžiojo universitetas (VDU),2006; 2015,1984 m. 1:10 000 mastelio sovietiniai topografiniai žemėlapiai,157,157,52,52,2.7,2.7,7,7,0.5,0.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0083,ež. Spindžius,,,True,False,,112.77,2017.0,Gamtos tyrimų centras (GTC),,,2,0,11,0,23.0,,9,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0084,Naujųjų Verkių ežeras,Naujųjų Verkių ež.,12030113,True,True,vardas+erdvė,3.06,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Batimetrinio plano kopija ant kalkės (GTC),1,1,7,7,6.1,6.1,7,7,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0085,ež. Juodikis,,,True,False,,8.31,2017.0,Gamtos tyrimų centras (GTC),,,28,0,5,0,8.0,,4,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0086,ež. Aisetas,,,True,False,,574.63,2017.0,Gamtos tyrimų centras (GTC),,,80,0,117,0,40.0,,17,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0087,Babrų ežeras,,,True,False,,69.98,2017.0,Gamtos tyrimų centras (GTC),,,0,0,19,0,24.0,,13,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0088,ež. Uosis,,,True,False,,46.57,2017.0,Gamtos tyrimų centras (GTC),,,0,0,16,0,27.0,,14,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0089,ež. Amalvas,,,True,False,,196.45,2020.0,Vytauto Didžiojo universitetas (VDU),,,19,0,10,0,2.3,,9,0,0.2999999999999998,,ZIP,vienintelis šaltinis,,False,True
+Z0090,ež. Gruožys,ež. Gruožys,11030050,True,True,vardas+erdvė,29.14,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),29,29,5,5,14.0,14.0,5,5,2.5,2.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0091,ež. Papis,,,True,False,,131.65,2017.0,Gamtos tyrimų centras (GTC),,,54,0,17,0,1.6,,4,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0092,ež. Berža,ež. Berža,12130405,True,True,vardas+erdvė,49.76,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5000 mastelio batimetrinio plano kopija ant kalkės (GTC),4,4,23,23,38.0,38.0,16,16,2.5,2.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0093,ež. Baltieji Lakajai,,,True,False,,711.31,2017.0,Gamtos tyrimų centras (GTC),,,15,0,84,0,45.0,,12,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0094,ež. Luokesaitis,,,True,False,,7.8,2017.0,Gamtos tyrimų centras (GTC),,,0,0,8,0,17.5,,8,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0095,ež. Vernijis,,,True,False,,179.07,2017.0,Gamtos tyrimų centras (GTC),,,1,0,21,0,18.0,,9,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0096,ež. Didžiulis,ež. Didžiulis (Dusmenų ežeras),11040126,True,True,vardas+erdvė,192.71,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),21,21,18,18,5.1,5.1,10,10,0.5,0.5,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0097,ež. Glėbas,,,True,False,,127.52,2017.0,Gamtos tyrimų centras (GTC),,,133,0,7,0,11.1,,6,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0098,Gudelių ežeras,,,True,False,,118.4,2017.0,Vytauto Didžiojo universitetas (VDU),,,42,0,17,0,2.6,,10,0,0.2999999999999998,,ZIP,vienintelis šaltinis,,False,True
+Z0099,ež. Naudoris,,,True,False,,25.21,2017.0,Gamtos tyrimų centras (GTC),,,0,0,12,0,25.0,,12,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0100,ež. Zapsys,,,True,False,,194.49,2017.0,Gamtos tyrimų centras (GTC),,,1,0,17,0,18.0,,7,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0101,ež. Dumblys,,,True,False,,44.35,2017.0,Gamtos tyrimų centras (GTC),,,11,0,6,0,3.0,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0102,ež. Netečius,ež. Netečius,11030100,True,True,vardas+erdvė,86.41,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),34,34,7,7,3.6,3.6,4,4,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0103,ež. Vilkinys,,,True,False,,149.04,2017.0,Gamtos tyrimų centras (GTC),,,1,0,19,0,15.1,,8,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0104,ež. Unguraitis,ež. Unguraitis,10031013,True,True,vardas+erdvė,16.88,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Tarpukaryje sudarytas batimetrinis planas (GTC),26,26,8,10,14.0,14.0,8,9,2.0,2.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0105,ež. Juodajis Bilsas,,,True,False,,35.82,2017.0,Vytauto Didžiojo universitetas (VDU),,,27,0,17,0,16.5,,9,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0106,ež. Linkmenas,,,True,False,,76.95,2017.0,Gamtos tyrimų centras (GTC),,,0,0,4,0,7.5,,3,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0107,ež. Grūtas,,,True,False,,53.62,2017.0,Gamtos tyrimų centras (GTC),,,27,0,13,0,4.5,,10,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0108,Bildžių ež.,,,True,False,,19.97,2017.0,Vytauto Didžiojo universitetas (VDU),,,1,0,12,0,27.1,,11,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0109,ež. Aviris,,,True,False,,149.72,2017.0,Vytauto Didžiojo universitetas (VDU),,,46,0,26,0,32.6,,17,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0110,ež. Baluosys,,,True,False,,33.78,2017.0,Gamtos tyrimų centras (GTC),,,1,0,8,0,18.9,,7,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0111,ež. Alsas,ež. Alsas,12030115,True,True,vardas+erdvė,4.77,2017.0,Gamtos tyrimų centras (GTC),2013,Batimetrinio plano kopija (GTC),1,1,3,3,2.6,2.6,3,3,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0112,,,,True,False,,0.37,2017.0,Gamtos tyrimų centras (GTC),,,1,0,2,0,2.2,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0113,ež. Mažasis Gulbinas,Mažasis Gulbinų ež.,12030117,True,True,panašus vardas+erdvė (rašyba),10.23,2017.0,Gamtos tyrimų centras (GTC),2013,XX a. 5-ajame dešimtmetyje (?) sudaryto batimetrinio plano M 1:5000 kopija (GTC),1,1,8,8,13.6,13.6,7,7,2.0,2.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0114,ež. Ilgis,ež. Ilgis,12130427,True,True,vardas+erdvė,89.66,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5000 mastelio batimetrinio plano kopija ant kalkės (GTC),6,6,4,5,10.5,10.5,4,5,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0115,ež. Gilušis,,,True,False,,11.16,2017.0,Vytauto Didžiojo universitetas (VDU),,,1,0,4,0,11.0,,4,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0116,ež. Širmukas,,,True,False,,5.07,2017.0,Gamtos tyrimų centras (GTC),,,2,0,3,0,4.9,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0117,Dvarčių ežeras,,,True,False,,25.87,2017.0,Vytauto Didžiojo universitetas (VDU),,,2,0,14,0,24.1,,9,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0118,Šulininkų ežeras,Šulininkų ežeras,12030228,True,True,vardas+erdvė,26.2,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),2,2,22,22,35.5,35.5,12,12,3.0,3.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0119,ež. Kulpis,ež. Kulpis,12030241,True,True,vardas+erdvė,25.67,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),1,1,11,11,11.0,11.0,11,11,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0120,ež. Vašuokas,,,True,False,,18.35,2017.0,Gamtos tyrimų centras (GTC),,,0,0,5,0,2.0,,3,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0121,ež. Išnarai,,,True,False,,288.56,2017.0,Gamtos tyrimų centras (GTC),,,0,0,13,0,3.0,,6,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0122,ež. Kertuojai,ež. Kertuojai,12140320,True,True,vardas+erdvė,545.56,2017.0,Gamtos tyrimų centras (GTC),2012,Vilniaus hidroprojekto 1996 m. parengtas 1:10 000 mastelio batimetrinis planas (AAA),11,9,11,11,5.4,5.2,8,7,0.5,0.7499999999999999,ZIP,daugiau taškų+izolinijų,0.2,False,True
+Z0123,ež. Juodieji Lakajai,,,True,False,,394.78,2017.0,Gamtos tyrimų centras (GTC),,,5,0,29,0,31.2,,8,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0124,ež. Asveja (Dubingių ežeras),,,True,False,,33.48,2017.0,Gamtos tyrimų centras (GTC),,,2,0,6,0,20.0,,4,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0125,ež. Žvernas,ež. Žvernas,12130112,True,True,vardas+erdvė,180.56,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),4,4,11,13,5.0,5.0,5,6,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0126,ež. Baluošai,,,True,False,,243.75,2017.0,Gamtos tyrimų centras (GTC),,,124,0,24,0,36.0,,10,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0127,ež. Rudesa,,,True,False,,29.47,2017.0,Gamtos tyrimų centras (GTC),,,0,0,11,0,27.0,,11,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0128,ež. Bebrusai,,,True,False,,378.3,2017.0,Gamtos tyrimų centras (GTC),,,0,0,25,0,20.0,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0129,ež. Kirneilis,ež. Kirneilis,12231948,True,True,vardas+erdvė,62.05,2017.0,Gamtos tyrimų centras (GTC),2015,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),3,3,12,14,15.0,15.0,7,8,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0130,ež. Balsys,ež. Balsys,12030127,True,True,vardas+erdvė,56.51,2017.0,Gamtos tyrimų centras (GTC),2013,XX a. 5-ajame dešimtmetyje (?) sudarytas batimetrinis planas (GTC); XX a. 5-ajame dešimtmetyje (?) sudarytas batimetrinis planas M 1:5000 (GTC),3,21,8,14,38.8,38.8,7,9,5.0,5.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0131,ež. Arinas,,,True,False,,442.23,2017.0,Gamtos tyrimų centras (GTC),,,88,0,13,0,18.0,,8,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0132,ež. Pravalas,,,True,False,,265.01,2017.0,Gamtos tyrimų centras (GTC),,,94,0,40,0,4.9,,9,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0133,ež. Asveja (Dubingių ežeras),,,True,False,,367.38,2017.0,Gamtos tyrimų centras (GTC),,,12,0,45,0,40.2,,8,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0134,ež. Babrukas,,,True,False,,38.23,2017.0,Gamtos tyrimų centras (GTC),,,1,0,9,0,17.2,,5,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0135,ež. Akmena,,,True,False,,274.5,2017.0,Gamtos tyrimų centras (GTC),,,8,0,50,0,30.0,,10,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0136,ež. Akis,ež. Akis,12030128,True,True,vardas+erdvė,0.64,2017.0,Vytauto Didžiojo universitetas (VDU),2013,Batimetrinio plano kopija (GTC),1,1,2,3,4.7,4.7,2,3,,2.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0137,ež. Gauštvinis,,,True,False,,123.35,2017.0,Vytauto Didžiojo universitetas (VDU),,,47,0,7,0,3.8,,6,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0138,ež. Bridvaišis,,,True,False,,45.39,2017.0,Vytauto Didžiojo universitetas (VDU),,,9,0,23,0,42.8,,9,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0139,ež. Apušys,,,True,False,,27.02,2017.0,Vytauto Didžiojo universitetas (VDU),,,27,0,7,0,5.2,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0140,ež. Gilius,,,True,False,,37.03,2017.0,Vytauto Didžiojo universitetas (VDU),,,4,0,7,0,22.9,,6,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0141,ež. Asavas,,,True,False,,178.78,2017.0,Gamtos tyrimų centras (GTC),,,56,0,8,0,7.0,,5,0,1.5,,ZIP,vienintelis šaltinis,,False,True
+Z0142,ež. Alksnas,,,True,False,,179.49,2017.0,Vytauto Didžiojo universitetas (VDU),,,44,0,24,0,4.6,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0143,ež. Asavėlis,,,True,False,,27.31,2017.0,Gamtos tyrimų centras (GTC),,,12,0,5,0,7.0,,3,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0144,ež. Biržulis,ež. Biržulis,30040060,True,True,vardas+erdvė,124.65,2017.0,Vytauto Didžiojo universitetas (VDU),2015,"1968 m. VŪPI sudarytas batimetrinis planas (M 1:5000, GTC)",34,39,22,35,2.5,2.45,9,10,0.24999999999999992,0.25,ArcGIS,daugiau taškų+izolinijų,0.05,False,True
+Z0145,ež. Bijotė,,,True,False,,66.43,2017.0,GIS-Centras,,,0,0,185,0,11.3,,46,0,0.2999999999999998,,ZIP,vienintelis šaltinis,,False,True
+Z0146,ež. Rėkyva,,,True,False,,1196.79,2017.0,Gamtos tyrimų centras (GTC),,,806,0,79,0,4.4,,17,0,0.25,,ZIP,vienintelis šaltinis,,False,True
+Z0147,ež. Stanka,,,True,False,,9.97,2017.0,Vytauto Didžiojo universitetas (VDU),,,68,0,10,0,9.0,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0148,ež. Visaginas,,,True,False,,222.83,2017.0,Gamtos tyrimų centras (GTC),,,90,0,19,0,7.5,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0149,ež. Žilmas,,,True,False,,101.55,2017.0,Vytauto Didžiojo universitetas (VDU),,,122,0,51,0,29.0,,29,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0150,ež. Rūžas,,,True,False,,225.74,2017.0,Gamtos tyrimų centras (GTC),,,121,0,38,0,4.3,,10,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0151,Lazdinių ežeras,,,True,False,,134.46,2017.0,Vytauto Didžiojo universitetas (VDU),,,12,0,21,0,11.2,,17,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0152,ež. Apvardai,,,True,False,,543.33,2017.0,Gamtos tyrimų centras (GTC),,,90,0,44,0,5.0,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0153,ež. Vajuonis,,,True,False,,235.97,2017.0,Gamtos tyrimų centras (GTC),,,537,0,23,0,20.0,,17,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0154,ež. Šventas,,,True,False,,433.58,2017.0,Gamtos tyrimų centras (GTC),,,1,0,46,0,18.5,,19,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0155,ež. Dūkštas,,,True,False,,498.35,2017.0,Gamtos tyrimų centras (GTC),,,9,0,20,0,10.5,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0156,ež. Dysnykštis,,,True,False,,555.47,2017.0,Gamtos tyrimų centras (GTC),,,6,0,19,0,5.0,,4,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0157,ež. Smalvas,,,True,False,,339.28,2017.0,Gamtos tyrimų centras (GTC),,,41,0,44,0,26.6,,13,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0158,ež. Ilgis,,,True,False,,34.66,2017.0,Gamtos tyrimų centras (GTC),,,37,0,22,0,29.4,,16,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0159,ež. Samavas,,,True,False,,549.26,2017.0,Gamtos tyrimų centras (GTC),,,207,0,67,0,19.6,,13,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0160,ež. Erzvėtas,ež. Erzvėtas,50030223,True,True,vardas+erdvė,205.88,2017.0,Gamtos tyrimų centras (GTC),2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),10,8,13,18,19.0,19.0,7,8,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0161,ež. Dysnai,,,True,False,,2389.05,2017.0,Gamtos tyrimų centras (GTC),,,0,0,33,0,6.0,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0162,BALTIJOS JŪRA,,,True,False,,878696.05,2017.0,Gamtos tyrimų centras (GTC),,,1,0,102,0,95.0,,22,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0163,ež. Tausalas,,,True,False,,191.11,2017.0,Gamtos tyrimų centras (GTC),,,83,0,27,0,6.1,,12,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0164,Paršežeris,Paršežeris,30030062,True,True,vardas+erdvė,197.67,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),0,0,8,9,4.2,4.2,8,9,0.5,0.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0165,Elektrėnų tvenkinys,,,True,False,,77.58,2017.0,GIS-Centras,,,1,0,3,0,2.0,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0166,ež. Drūkšiai,,,True,False,,4513.14,2017.0,Gamtos tyrimų centras (GTC),,,0,0,196,0,31.0,,26,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0167,ež. Luodis,,,True,False,,1292.9,2017.0,Gamtos tyrimų centras (GTC),,,1105,0,106,0,18.5,,17,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0168,ež. Vištytis,,,True,False,,1803.41,2017.0,Gamtos tyrimų centras (GTC),,,0,0,25,0,50.0,,10,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0169,ež. Lavysas,,,True,False,,156.12,2017.0,Gamtos tyrimų centras (GTC),,,2,0,4,0,10.2,,4,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0170,Kauno HE tvenkinys,,,True,False,,4747.11,2017.0,GIS-Centras,,,763,0,332,0,22.8,,12,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0171,ež. Stervas,ež. Stervas,30040064,True,True,vardas+erdvė,124.92,2017.0,GIS-Centras,2016,1967 m. (ežero patvenkimo metu) VŪPI sudarytas 1:5000 mastelio batimetrinis planas,0,11,4,7,2.4,2.84,4,5,0.5,0.5,ArcGIS,daugiau taškų+izolinijų,-0.44,False,True
+Z0172,ež. Beržoras,ež. Beržoras,17030032,True,True,vardas+erdvė,51.92,2017.0,Vytauto Didžiojo universitetas (VDU),2015,VŪPI 1969 m. sudaryto 1:5000 mastelio batimetrinio plano kopija (GTC),28,28,12,15,6.3,6.3,6,7,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0173,ež. Ilgis,ež. Ilgis,17030041,True,True,vardas+erdvė,118.14,2017.0,Vytauto Didžiojo universitetas (VDU),2015,VŪPI 1969 m. sudaryto 1:5000 mastelio batimetrinio plano kopija (GTC),47,47,16,20,5.1,5.1,7,8,0.5000000000000002,0.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0174,ež. Lūkstas,ež. Lūkstas,30030063,True,True,vardas+erdvė,979.68,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),5,5,35,34,7.0,6.0,14,13,0.5,0.5,ZIP,daugiau taškų+izolinijų,1.0,False,True
+Z0175,Bagdononių HE tvenkinys,,,True,False,,96.45,2017.0,Vytauto Didžiojo universitetas (VDU),,,43,0,62,0,17.0,,18,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0176,ež. Gruodys,,,True,False,,38.91,2017.0,Vytauto Didžiojo universitetas (VDU),,,24,0,6,0,5.4,,5,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0177,ež. Mastis,,,True,False,,273.39,2017.0,Gamtos tyrimų centras (GTC),,,0,0,11,0,5.0,,5,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0178,Bubių tvenkinys,,,True,False,,415.4,2017.0,GIS-Centras,,,17,0,98,0,13.2,,13,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0179,Aukštadvario HE tvenkinys,,,True,False,,303.3,2017.0,GIS-Centras,,,111,0,83,0,41.0,,22,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0180,Pailių tvenkinys,,,True,False,,16.03,2017.0,Gamtos tyrimų centras (GTC),,,1,0,0,0,2.1,,0,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0181,,,,True,False,,0.47,2017.0,Vytauto Didžiojo universitetas (VDU),,,0,0,0,0,,,0,0,,,,gylio duomenų nėra,,False,False
+Z0182,,,,True,False,,0.3,2017.0,Vytauto Didžiojo universitetas (VDU),,,0,0,1,0,0.5,,1,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0183,ež. Tabaliukas,,,True,False,,1.59,2020.0,Vytauto Didžiojo universitetas (VDU),,,1,0,9,0,9.8,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0184,ež. Gervinis,,,True,False,,26.4,2019.0,Vytauto Didžiojo universitetas (VDU),,,10,0,3,0,2.8,,3,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0185,ež. Tabaliukas,,,True,False,,2.38,2020.0,Vytauto Didžiojo universitetas (VDU),,,2,0,10,0,18.5,,10,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0186,ež. Ūstas,,,True,False,,41.56,2020.0,Vytauto Didžiojo universitetas (VDU),,,23,0,20,0,25.6,,15,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0187,ež. Vaikėsas,,,True,False,,41.07,2020.0,Vytauto Didžiojo universitetas (VDU),,,19,0,16,0,3.7,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0188,ež. Alksnas (Alksnaitis),,,True,False,,91.3,2019.0,Vytauto Didžiojo universitetas (VDU),,,55,0,30,0,21.2,,15,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0189,ež. Žiegas,,,True,False,,87.35,2020.0,Vytauto Didžiojo universitetas (VDU),,,56,0,26,0,20.3,,18,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0190,ež. Ilgis,,,True,False,,67.35,2019.0,Vytauto Didžiojo universitetas (VDU),,,24,0,26,0,15.2,,16,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0191,Angininkų ežeras,,,True,False,,45.39,2019.0,Vytauto Didžiojo universitetas (VDU),,,44,0,11,0,5.6,,9,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0192,ež. Vidugašlis,,,True,False,,36.04,2019.0,Vytauto Didžiojo universitetas (VDU),,,20,0,11,0,9.6,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0193,ež. Atesys,,,True,False,,111.42,2019.0,Vytauto Didžiojo universitetas (VDU),,,101,0,23,0,13.9,,15,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0194,ež. Liškiavis,,,True,False,,60.02,2020.0,Vytauto Didžiojo universitetas (VDU),,,62,0,30,0,21.2,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0195,Stirtos ežeras,,,True,False,,55.59,2019.0,Vytauto Didžiojo universitetas (VDU),,,26,0,12,0,20.3,,10,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0196,ež. Asveja (Dubingių ežeras),,,True,False,,622.36,2017.0,Gamtos tyrimų centras (GTC),,,23,0,71,0,50.2,,11,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0197,ež. Sartai,,,True,False,,1335.57,2017.0,Gamtos tyrimų centras (GTC),,,1594,0,104,0,21.9,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0198,ež. Tauragnas,,,True,False,,506.6,2017.0,Gamtos tyrimų centras (GTC),,,1,0,47,0,62.5,,12,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0199,Paežerių ežeras,,,True,False,,157.17,2017.0,GIS-Centras,,,257,0,55,0,6.9,,20,0,0.30000000000000004,,ZIP,vienintelis šaltinis,,False,True
+Z0200,Didžiulis (Daugų ežeras),,,True,False,,900.7,2017.0,Gamtos tyrimų centras (GTC),,,0,0,63,0,44.0,,12,0,4.0,,ZIP,vienintelis šaltinis,,False,True
+Z0201,Elektrėnų tvenkinys,,,True,False,,1306.36,2017.0,GIS-Centras,,,99,0,237,0,30.0,,30,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0202,ež. Ančia,,,True,False,,497.62,2017.0,Gamtos tyrimų centras (GTC),,,1,0,54,0,26.0,,10,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0203,ež. Asalnai,,,True,False,,268.4,2017.0,Gamtos tyrimų centras (GTC),,,12,0,12,0,33.0,,6,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0204,ež. Asalnykštis,,,True,False,,66.73,2017.0,Gamtos tyrimų centras (GTC),,,9,0,6,0,20.0,,4,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0205,ež. Auslas,ež. Auslas,50040301,True,True,vardas+erdvė,152.51,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),32,32,24,28,9.0,9.0,9,10,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0206,ež. Avilys,,,True,False,,1226.68,2017.0,Gamtos tyrimų centras (GTC),,,592,0,175,0,13.0,,15,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0207,ež. Baluošas,,,True,False,,425.69,2017.0,Gamtos tyrimų centras (GTC),,,36,0,85,0,33.7,,14,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0208,ež. Bevardis,Bevardis ež.,12030131,True,True,vardas+erdvė,2.35,2017.0,Gamtos tyrimų centras (GTC),2013,Batimetrinio plano kopija (GTC),2,2,11,7,4.4,4.4,8,5,0.5,1.0,ZIP,daugiau taškų+izolinijų,0.0,False,True
+Z0209,ež. Birva,ež. Birva,12030237,True,True,vardas+erdvė,26.69,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),0,0,10,12,7.0,7.0,7,8,1.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0210,ež. Čičirys,,,True,False,,694.41,2017.0,Gamtos tyrimų centras (GTC),,,199,0,259,0,39.6,,40,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0211,ež. Dringis,,,True,False,,709.21,2017.0,Gamtos tyrimų centras (GTC),,,39,0,82,0,24.0,,10,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0212,ež. Dulgas,,,True,False,,32.12,2019.0,Vytauto Didžiojo universitetas (VDU),,,43,0,12,0,10.6,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0213,ež. Dumblinis,,,True,False,,35.36,2017.0,Vytauto Didžiojo universitetas (VDU),,,16,0,21,0,25.2,,21,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0214,ež. Dusia,,,True,False,,2347.11,2019.0,Vytauto Didžiojo universitetas (VDU),,,693,0,369,0,32.6,,33,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0215,ež. Gailintas,,,True,False,,65.74,2017.0,Vytauto Didžiojo universitetas (VDU),,,24,0,37,0,32.5,,18,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0216,ež. Galstas,,,True,False,,392.17,2017.0,Gamtos tyrimų centras (GTC),,,1,0,20,0,50.1,,10,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0217,ež. Galuonai,,,True,False,,594.6,2017.0,Gamtos tyrimų centras (GTC),,,15,0,36,0,17.6,,8,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0218,ež. Galvė,,,True,False,,371.61,2017.0,Gamtos tyrimų centras (GTC),,,8,0,85,0,46.8,,16,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0219,ež. Gavys,,,True,False,,126.46,2017.0,Gamtos tyrimų centras (GTC),,,3,0,24,0,39.0,,8,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0220,ež. Giluitis,,,True,False,,234.18,2017.0,Gamtos tyrimų centras (GTC),,,3,0,25,0,22.0,,21,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0221,ež. Gomerta,,,True,False,,8.59,2020.0,Vytauto Didžiojo universitetas (VDU),,,135,0,37,0,5.2,,11,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0222,ež. Gulbinas,ež. Gulbinas,12030112,True,True,vardas+erdvė,37.2,2017.0,Gamtos tyrimų centras (GTC),2013,XX a. 5-ajame dešimtmetyje (?) sudaryto batimetrinio plano M 1:5000 kopija (GTC),4,3,10,12,11.8,11.8,5,6,2.0,2.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0223,ež. Ilgis,,,True,False,,328.21,2017.0,Gamtos tyrimų centras (GTC),,,5,0,7,0,21.0,,4,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0224,ež. Indrajai,,,True,False,,304.4,2017.0,Gamtos tyrimų centras (GTC),,,80,0,48,0,23.6,,17,0,1.5,,ZIP,vienintelis šaltinis,,False,True
+Z0225,ež. Juostinas,ež. Juostinas,13030020,True,True,vardas+erdvė,34.74,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),8,8,16,17,25.4,25.35,12,13,2.0,2.0,ArcGIS,daugiau taškų+izolinijų,0.05,False,True
+Z0226,ež. Kiaunas,,,True,False,,67.85,2017.0,Vytauto Didžiojo universitetas (VDU),,,45,0,24,0,12.5,,16,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0227,ež. Lūšiai,,,True,False,,355.74,2017.0,Gamtos tyrimų centras (GTC),,,0,0,22,0,35.0,,7,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0228,ež. Margis,,,True,False,,122.2,2017.0,Gamtos tyrimų centras (GTC),,,3,0,9,0,20.5,,4,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0229,ež. Meduvys,,,True,False,,49.18,2017.0,Gamtos tyrimų centras (GTC),,,178,0,13,0,10.0,,5,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0230,ež. Metelys,,,True,False,,1298.19,2017.0,Gamtos tyrimų centras (GTC),,,210,0,105,0,14.9,,28,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0231,ež. Monaitis,,,True,False,,51.62,2017.0,Gamtos tyrimų centras (GTC),,,44,0,26,0,25.0,,12,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0232,ež. Monis,,,True,False,,101.31,2017.0,Gamtos tyrimų centras (GTC),,,38,0,21,0,33.0,,8,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0233,ež. Mošia,ež. Mošia,10030650,True,True,vardas+erdvė,34.56,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Mokslų akademijos Geografijos skyriaus 1965 m. sudarytas 1:5000 mastelio batimetrinis planas (GTC),6,6,5,5,4.2,4.15,5,5,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.05,False,True
+Z0234,ež. Mūšėjus,ež. Mūšėjus,12231562,True,True,vardas+erdvė,93.4,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietmetyje sudarytas 1:10 000 mastelio batimetrinis planas (GTC),1,1,17,21,11.8,11.8,7,7,2.3499999999999996,2.3499999999999996,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0235,ež. Pakasas,,,True,False,,148.02,2017.0,Gamtos tyrimų centras (GTC),,,6,0,9,0,17.0,,6,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0236,ež. Paštys,ež. Paštys,12130407,True,True,vardas+erdvė,38.27,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija (GTC),1,1,14,16,17.5,17.5,8,8,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0237,ež. Pijuosas,,,True,False,,15.93,2017.0,Gamtos tyrimų centras (GTC),,,51,0,5,0,13.5,,4,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0238,ež. Prapuntas,,,True,False,,132.73,2017.0,Gamtos tyrimų centras (GTC),,,1,0,19,0,22.3,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0239,ež. Rimietis,,,True,False,,139.56,2017.0,Gamtos tyrimų centras (GTC),,,1,0,8,0,6.8,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0240,ež. Sągardas,ež. Sągardas,50030006,True,True,vardas+erdvė,119.4,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),7,7,25,26,26.5,26.5,10,11,2.5,2.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0241,ež. Salotė,ež. Salotė,12040143,True,True,vardas+erdvė,13.43,2017.0,Vytauto Didžiojo universitetas (VDU),2015,2014-15 m. žiemą išmatavo VU Ekologijos ir aplinkotyros centro doktorantas Vaidotas Valskys,2,2,11,13,3.4,3.4,6,7,0.5,0.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0242,ež. Savistas,,,True,False,,61.66,2017.0,GIS-Centras,,,0,0,6,0,20.0,,5,0,4.0,,ZIP,vienintelis šaltinis,,False,True
+Z0243,ež. Siesartis,,,True,False,,520.05,2017.0,Gamtos tyrimų centras (GTC),,,5,0,59,0,36.5,,11,0,4.5,,ZIP,vienintelis šaltinis,,False,True
+Z0244,ež. Skaistis,,,True,False,,288.71,2017.0,Gamtos tyrimų centras (GTC),,,7,0,56,0,32.0,,11,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0245,ež. Snaigynas,,,True,False,,208.8,2017.0,Gamtos tyrimų centras (GTC),,,1,0,16,0,25.0,,6,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0246,ež. Šakarvai,,,True,False,,78.2,2017.0,Gamtos tyrimų centras (GTC),,,0,0,7,0,35.0,,7,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0247,ež. Šamukas,ež. Šamukas; ež.Šamukas,10030862,True,True,vardas+erdvė,9.09,2017.0,Vytauto Didžiojo universitetas (VDU),2016; 2017,1959 m. 1:2500 mastelio batimetrinis planas (VU),110,80,11,11,7.9,8.35,9,9,1.0,1.0,ZIP,daugiau taškų+izolinijų,-0.45,False,True
+Z0248,ež. Šaulys,,,True,False,,25.62,2017.0,Vytauto Didžiojo universitetas (VDU),,,24,0,8,0,7.9,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0249,ež. Šlavantas,,,True,False,,191.45,2017.0,Gamtos tyrimų centras (GTC),,,0,0,18,0,30.0,,6,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0250,ež. Švenčius,ež. Švenčius,10031139,True,True,vardas+erdvė,52.72,2017.0,Vytauto Didžiojo universitetas (VDU),2015,1970 m. VŪPI sudaryto batimetrinio plano kopija (GTC),23,23,6,7,4.6,4.64,6,7,0.5,0.5,ArcGIS,daugiau taškų+izolinijų,-0.04,False,True
+Z0251,ež. Ungurys,ež. Ungurys,10031012,True,True,vardas+erdvė,18.52,2017.0,Vytauto Didžiojo universitetas (VDU),2015,Tarpukaryje sudarytas batimetrinis planas (GTC),25,25,11,14,22.5,22.5,11,13,2.0,2.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0252,ež. Uolys,,,True,False,,59.36,2017.0,Gamtos tyrimų centras (GTC),,,0,0,5,0,7.0,,3,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0253,ež. Ūsiai,,,True,False,,270.4,2017.0,Gamtos tyrimų centras (GTC),,,16,0,38,0,23.0,,9,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0254,ež. Utenas,,,True,False,,202.52,2017.0,Gamtos tyrimų centras (GTC),,,74,0,62,0,21.0,,21,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0255,ež. Vaisietis,,,True,False,,91.46,2017.0,Vytauto Didžiojo universitetas (VDU),,,54,0,16,0,29.8,,6,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0256,ež. Veisiejis,,,True,False,,706.16,2017.0,Gamtos tyrimų centras (GTC),,,2,0,64,0,33.8,,24,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0257,ež. Vencavas,,,True,False,,227.09,2017.0,Gamtos tyrimų centras (GTC),,,8,0,23,0,48.4,,10,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0258,ež. Verniejus,,,True,False,,110.13,2017.0,Vytauto Didžiojo universitetas (VDU),,,53,0,50,0,50.0,,25,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0259,ež. Vievis,,,True,False,,301.34,2017.0,Gamtos tyrimų centras (GTC),,,150,0,29,0,33.0,,16,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0260,ež. Vilkokšnis,,,True,False,,339.08,2017.0,Gamtos tyrimų centras (GTC),,,5,0,36,0,23.4,,9,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0261,ež. Virintai,,,True,False,,286.88,2017.0,Gamtos tyrimų centras (GTC),,,34,0,27,0,37.1,,11,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0262,ež. Zalvė,,,True,False,,25.93,2017.0,Gamtos tyrimų centras (GTC),,,26,0,3,0,5.3,,2,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0263,ež. Žiezdras,ež. Žiezdras,12130510,True,True,vardas+erdvė,63.7,2017.0,Vytauto Didžiojo universitetas (VDU),2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),6,6,13,14,36.0,36.0,7,8,5.0,5.0,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0264,ež. Žiežmuo,,,True,False,,28.29,2017.0,Gamtos tyrimų centras (GTC),,,12,0,14,0,8.0,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0265,Gailintėnų ežerėlis,,,True,False,,13.49,2017.0,Vytauto Didžiojo universitetas (VDU),,,9,0,6,0,5.9,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0266,Gineitiškių ežeras,Gineitiškių ežeras,12040141,True,True,vardas+erdvė,14.19,2017.0,Vytauto Didžiojo universitetas (VDU),2015,2014-15 m. žiemą išmatavo VU Ekologijos ir aplinkotyros centro doktorantas Vaidotas Valskys,1,1,6,7,3.3,3.3,6,7,0.5,0.5,ArcGIS,daugiau taškų+izolinijų,0.0,False,True
+Z0267,Klykių ežeras,,,True,False,,51.32,2018.0,Vytauto Didžiojo universitetas (VDU),,,44,0,28,0,43.2,,22,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0268,Pabezninkų ežeras,,,True,False,,65.98,2017.0,Vytauto Didžiojo universitetas (VDU),,,34,0,5,0,3.0,,4,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0269,Pikeliškių ežeras (ež. Žalesas),,,True,False,,69.47,2017.0,Gamtos tyrimų centras (GTC),,,53,0,21,0,17.6,,17,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0270,Platelių ežeras,Platelių ežeras,17040030,True,True,vardas+erdvė,1207.55,2017.0,Klaipėdos universitetas/Žemaitijos nacionalinis parkas (KU-ŽNP ),2010,"Bieliukas K. 1937. Platelių srities ežerų morfometrija. Gamta, 153-165 p.",105,24,240,90,48.6,46.0,24,24,2.0,2.0,ZIP,daugiau taškų+izolinijų,2.6,False,True
+Z0271,Plinkšių ežeras,,,True,False,,393.44,2017.0,Gamtos tyrimų centras (GTC),,,101,0,33,0,11.6,,19,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0272,Sausas ežerėlis,Sausas ežerėlis,12030116,True,True,vardas+erdvė,6.87,2017.0,Vytauto Didžiojo universitetas (VDU),2013,Batimetrinio plano kopija (GTC),1,1,3,3,2.5,2.5,3,3,1.0,1.0,ZIP,"lygiai, naujesnis ZIP",0.0,False,True
+Z0273,Siesikų ežeras,,,True,False,,123.77,2017.0,Gamtos tyrimų centras (GTC),,,21,0,16,0,4.6,,9,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0274,Simno ežeras,,,True,False,,244.58,2017.0,Gamtos tyrimų centras (GTC),,,2,0,10,0,4.1,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0275,Stavarygalos ežeras,,,True,False,,76.21,2018.0,Vytauto Didžiojo universitetas (VDU),,,44,0,11,0,6.1,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0276,Suosa (Jurgiškio ežeras),,,True,False,,203.44,2017.0,Gamtos tyrimų centras (GTC),,,85,0,17,0,4.5,,10,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0277,Širvenos ežeras,,,True,False,,318.79,2017.0,Gamtos tyrimų centras (GTC),,,4,0,7,0,3.0,,5,0,0.75,,ZIP,vienintelis šaltinis,,False,True
+Z0278,Škilietų ežeras,Škilietų ežeras (2),10030653,True,True,vardas+erdvė,3.48,2020.0,Vytauto Didžiojo universitetas (VDU),2016,1982 m. 1:1000 mastelio batimetrinis planas (VU),5,69,7,13,13.0,12.8,7,13,2.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.2,False,True
+Z0279,Škilietų ežeras,Škilietų ežeras (1),10030652,True,True,vardas+erdvė,5.27,2020.0,Vytauto Didžiojo universitetas (VDU),2016,1982 m. 1:1000 mastelio batimetrinis planas (VU),6,42,9,32,18.3,18.2,9,19,2.0,1.0,ArcGIS,daugiau taškų+izolinijų,0.1,False,True
+Z0280,Tapelių ežeras,,,True,False,,13.4,2020.0,Vytauto Didžiojo universitetas (VDU),,,5,0,14,0,9.4,,13,0,0.75,,ZIP,vienintelis šaltinis,,False,True
+Z0281,Teizų ežeras,,,True,False,,43.08,2019.0,Vytauto Didžiojo universitetas (VDU),,,53,0,10,0,6.9,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0282,Totoriškių ežeras,,,True,False,,76.24,2017.0,Gamtos tyrimų centras (GTC),,,3,0,14,0,19.0,,6,0,3.0,,ZIP,vienintelis šaltinis,,False,True
+Z0283,Vabalių ežeras (Svaitingis),,,True,False,,58.12,2017.0,Vytauto Didžiojo universitetas (VDU),,,41,0,30,0,20.6,,23,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0284,Žaslių ežeras,,,True,False,,110.74,2017.0,Gamtos tyrimų centras (GTC),,,43,0,6,0,9.5,,5,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0285,KURŠIŲ MARIOS,,,True,False,,54605.43,2017.0,GIS-Centras,,,924,0,286,0,10.0,,19,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0286,Čižiūnų tvenkinys,,,True,False,,5.35,2017.0,Vytauto Didžiojo universitetas (VDU),,,50,0,1,0,3.8,,1,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0287,NEMUNAS,,,True,False,,1462.77,2017.0,GIS-Centras,,,451,0,69,0,13.6,,6,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0288,,,,True,False,,11.71,2017.0,Gamtos tyrimų centras (GTC),,,0,0,1,0,1.0,,1,0,,,ZIP,vienintelis šaltinis,,False,True
+Z0289,Antalieptės HE tvenkinys,,,True,False,,1509.97,2017.0,Gamtos tyrimų centras (GTC),,,0,0,439,0,46.0,,33,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0290,ež. Žaliasis,,,True,False,,2.13,2021.0,Vytauto Didžiojo universitetas (VDU),,,9,0,12,0,15.8,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0291,ež. Baltys,,,True,False,,24.16,2021.0,Vytauto Didžiojo universitetas (VDU),,,24,0,17,0,23.6,,15,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0292,ež. Giedrys,,,True,False,,36.03,2021.0,Vytauto Didžiojo universitetas (VDU),,,17,0,20,0,10.8,,20,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0293,ež. Kuleinis,,,True,False,,4.3,2021.0,Vytauto Didžiojo universitetas (VDU),,,1,0,11,0,10.6,,11,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0294,ež. Liedis,,,True,False,,67.22,2021.0,Vytauto Didžiojo universitetas (VDU),,,14,0,8,0,6.1,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0295,ež. Baluošykštis,,,True,False,,12.96,2021.0,Vytauto Didžiojo universitetas (VDU),,,16,0,11,0,10.5,,11,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0296,Epušės ežeras,,,True,False,,17.16,2021.0,Vytauto Didžiojo universitetas (VDU),,,1,0,8,0,14.1,,8,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0297,ež. Kertušas,,,True,False,,41.01,2021.0,Vytauto Didžiojo universitetas (VDU),,,9,0,5,0,3.8,,5,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0298,ež. Skarbelis,,,True,False,,2.33,2021.0,Vytauto Didžiojo universitetas (VDU),,,9,0,12,0,9.3,,12,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0299,ež. Kampuolis,,,True,False,,51.16,2021.0,Vytauto Didžiojo universitetas (VDU),,,29,0,23,0,12.3,,13,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0300,ež. Perūnas,,,True,False,,29.91,2021.0,Vytauto Didžiojo universitetas (VDU),,,10,0,9,0,2.3,,9,0,0.2999999999999998,,ZIP,vienintelis šaltinis,,False,True
+Z0301,Šakių ežeras,,,True,False,,51.87,2021.0,Vytauto Didžiojo universitetas (VDU),,,25,0,12,0,3.8,,6,0,0.6,,ZIP,vienintelis šaltinis,,False,True
+Z0302,Draudenių ežeras,,,True,False,,103.8,2021.0,Vytauto Didžiojo universitetas (VDU),,,55,0,9,0,2.5,,6,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0303,ež. Kapstatas,,,True,False,,45.08,2021.0,Vytauto Didžiojo universitetas (VDU),,,25,0,15,0,2.4,,5,0,0.49999999999999994,,ZIP,vienintelis šaltinis,,False,True
+Z0304,ež. Nestrėvantys,,,True,False,,49.9,2021.0,Vytauto Didžiojo universitetas (VDU),,,27,0,9,0,7.0,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0305,Keležeris,,,True,False,,34.16,2021.0,Vytauto Didžiojo universitetas (VDU),,,31,0,18,0,14.8,,16,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0306,ež. Žiegelis,,,True,False,,36.31,2021.0,Vytauto Didžiojo universitetas (VDU),,,17,0,10,0,8.2,,9,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0307,Obelių ežeras,,,True,False,,51.25,2021.0,Vytauto Didžiojo universitetas (VDU),,,14,0,5,0,2.1,,5,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0308,ež. Alšia,,,True,False,,45.64,2021.0,Vytauto Didžiojo universitetas (VDU),,,31,0,15,0,12.0,,13,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0309,Gelionių ežeras,,,True,False,,4.63,2021.0,Vytauto Didžiojo universitetas (VDU),,,4,0,11,0,19.8,,11,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0310,Balčių ežeras,,,True,False,,41.22,2021.0,Vytauto Didžiojo universitetas (VDU),,,36,0,22,0,23.1,,15,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0311,ež. Zalvys,,,True,False,,44.51,2021.0,Vytauto Didžiojo universitetas (VDU),,,33,0,22,0,7.5,,11,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0312,ež. Srovinaitis,,,True,False,,33.21,2021.0,Vytauto Didžiojo universitetas (VDU),,,19,0,15,0,13.5,,14,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0313,Politiškių ežeras,,,True,False,,33.58,2021.0,Vytauto Didžiojo universitetas (VDU),,,28,0,27,0,42.1,,22,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0314,ež. Trikojis,,,True,False,,39.53,2021.0,Vytauto Didžiojo universitetas (VDU),,,33,0,23,0,9.3,,12,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0315,ež. Janavas,,,True,False,,26.6,2021.0,Vytauto Didžiojo universitetas (VDU),,,20,0,5,0,1.9,,4,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0316,ež. Senkutis (Bagdononių ežeras),,,True,False,,33.08,2021.0,Vytauto Didžiojo universitetas (VDU),,,10,0,5,0,4.9,,5,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0317,ež. Gailiekas,,,True,False,,42.6,2021.0,Vytauto Didžiojo universitetas (VDU),,,30,0,10,0,11.5,,6,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0318,ež. Juodis,,,True,False,,14.35,2021.0,Vytauto Didžiojo universitetas (VDU),,,8,0,6,0,6.4,,6,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0319,ež. Mainia,,,True,False,,18.27,2021.0,Vytauto Didžiojo universitetas (VDU),,,61,0,7,0,9.4,,5,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0320,ež. Viesai,,,True,False,,45.42,2021.0,Vytauto Didžiojo universitetas (VDU),,,38,0,33,0,20.9,,22,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0321,ež. Suoselis,,,True,False,,7.67,2021.0,Vytauto Didžiojo universitetas (VDU),,,55,0,5,0,10.5,,5,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0322,ež. Delviai,,,True,False,,8.63,2021.0,Vytauto Didžiojo universitetas (VDU),,,38,0,7,0,17.0,,7,0,2.5,,ZIP,vienintelis šaltinis,,False,True
+Z0323,ež. Rudesa,,,True,False,,25.57,2021.0,Vytauto Didžiojo universitetas (VDU),,,2,0,12,0,19.3,,9,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0324,ež. Šona,,,True,False,,5.57,2021.0,Vytauto Didžiojo universitetas (VDU),,,3,0,6,0,11.9,,6,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0325,Gelvės ežeras,,,True,False,,40.34,2021.0,Vytauto Didžiojo universitetas (VDU),,,18,0,13,0,22.8,,13,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0326,Sarių ežeras,,,True,False,,83.15,2021.0,Vytauto Didžiojo universitetas (VDU),,,77,0,13,0,22.0,,5,0,5.0,,ZIP,vienintelis šaltinis,,False,True
+Z0327,Saločių ežeras,,,True,False,,47.63,2021.0,Vytauto Didžiojo universitetas (VDU),,,26,0,15,0,6.3,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0328,Meižių ežeras,,,True,False,,33.07,2021.0,Vytauto Didžiojo universitetas (VDU),,,13,0,9,0,4.5,,7,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0329,ež. Germantas,,,True,False,,167.3,2021.0,Vytauto Didžiojo universitetas (VDU),,,49,0,26,0,5.8,,14,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0330,ež. Ilgis,,,True,False,,37.93,2021.0,Vytauto Didžiojo universitetas (VDU),,,27,0,14,0,12.8,,13,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0331,Alsėdžių ežeras,,,True,False,,92.28,2021.0,Vytauto Didžiojo universitetas (VDU),,,33,0,9,0,2.5,,8,0,0.30000000000000004,,ZIP,vienintelis šaltinis,,False,True
+Z0332,Kalčių ežeras,,,True,False,,24.58,2021.0,Vytauto Didžiojo universitetas (VDU),,,11,0,7,0,4.8,,7,0,0.75,,ZIP,vienintelis šaltinis,,False,True
+Z0333,Ambraziškių ežeras,,,True,False,,26.01,2023.0,Vytauto Didžiojo universitetas (VDU),,,6,0,8,0,7.59999999999999,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0334,ež. Apidemis,,,True,False,,28.37,2023.0,Vytauto Didžiojo universitetas (VDU),,,21,0,8,0,3.9,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0335,ež. Apvalasai,,,True,False,,43.9,2023.0,Vytauto Didžiojo universitetas (VDU),,,40,0,18,0,6.7,,11,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0336,ež. Čiaunas,,,True,False,,38.84,2023.0,Vytauto Didžiojo universitetas (VDU),,,34,0,25,0,8.4,,12,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0337,Gelvanės ežeras,,,True,False,,58.77,2023.0,Vytauto Didžiojo universitetas (VDU),,,24,0,16,0,6.1,,12,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0338,Gražutės ežeras,,,True,False,,30.41,2023.0,Vytauto Didžiojo universitetas (VDU),,,13,0,8,0,6.25,,7,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0339,ež. Ilgis,,,True,False,,48.84,2023.0,Vytauto Didžiojo universitetas (VDU),,,26,0,32,0,20.5,,21,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0340,ež. Ilgys,,,True,False,,13.16,2023.0,Vytauto Didžiojo universitetas (VDU),,,9,0,20,0,9.59999999999999,,13,0,0.75,,ZIP,vienintelis šaltinis,,False,True
+Z0341,ež. Joskutis,,,True,False,,39.92,2023.0,Vytauto Didžiojo universitetas (VDU),,,17,0,11,0,9.08,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0342,ež. Kania,,,True,False,,27.01,2023.0,Vytauto Didžiojo universitetas (VDU),,,9,0,10,0,6.68000000000001,,10,0,0.599999999999994,,ZIP,vienintelis šaltinis,,False,True
+Z0343,ež. Našys,,,True,False,,89.64,2023.0,Vytauto Didžiojo universitetas (VDU),,,31,0,9,0,2.9,,6,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0344,ež. Paneikiškis,,,True,False,,39.72,2023.0,Vytauto Didžiojo universitetas (VDU),,,16,0,8,0,2.90000000000001,,7,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0345,ež. Paštys,,,True,False,,27.19,2023.0,Vytauto Didžiojo universitetas (VDU),,,21,0,10,0,13.62,,8,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0346,Petriošiškio ežeras,,,True,False,,60.09,2023.0,Vytauto Didžiojo universitetas (VDU),,,51,0,12,0,4.7,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0347,ež. Pilašius,,,True,False,,16.86,2023.0,Vytauto Didžiojo universitetas (VDU),,,13,0,24,0,5.5,,12,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0348,ež. Plavys,,,True,False,,27.81,2023.0,Vytauto Didžiojo universitetas (VDU),,,20,0,14,0,11.11,,10,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0349,ež. Praviršulis,,,True,False,,72.2,2023.0,Vytauto Didžiojo universitetas (VDU),,,27,0,16,0,4.34,,10,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0350,ež. Skaistė,,,True,False,,58.3,2023.0,Vytauto Didžiojo universitetas (VDU),,,36,0,15,0,13.08,,14,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0351,ež. Šlavinas,,,True,False,,34.16,2023.0,Vytauto Didžiojo universitetas (VDU),,,27,0,28,0,26.1,,16,0,2.0,,ZIP,vienintelis šaltinis,,False,True
+Z0352,ež. Vasaknas,,,True,False,,82.19,2023.0,Vytauto Didžiojo universitetas (VDU),,,37,0,22,0,7.59999999999999,,12,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0353,ež. Vazajis,,,True,False,,80.51,2023.0,Vytauto Didžiojo universitetas (VDU),,,59,0,12,0,6.0,,10,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0354,ež. Vykas,,,True,False,,26.97,2023.0,Vytauto Didžiojo universitetas (VDU),,,20,0,10,0,9.2,,7,0,1.4999999999999996,,ZIP,vienintelis šaltinis,,False,True
+Z0355,ež. Zelva,,,True,False,,47.36,2023.0,Vytauto Didžiojo universitetas (VDU),,,30,0,13,0,6.89,,8,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0356,ež. Zirnajys,,,True,False,,49.76,2023.0,Vytauto Didžiojo universitetas (VDU),,,39,0,14,0,11.5,,14,0,1.0,,ZIP,vienintelis šaltinis,,False,True
+Z0357,Sabališkių tvenkinys,,,True,False,,5.74,2025.0,Aplinkos apsaugos agentūra (AAA),,,54,0,8,0,3.8,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0358,Papilio tvenkinys,,,True,False,,88.4,2025.0,Aplinkos apsaugos agentūra (AAA),,,164,0,185,0,3.8,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0359,Jucių tvenkinys,,,True,False,,2.4,2025.0,Aplinkos apsaugos agentūra (AAA),,,32,0,33,0,3.6,,8,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0360,Kairiškių tvenkinys,,,True,False,,7.65,2025.0,Aplinkos apsaugos agentūra (AAA),,,37,0,58,0,3.0,,7,0,0.5,,ZIP,vienintelis šaltinis,,False,True
+Z0361,Kapėnų tvenkinys,,,True,False,,12.16,2025.0,Aplinkos apsaugos agentūra (AAA),,,55,0,117,0,3.7,,15,0,0.25,,ZIP,vienintelis šaltinis,,False,True
+A_10011050,Verknė,Verknė,10011050,False,True,ArcGIS-only,,,,2015,Sovietinio 1:5 000 mastelio batimetrinio plano kopija ant kalkės (GTC),0,0,0,8,,0.5,0,2,,,ArcGIS,vienintelis šaltinis,,False,True
+A_12030092,ež. Balžis,ež. Balžis,12030092,False,True,"ArcGIS-only (erdvė sutampa su ZIP 'Bildžių ež.', pavadinimai skiriasi, nesujungta)",,,,2016,Sovietinio 1:2 500 mastelio batimetrinio plano kopija ant kalkės (GTC),0,1,0,11,,27.1,0,11,,2.5,ArcGIS,vienintelis šaltinis,,False,True
+A_12210001,Šventoji,Šventoji,12210001,False,True,ArcGIS-only,,,,2016,Sovietinio 1:10 000 mastelio batimetrinio plano kopija (GTC),0,0,0,11,,2.5,0,4,,0.6,ArcGIS,vienintelis šaltinis,,False,True
+A_12210654,Juškų upelis,Juškų upelis,12210654,False,True,"ArcGIS-only (erdvė sutampa su ZIP '', pavadinimai skiriasi, nesujungta)",,,,2015,Sovietmetyje sudarytas 1:10 000 mastelio batimetrinis planas (GTC),0,0,0,8,,0.5,0,2,,,ArcGIS,vienintelis šaltinis,,False,True
+A_bevardis,Bevardis ež.,Bevardis ež.,,False,True,"ArcGIS-only (erdvė sutampa su ZIP '', pavadinimai skiriasi, nesujungta)",,,,2013,Batimetrinio plano kopija (GTC),0,1,0,3,,2.2,0,3,,1.0,ArcGIS,vienintelis šaltinis,,False,True
+A_tamasiavos,Tamašiavos tv.,Tamašiavos tv.,,False,True,"ArcGIS-only (erdvė sutampa su ZIP 'Čižiūnų tvenkinys', pavadinimai skiriasi, nesujungta)",,,,2016,"2016-06-30 matavimai, kuriuos atliko LEU geografijos III kurso studentai vadovaujant M.Pileckui; GDR10LT (2016 m. versija)",0,50,0,1,,3.78,0,1,,,ArcGIS,vienintelis šaltinis,,False,True

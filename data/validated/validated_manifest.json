@@ -1,0 +1,61 @@
+{
+ "generated_utc": "2026-11-13T14:31:06.878723Z",
+ "tolerances": {
+  "offset_m": 25.0,
+  "depth_abs": 1.0,
+  "depth_rel": 0.15,
+  "mirror": 0.9,
+  "snap": 150.0,
+  "supp_dup_m": 5.0
+ },
+ "lakes": 367,
+ "status": {
+  "bathymetry_available": 366,
+  "no_verified_bathymetry": 1
+ },
+ "confidence": {
+  "single_source": 342,
+  "cross_validated": 24,
+  "none": 1
+ },
+ "selected": {
+  "zip": 350,
+  "arcgis_leu": 16
+ },
+ "sources": {
+  "zip": {
+   "source": "zip",
+   "url": "Batimetrija_gdb.zip (vartotojo įkeltas oficialus FileGDB)",
+   "crs": "EPSG:3346 (LKS94; taškai su Baltic 1977 height)",
+   "fetched_utc": "2026-11-13T13:47:00Z (failo įkėlimas)",
+   "copyright": null,
+   "measurement_dates": "Lakes.METAI 2017-2025 (poligono lygmuo); FileGDB failų datos 2021-2026",
+   "note": "Be GRAKTAS; taškai be pavadinimo; autorius=KONTRIBUTORIUS"
+  },
+  "geoportal": {
+   "source": "geoportal",
+   "url": "https://www.geoportal.lt/mapproxy/gisc_batimetrija/MapServer",
+   "crs": "EPSG:3346 (ArcGIS wkid 2600, vcs 5705)",
+   "fetched_utc": "2026-11-13T14:04:55.437470Z",
+   "copyright": "(c) VšĮ SSVA",
+   "measurement_dates": null,
+   "note": "Be GRAKTAS, metų ir šaltinio planų atributų; tik pavadinimas ir gylis"
+  },
+  "arcgis_leu": {
+   "source": "arcgis_leu",
+   "url": "https://services3.arcgis.com/G9UFYDnivWeZc6i4/ArcGIS/rest/services/Lietuvos_ezeru_batimetrija/FeatureServer",
+   "crs": "EPSG:3346 (ArcGIS wkid 2600)",
+   "fetched_utc": "2026-11-13T14:08:34.131585Z",
+   "copyright": null,
+   "measurement_dates": "Metai 2010-2016 (digitizavimo metai pagal sluoksnio lauką Metai; ne matavimo data)",
+   "last_edit": {
+    "lastEditDate": 1570158009624,
+    "schemaLastEditDate": 1570158009624,
+    "dataLastEditDate": 1570158009624
+   },
+   "note": "Turi GRAKTAS ir šaltinio planą; be ežerų poligonų"
+  }
+ },
+ "points_written": 17974,
+ "contours_written": 10668
+}
