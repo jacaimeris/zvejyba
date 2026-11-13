@@ -344,7 +344,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.5 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.6 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1032,7 +1032,7 @@ async function initDb(){
   setTimeout(reboot,50);
 }
 async function save(c,o){
-  o.id=o.id||uid();if(OWNED.includes(c)&&!o.owner)o.owner=S.who||'Arnas';o.updated=Date.now();if(!o.created)o.created=o.updated;
+  o.id=o.id||uid();if(OWNED.includes(c)&&!o.owner&&(S.who||c==='gear'))o.owner=S.who||'Arnas';o.updated=Date.now();if(!o.created)o.created=o.updated;
   const clean=JSON.parse(JSON.stringify(o));
   if(db){try{await db.doc(c+'/'+clean.id).set(clean)}catch(e){toast('Nepavyko išsaugoti: '+(e.message||e));return false}}
   else{const a=rawColl(c);const i=a.findIndex(x=>x.id===clean.id);if(i>=0)a[i]=clean;else a.push(clean);setColl(c,a);renderLive()}
@@ -1074,7 +1074,7 @@ function placeTab(){const nav=$('#tabs'),b=nav.querySelector('[aria-current="tru
   const w=Math.round(b.offsetWidth*.4);i.style.width=w+'px';i.style.transform=`translateX(${b.offsetLeft+(b.offsetWidth-w)/2}px)`;if(!i.classList.contains('ready'))requestAnimationFrame(()=>i.classList.add('ready'))}
 function renderAll(){S._anim=true;renderTabs();renderMain()}
 function renderLive(){if(S.tab==='more'&&S.more==='guide')return;const a=document.activeElement;if(a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)&&$('#main').contains(a))return;renderMain()}
-function renderMain(){const v=S.who?whoBar()+VIEWS[S.tab]():whoChooser();const m=$('#main');const anim=!!S._anim,dir=S._dir||0;S._anim=false;S._dir=0;
+function renderMain(){const v=VIEWS[S.tab]();const m=$('#main');const anim=!!S._anim,dir=S._dir||0;S._anim=false;S._dir=0;
   m.innerHTML=(S.dbOK===false?'<div class="banner">Duomenų bazė šiame lange nepasiekiama, todėl viskas dings uždarius puslapį. Atidaryk įrankį per claude.ai, kad duomenys išliktų.</div>':'')+v;
   if(anim)Motion.enter(m,dir);Motion.after(m,anim)}
 
@@ -1087,9 +1087,10 @@ const statusPill=w=>{const s=(w.legal&&w.legal.status)||'';if(!s)return '<span c
 
 const VIEWS={
 gear(){
+  if(!S.who)return whoChooser();
   const cats=Object.keys(CATS);const q=S.q.toLowerCase();
   const list=S.gear.filter(g=>(S.cat==='all'||g.cat===S.cat)&&(!q||JSON.stringify(g).toLowerCase().includes(q)));
-  return `<div class="row between"><h2>Žvejybos spinta</h2><span class="badge">${S.gear.length} daiktų</span></div>
+  return `${whoBar()}<div class="row between"><h2>${S.who==='Rokas'?'Roko':'Arno'} spinta</h2><span class="badge">${S.gear.length} daiktų</span></div>
   <div class="row"><button class="btn primary" data-act="gearPhoto">Nufotografuoti</button><button class="btn" data-act="gearManual">Įvesti ranka</button><button class="btn hot" data-act="gearBulk">Įkelti viską tekstu</button></div>
   <input id="gq" type="search" placeholder="Ieškoti spintoje" value="${esc(S.q)}" style="border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 12px;width:100%">
   <div class="chips"><button class="chip" data-act="cat" data-v="all" aria-pressed="${S.cat==='all'}">Viskas</button>${cats.map(c=>{const n=S.gear.filter(g=>g.cat===c).length;return n?`<button class="chip" data-act="cat" data-v="${c}" aria-pressed="${S.cat===c}">${CATS[c].n} ${n}</button>`:''}).join('')}</div>
@@ -1522,7 +1523,7 @@ function briefHTML(b){
 function briefPrompt(p,w,cond){
   const cats=/žiemin/i.test(p.type)?['ice','lure','terminal','line']:['lure','terminal','line'];
   const ev=EVID.map(e=>`${e.id} [${e.f}; pasitikėjimas ${e.conf}; taikomumas: ${e.ap}] ${e.claim} (šaltiniai ${e.src.join(',')||'nėra'})`).join('\n');
-  return `Tu padedi ${S.who==="Rokas"?"Rokui":"Arnui"} paruošti žvejybos brifo dalį "masalų komplektas ir sistema". Grąžink TIK JSON, be kito teksto.
+  return `Tu padedi ${S.who==="Rokas"?"Rokui":S.who==="Arnas"?"Arnui":"žvejui"} paruošti žvejybos brifo dalį "masalų komplektas ir sistema". Grąžink TIK JSON, be kito teksto.
 GRIEŽTOS TAISYKLĖS:
 1. Masalus renkiesi TIK iš žemiau pateiktos spintos, naudok jų id. Jei reikiamo nėra, įrašyk į "gaps" (tipas ir parametrai, ne prekės ženklas).
 2. Kiekvienas pasirinkimas privalo turėti "evid" (įrodymų ID iš sąrašo žemiau) arba "basis". Jei įrodymo nėra, "evid":[] ir nieko nerašyk apie veiksmingumą.
@@ -1765,13 +1766,13 @@ Sąrašas: """${txt}"""`));
 
 /* ---------- du žmonės: Arnas ir Rokas ---------- */
 function rawColl(c){return [...(ALL[c]||S[c]||[])]}
+/* Asmeniška tik spinta: žurnalas, brifai ir hipotezės bendri. Nepasirinkus žmogaus, spinta = visų daiktai. */
 function setColl(c,list){ALL[c]=list;
-  if(OWNED.includes(c)){const mine=list.filter(x=>(x.owner||'Arnas')===S.who);
-    if(c==='trips'){S.activeTrip=mine.find(t=>t.active)||null;S.trips=mine.filter(t=>!t.active)}else S[c]=mine}
-  else S[c]=list}
+  const L=c==='gear'&&S.who?list.filter(x=>(x.owner||'Arnas')===S.who):list;
+  if(c==='trips'){S.activeTrip=L.find(t=>t.active)||null;S.trips=L.filter(t=>!t.active)}else S[c]=L}
 function setWho(v){if(!PEOPLE.includes(v))return;S.who=v;try{localStorage.setItem('zz_who',v)}catch(e){}
-  S.brief=null;S.planOpen=false;S.plan.waterId='';OWNED.forEach(c=>setColl(c,ALL[c]||[]));renderAll()}
-function whoChooser(){return `<div class="hero"><h1>Kas žvejoja?</h1></div><div class="panel list"><p class="muted">Kiekvienas turi savo inventorių, žurnalą ir brifus. Vandenys, dosjė ir prognozės bendri.</p>${PEOPLE.map(n=>`<button class="btn primary big" data-act="who" data-v="${n}">${n}</button>`).join('')}</div>`}
+  setColl('gear',ALL.gear||[]);renderMain()}
+function whoChooser(){return `<div class="panel list"><h3>Kieno spinta?</h3><p class="muted">Kiekvienas turi savo inventorių. Brifas renkasi masalus iš pasirinkto žmogaus spintos.</p>${PEOPLE.map(n=>`<button class="btn primary big" data-act="who" data-v="${n}">${n}</button>`).join('')}</div>`}
 function whoBar(){return `<div class="chips" style="margin-bottom:8px">${PEOPLE.map(n=>`<button class="chip" data-act="who" data-v="${n}" aria-pressed="${S.who===n}">${n}</button>`).join('')}</div>`}
 
 /* ---------- events ---------- */
@@ -1973,9 +1974,9 @@ VIEWS.today=function(){
   const lures=Object.entries(byLure).sort((a,b)=>b[1].n-a[1].n).slice(0,6);
   const tile=(k,v)=>`<div class="pick" style="text-align:center"><b style="font-size:22px">${v}</b><div class="small muted">${k}</div></div>`;
   if(!ts.length)return `<div class="hero"><div class="eyebrow">Žurnalas</div><h1>Dar tuščia</h1></div><div class="panel list"><p class="muted">Čia kaupsis tavo žvejybos, laimikiai ir debrief. Pirmą žvejybą pradėk skiltyje Išvyka.</p><button class="btn" data-act="newTrip">Įrašyti jau įvykusią žvejybą</button></div>`;
-  return `<div class="hero"><div class="eyebrow">Žurnalas</div><h1>${S.who||'Tavo'} žvejybos</h1></div>
+  return `<div class="hero"><div class="eyebrow">Žurnalas</div><h1>Žvejybos</h1></div>
   <div class="grid3">${tile('žvejybų',ts.length)}${tile('žuvų',fish)}${tile('valandų',fmt1(hrs))}</div>
-  ${lures.length?`<div class="panel"><h3>Ant ko kibo</h3><div class="small muted" style="margin:4px 0 8px">Tik tavo laimikiai, be pastangų normalizavimo. Dar per mažai duomenų išvadoms. Analizė su pastangomis yra skiltyje Daugiau.</div>${lures.map(([k,v])=>`<div class="lrow"><span class="badge">${v.n}</span><span>${esc(k)} <span class="muted small">${Object.keys(v.sp).map(esc).join(', ')}</span></span></div>`).join('')}</div>`:''}
+  ${lures.length?`<div class="panel"><h3>Ant ko kibo</h3><div class="small muted" style="margin:4px 0 8px">Abiejų laimikiai, be pastangų normalizavimo. Dar per mažai duomenų išvadoms. Analizė su pastangomis yra skiltyje Daugiau.</div>${lures.map(([k,v])=>`<div class="lrow"><span class="badge">${v.n}</span><span>${esc(k)} <span class="muted small">${Object.keys(v.sp).map(esc).join(', ')}</span></span></div>`).join('')}</div>`:''}
   <div class="sect">Žvejybos</div>
   <div class="list">${ts.map(t=>{const c=t.catches||[],d=t.debrief&&t.debrief.ai;
    return `<button class="item" data-act="editTrip" data-v="${t.id}"><div class="grow"><div class="row between" style="flex-wrap:nowrap"><b>${esc(t.waterName||'be vietos')}</b><span class="badge">${c.length} ${c.length===1?'žuvis':'žuvų'}</span></div>
