@@ -379,7 +379,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.1 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2267,8 +2267,8 @@ function lureHTML(cur,r){const lk=cur.lk,cl=clarityFor(cur);
    ${dashSpecies().map(sp=>{const band=bandFor(lk,r.se,sp),g=gearMatch(sp);return `<div class="sl-g"><div class="sl-h" style="border-color:${SPCOL[sp]}"><b>${sp}</b><span class="small muted">${fmt1(band[0])}–${fmt1(band[1])} m</span></div>
      ${lureAdvice(sp,band,cl.v,r.se).map(a=>`<div class="lu-r"><div><b>${esc(a.t)}</b><div class="small muted">${esc(a.why)}</div></div>${a.ev==='metodinis'?'<span class="pill" style="background:var(--muted);color:#fff">metodinis</span>':a.ev?srcEv(a.ev):''}</div>`).join('')}
      <div class="small" style="margin-top:8px">${S.gear.length?(g.length?'<b>Iš spintos tiktų:</b> '+g.slice(0,5).map(x=>esc(gl(x))).join(', '):'Spintoje tinkamų masalų neradau.'):'<span class="muted">Spinta tuščia: įkelk masalus (Daugiau → Spinta) ir parodysiu, kurie tinka.</span>'}</div></div>`}).join('')}
-   <div class="small muted">Įrodymai yra tik lydekai ir iš užsienio ežerų. „Metodinis“ reiškia įprastą praktiką be tyrimo. Šaltiniai: Daugiau → Žinynas.</div></div>`}
-const srcEv=id=>{const e=EVID.find(x=>x.id===id);return `<span style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto"><span class="pill good">${id}</span>${e?srcChips(e.src):''}</span>`};
+   <div class="small muted">„Tyrimas“: remiasi recenzuotu tyrimu (yra tik lydekai, iš užsienio ežerų). „Metodinis“: įprasta praktika be tyrimo. Šaltiniai: Daugiau → Žinynas.</div></div>`}
+const srcEv=id=>`<span class="pill good" style="flex:0 0 auto">tyrimas</span>`; // tyrimų numerių ir pavadinimų čia nerodome (vartotojo prašymu); jie lieka Žinyne
 /* ---------- Pradžia: kur važiuoti. Pasiūlymas iš reljefo, sezono gylių, tavo žurnalo ir atstumo; ne iš žuvų kiekio duomenų. ---------- */
 const VILNIUS=[54.6872,25.2797];
 const kmFrom=(lk,o)=>{const la=(lk.bbox[1]+lk.bbox[3])/2,lo=(lk.bbox[0]+lk.bbox[2])/2;return Math.hypot((la-o[0])*111,(lo-o[1])*111*Math.cos(la*Math.PI/180))};
