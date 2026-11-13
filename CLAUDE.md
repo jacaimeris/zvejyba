@@ -49,3 +49,13 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - Šakniniai `index.html` + dalys (`build.py`...) = senesnis surinkimas be Motion/forecast. Tikslui "kaip gyva" naudok `live/index.html`.
 - `build.py` reikalauja `app_old.js`, kurio pakete nėra: iš naujo surinkti negalima, kol jo nėra (arba kol dalys neperrašytos).
 - `archive/zvejo-zurnalas-old.html` = ankstesnė pirmo importo versija, tik istorijai.
+
+## Vietinis paleidimas (įgyvendinta, vietoj artifact runtime)
+- `python3 server.py` -> http://127.0.0.1:8765 (tik Python 3 stdlib). Rodo `live/index.html` (nekeičiamas; serveris įterpia `claude-shim.js`), `bathy.json`, `forecast.json`.
+- `claude-shim.js` atkuria `claude.use('db'|'sample'|'dictation'|'downloads')`:
+  - db -> `/api/db/<kolekcija>[/<id>]`, saugoma `data/store/<kolekcija>.json` (gitignore: tai gyvi vartotojų duomenys). Kolekcijos: gear, trips, waters, hyp, briefs, forecasts, dossiers.
+  - sample (tekstas + nuotraukų atpažinimas) -> `/api/sample` -> Anthropic Messages API. Reikia `ANTHROPIC_API_KEY` (`.env`, žr. `.env.example`). Modelis `ZVEJO_MODEL`, numatytasis claude-sonnet-5-5.
+  - dictation -> naršyklės SpeechRecognition (lt-LT), tik Chrome/Safari.
+  - downloads -> naršyklės atsisiuntimas.
+- Patikrinta 2026-11-13: puslapis kraunasi, db išsaugo/ištrina/išlieka po perkrovimo. NEPATIKRINTA: AI atsakymai (nėra rakto), nuotraukų atpažinimas, diktavimas.
+- Atviri: forecast.json vis dar statinis (reikia naujo fetch į LHMT/Open-Meteo arba cron); duomenų importas iš artifact eksporto (`data/export.json`) dar nesukurtas; macOS: jei paleidžiant iš Claude programos pasirodo "Operation not permitted", paleisk `python3 server.py` savo terminale.
