@@ -11,7 +11,7 @@
 <style>
 /* Principai: vienas pagrindinis veiksmas ekrane, didelės paspaudimo zonos, detalės sulenktos. */
 :root{
-  --bg:#ede3d1; --surface:#ffffff; --ink:#15221f; --muted:#68746f; --line:#e3dfd4;
+  --bg:#f5f3ee; --surface:#ffffff; --ink:#15221f; --muted:#68746f; --line:#e3dfd4;
   --accent:#1f5a4a; --accent-ink:#ffffff; --hot:#c4501b; --good:#2e7d52; --warn:#b87a14; --bad:#b23a2a;
   --soft:#ebe8df;
   --display:'Bricolage Grotesque',system-ui,sans-serif; --body:'Public Sans',system-ui,-apple-system,sans-serif;
@@ -344,7 +344,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.4 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.5 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2026,13 +2026,13 @@ function bathyMapSVG(lk,spots,opt={}){
   const P=c=>'M'+c.map(p=>X(p[0])+' '+Y(p[1])).join('L')+'Z';
   const defs=R.order.map((r,i)=>`<path id="${uid}r${i}" d="${P(r.c)}"/>`).join('');
   const layers=R.order.map((r,i)=>`<use href="#${uid}r${i}" transform="translate(.8 2.6)" fill="rgba(6,34,62,.12)"/><use href="#${uid}r${i}" transform="translate(.4 1.2)" fill="rgba(6,34,62,.2)"/><use href="#${uid}r${i}" fill="${col(r.fd)}" stroke="rgba(255,255,255,.65)" stroke-width=".8" stroke-linejoin="round"><title>${fmt1(r.d)} m</title></use>`).join('');
-  const glow=R.order.map((r,i)=>r.par?'':`<use href="#${uid}r${i}" fill="#cfe2f0" stroke="#cfe2f0" stroke-width="10"/>`).join('');
+  const glow=R.order.map((r,i)=>r.par?'':`<use href="#${uid}r${i}" fill="#f4efe4" stroke="#f4efe4" stroke-width="10"/>`).join('');
   const lines=R.open.map(r=>`<path d="${'M'+r.c.map(p=>X(p[0])+' '+Y(p[1])).join('L')}" fill="none" stroke="${col(r.d)}" stroke-width="1" stroke-linejoin="round"><title>${fmt1(r.d)} m</title></path>`).join('');
   const paths=`<defs>${defs}<filter id="${uid}f" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="9"/></filter><linearGradient id="${uid}g">${[0,.25,.5,.75,1].map(t=>`<stop offset="${t}" stop-color="${col(t*md)}"/>`).join('')}</linearGradient></defs><g filter="url(#${uid}f)" opacity=".8">${glow}</g>${layers}${lines}`;
   const dots=lk.pts.length<=140?lk.pts.map(p=>`<circle cx="${X(p[0])}" cy="${Y(p[1])}" r="1.8" fill="#16425b" opacity=".55"><title>${p[2]==null?'':fmt1(Math.abs(p[2]))+' m'}</title></circle>`).join(''):'';
   const mk=(spots||[]).map(s=>`<g><circle cx="${X(s.lon)}" cy="${Y(s.lat)}" r="9" fill="${SPCOL[s.sp]}" stroke="#fff" stroke-width="2"/><text x="${X(s.lon)}" y="${(+Y(s.lat)+3.6).toFixed(1)}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">${s.n}</text></g>`).join('');
   const my=(opt.mine||[]).map(p=>`<path d="M${X(p.lon)} ${(+Y(p.lat)-7).toFixed(1)}l5 7-5 7-5-7z" fill="#111" stroke="#fff" stroke-width="1.2"><title>${esc(p.t||'laimikis')}</title></path>`).join('');
-  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#f7fafc;border-radius:10px;display:block">${paths}${dots}${my}${mk}<g font-size="11" fill="#16425b"><rect x="${pad}" y="${H-pad-5}" width="70" height="7" rx="3.5" fill="url(#${uid}g)"/><text x="${pad+76}" y="${H-pad+2}">0–${fmt1(md)} m</text><text x="${W-pad}" y="${H-pad+2}" text-anchor="end">šiaurė ↑</text></g></svg>`}
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#ede3d1;border-radius:10px;display:block">${paths}${dots}${my}${mk}<g font-size="11" fill="#16425b"><rect x="${pad}" y="${H-pad-5}" width="70" height="7" rx="3.5" fill="url(#${uid}g)"/><text x="${pad+76}" y="${H-pad+2}">0–${fmt1(md)} m</text><text x="${W-pad}" y="${H-pad+2}" text-anchor="end">šiaurė ↑</text></g></svg>`}
 /* Kontūrų medis vienam ežerui (skaičiuojama kartą): kiekvienas uždaras kontūras gauna mažiausią jį
    gaubiantį kontūrą (tėvą). Jei kontūras seklesnis už tėvą, tai povandeninė kalva: jo vidus seklesnis,
    todėl dažomas ankstesnio (seklesnio) lygio spalva. Atviros linijos (nutrūkę kontūrai) piešiamos tik linija. */
