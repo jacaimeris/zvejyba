@@ -1,0 +1,27 @@
+# Netlify publikuoja tik public/. Jokio build žingsnio: lakes-index.json ir lakes/*.json
+# sugeneruojami lokaliai (python3 scripts/split_bathy.py) ir įkeliami į git.
+[build]
+  publish = "public"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "same-origin"
+
+# Ežerų duomenys keičiasi retai (kartą per metus): ilgas podėlis + fone atnaujinimas.
+[[headers]]
+  for = "/lakes/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/lakes-index.json"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
+
+# Orų prognozė: trumpas podėlis.
+[[headers]]
+  for = "/forecast.json"
+  [headers.values]
+    Cache-Control = "public, max-age=300, stale-while-revalidate=1800"

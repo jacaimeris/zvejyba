@@ -51,9 +51,11 @@
     const url=URL.createObjectURL(new Blob([data]));const a=document.createElement('a');
     a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),4000)}};
 
+  /* Statiniame hostinge (pvz. Netlify be funkcijų) /api/* nėra: db ir sample tada null, programa rodo savo pranešimą. */
+  let up=null;const backend=()=>up||(up=fetch('/api/limits').then(r=>r.ok).catch(()=>false));
   window.claude={async use(name){
-    if(name==='db')return db;
-    if(name==='sample')return sample;
+    if(name==='db')return (await backend())?db:null;
+    if(name==='sample')return (await backend())?sample:null;
     if(name==='dictation')return makeDictation();
     if(name==='downloads')return downloads;
     return null}};

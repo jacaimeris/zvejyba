@@ -4,8 +4,7 @@
 Pakeičia tai, ką anksčiau teikė claude.ai artifact'as:
   db        -> JSON failai data/store/<kolekcija>.json   (/api/db/...)
   sample    -> Anthropic Messages API (su nuotraukomis)  (/api/sample, /api/limits)
-Statika: live/ (tikslus gyvo artifact'o eksportas), po to repo šaknis (bathy.json).
-index.html gauna įterptą <script src="claude-shim.js">, pats failas nekeičiamas.
+Statika: public/ (tas pats katalogas, kurį publikuoja Netlify).
 
 Paleidimas:  python3 server.py   ->  http://127.0.0.1:8765
 Raktas:      ANTHROPIC_API_KEY aplinkoje arba .env faile (žr. .env.example).
@@ -16,7 +15,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 ROOT = Path(__file__).resolve().parent
-STATIC = [ROOT / "live", ROOT]
+STATIC = [ROOT / "public"]  # tas pats katalogas, kurį publikuoja Netlify
 STORE = ROOT / "data" / "store"
 COLLS = {"gear", "trips", "waters", "hyp", "briefs", "forecasts", "dossiers"}
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,79}$")
@@ -166,11 +165,7 @@ class H(BaseHTTPRequestHandler):
         for base in STATIC:
             f = (base / rel).resolve()
             if base.resolve() in f.parents and f.is_file():
-                if f.parent == ROOT and f.name not in ("bathy.json", "claude-shim.js"):
-                    continue  # iš šaknies atiduodame tik šiuos du failus
                 data = f.read_bytes()
-                if f.name == "index.html" and base.name == "live":
-                    data = data.replace(b"</head>", b'<script src="claude-shim.js"></script></head>', 1)
                 ctype = mimetypes.guess_type(f.name)[0] or "application/octet-stream"
                 self.send_response(200)
                 self.send_header("Content-Type", ctype + ("; charset=utf-8" if ctype.startswith("text/") or ctype.endswith("json") or ctype.endswith("javascript") else ""))
