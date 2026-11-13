@@ -31,6 +31,16 @@
 .sl-t{flex:1;min-width:0}.sl-t>b{font-size:18px}
 .sl-m{display:inline-block;width:46px;height:6px;border-radius:3px;background:var(--soft);vertical-align:middle;overflow:hidden}
 .sl-m i{display:block;height:100%;background:var(--accent)}
+.cmp{position:fixed;inset:0;z-index:61;background:var(--bg);display:flex;flex-direction:column}
+.cmp-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:6px}
+.cmp-dial{position:relative;width:min(72vw,300px);aspect-ratio:1}
+.cmp-rose{position:absolute;inset:0;border-radius:50%;border:2px solid var(--line);background:var(--surface);box-shadow:inset 0 0 0 10px var(--soft);transition:transform .25s ease-out}
+.cmp-rose span{position:absolute;font-family:var(--display);font-weight:700;color:var(--muted)}
+.cmp-n{top:16px;left:50%;translate:-50% 0;color:var(--bad)!important}.cmp-s{bottom:16px;left:50%;translate:-50% 0}.cmp-e{right:18px;top:50%;translate:0 -50%}.cmp-w{left:18px;top:50%;translate:0 -50%}
+.cmp-arrow{position:absolute;inset:18%;width:64%;height:64%;transition:transform .25s ease-out}
+.cmp-dist{font-family:var(--display);font-size:44px;font-weight:700;margin-top:10px}
+.cmp-sub{text-align:center}.cmp-note{text-align:center;max-width:300px;min-height:1.5em}
+@media (prefers-reduced-motion:reduce){.cmp-rose,.cmp-arrow{transition:none}}
 .sl-r .btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center}
 .bmapw{position:relative;cursor:zoom-in;border-radius:10px}
 .bmapw:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -363,7 +373,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.3 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.4 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2086,7 +2096,7 @@ function spotListHTML(lk,sp,p,head){if(!sp.length)return '';const se=seasonOf(p)
   const grp=['Lydeka','Ešerys','Starkis','Žiema'].map(k=>[k,sp.filter(s=>s.sp===k)]).filter(g=>g[1].length);
   return `${head?`<h3>Galimos vietos · ${mN}</h3>`:''}<div class="small muted" style="margin:${head?'4px':'0'} 0 12px">${esc(se.n[0].toUpperCase()+se.n.slice(1))}${se.w?`, vanduo ~${fmt1(se.w.t)} °C`:''}. Hipotezė iš izobatų, tikrink echolotu.</div>
   ${grp.map(([k,l])=>{const bd=k==='Žiema'?null:bandFor(lk,se,k);return `<div class="sl-g"><div class="sl-h" style="border-color:${SPCOL[k]}"><b>${k==='Žiema'?'Žiemą (po ledu)':k}</b><span class="small muted">${bd?`ieškoma ${fmt1(bd[0])}–${fmt1(bd[1])} m`:'giliausia vieta'}</span></div>
-    ${l.map(s=>`<div class="sl-r"><span class="badge" style="background:${SPCOL[k]};color:#fff">${s.n}</span><div class="sl-t"><b>${fmt1(s.d)} m</b>${s.sp==='Žiema'?'':` <span class="small muted">kritimas ${fmt1(Math.round(s.slope))}°</span> ${meter(s.slope)}`}</div><a class="btn sm" href="https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lon}" target="_blank" rel="noopener" aria-label="Navigacija į ${s.n} vietą (${s.lat}, ${s.lon})" title="${s.lat}, ${s.lon}">${nav}</a></div>`).join('')}</div>`}).join('')}
+    ${l.map(s=>`<div class="sl-r"><span class="badge" style="background:${SPCOL[k]};color:#fff">${s.n}</span><div class="sl-t"><b>${fmt1(s.d)} m</b>${s.sp==='Žiema'?'':` <span class="small muted">kritimas ${fmt1(Math.round(s.slope))}°</span> ${meter(s.slope)}`}</div><button class="btn sm" data-compass="${s.lat},${s.lon}" data-name="${s.n} · ${esc(k==='Žiema'?'Žiema':k)} · ${fmt1(s.d)} m" aria-label="Kompasas į ${s.n} vietą" title="${s.lat}, ${s.lon}">${nav}</button></div>`).join('')}</div>`}).join('')}
   <details class="fold"><summary>Kodėl šie gyliai</summary><div class="small" style="margin-top:8px">${seasonNote(lk,p)}</div></details>`}
 const spotWhy=s=>s.sp==='Žiema'?`giliausia žinoma vieta (${fmt1(s.d)} m)`
   :`${fmt1(s.d)} m izobata, kritimas į gilesnį ~${fmt1(s.slope)}°${s.band?` (sezono juosta ${fmt1(s.band[0])}–${fmt1(s.band[1])} m)`:''}`;
@@ -2126,6 +2136,44 @@ function bathyMapSVG(lk,spots,opt={}){
   if(full)return svg;
   const MR=bathyMapSVG.reg=bathyMapSVG.reg||{};MR[uid]={lk,spots,opt};const ks=Object.keys(MR);if(ks.length>30)delete MR[ks[0]];
   return `<div class="bmapw" data-act="mapZoom" data-v="${uid}" role="button" tabindex="0" aria-label="Padidinti gylių žemėlapį">${svg}<span class="bmapz">⤢ Padidinti</span></div>`}
+/* Kompasas: rodyklė į pasirinktą vietą pagal GPS ir telefono kryptį. Jei vieta ar kryptis šiame lange
+   neprieinama, sakoma tiesiai ir paliekamas Google Maps kelias. */
+function compassOpen(lat,lon,name){
+  const ov=document.createElement('div');ov.className='cmp';ov.setAttribute('role','dialog');ov.setAttribute('aria-label','Kompasas');
+  const gm=`https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+  ov.innerHTML=`<div class="mapfs-top"><b>${esc(name)}</b><button class="btn sm" data-x="close" aria-label="Uždaryti">✕</button></div>
+   <div class="cmp-body"><div class="cmp-dial"><div class="cmp-rose"><span class="cmp-n">Š</span><span class="cmp-e">R</span><span class="cmp-s">P</span><span class="cmp-w">V</span></div>
+     <svg class="cmp-arrow" viewBox="-50 -50 100 100" aria-hidden="true"><path d="M0 -44 L14 6 L0 -2 L-14 6Z" fill="#c4501b" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg></div>
+    <div class="cmp-dist" aria-live="polite">–</div><div class="cmp-sub small">Ieškau tavo vietos…</div>
+    <div class="cmp-note small muted"></div>
+    <div class="row" style="justify-content:center;margin-top:8px"><button class="btn primary" data-x="dir" hidden>Įjungti telefono kryptį</button><a class="btn" href="${gm}" target="_blank" rel="noopener" style="text-decoration:none">Google Maps</a></div>
+    <div class="small muted" style="text-align:center;margin-top:10px">${lat}, ${lon}</div></div>`;
+  document.body.appendChild(ov);const prevOv=document.body.style.overflow;document.body.style.overflow='hidden';
+  const q=c=>ov.querySelector(c),arrow=q('.cmp-arrow'),rose=q('.cmp-rose'),dist=q('.cmp-dist'),sub=q('.cmp-sub'),note=q('.cmp-note'),dirB=q('[data-x="dir"]');
+  let pos=null,head=null,watch=null,brg=0;
+  const R=Math.PI/180,card=b=>['Š','ŠR','R','PR','P','PV','V','ŠV'][Math.round(b/45)%8];
+  const draw=()=>{if(!pos)return;const f1=pos.lat*R,f2=lat*R,dl=(lon-pos.lon)*R;
+    brg=(Math.atan2(Math.sin(dl)*Math.cos(f2),Math.cos(f1)*Math.sin(f2)-Math.sin(f1)*Math.cos(f2)*Math.cos(dl))/R+360)%360;
+    const a=Math.sin((f2-f1)/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2,m=12742000*Math.asin(Math.sqrt(a));
+    dist.textContent=m<1000?Math.round(m)+' m':fmt1(Math.round(m/100)/10)+' km';
+    const h=head==null?0:head;arrow.style.transform=`rotate(${brg-h}deg)`;rose.style.transform=`rotate(${-h}deg)`;
+    sub.innerHTML=m<=Math.max(15,pos.acc||0)?'<b>Esi vietoje</b> (GPS tikslumo ribose)':`Kryptis ${card(brg)} ${Math.round(brg)}° · GPS ±${Math.round(pos.acc||0)} m`;
+    note.textContent=head==null?'Telefono krypties nėra: laikyk telefoną viršumi į šiaurę, rodyklė rodo kryptį nuo šiaurės.':''};
+  const onOri=e=>{let h=null;if(typeof e.webkitCompassHeading==='number')h=e.webkitCompassHeading;else if(e.absolute&&e.alpha!=null)h=360-e.alpha;
+    if(h!=null){head=(h+(screen.orientation&&screen.orientation.angle||0))%360;dirB.hidden=true;draw()}};
+  const startOri=()=>{if('ondeviceorientationabsolute' in window)addEventListener('deviceorientationabsolute',onOri);else addEventListener('deviceorientation',onOri)};
+  if(typeof DeviceOrientationEvent!=='undefined'){startOri();if(typeof DeviceOrientationEvent.requestPermission==='function')dirB.hidden=false}
+  if(!navigator.geolocation){sub.textContent='Šiame naršyklės lange vieta neprieinama. Naudok Google Maps.'}
+  else watch=navigator.geolocation.watchPosition(p=>{pos={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy};draw()},
+    e=>{sub.textContent=e.code===1?'Vieta neleidžiama (naršyklė arba šis langas jos neduoda). Naudok Google Maps.':'Vietos gauti nepavyko. Naudok Google Maps.';dist.textContent='–'},
+    {enableHighAccuracy:true,maximumAge:2000,timeout:20000});
+  const close=()=>{if(watch!=null)navigator.geolocation.clearWatch(watch);removeEventListener('deviceorientationabsolute',onOri);removeEventListener('deviceorientation',onOri);removeEventListener('keydown',key);ov.remove();document.body.style.overflow=prevOv};
+  const key=e=>{if(e.key==='Escape')close()};addEventListener('keydown',key);
+  ov.addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(!b)return;
+    if(b.dataset.x==='close')close();
+    else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else note.textContent='Krypties leidimas nesuteiktas.'}).catch(()=>{note.textContent='Telefono kryptis šiame lange neprieinama.'})});
+  q('[data-x="close"]').focus()}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-compass]');if(!b)return;const [la,lo]=b.dataset.compass.split(',').map(Number);compassOpen(la,lo,b.dataset.name||'Vieta')});
 /* ežero projekcija: lon/lat -> SVG vienetai ir atgal (plotis 640) */
 function bathyProj(lk){if(lk._proj)return lk._proj;
   const [x0,y0,x1,y1]=lk.bbox,c=Math.cos((y0+y1)/2*Math.PI/180),W=640,pad=14;
