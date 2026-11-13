@@ -379,7 +379,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.6.1 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1054,14 +1054,14 @@ const TREND=['','Kyla','Stabilus','Krenta'];
 
 /* ---------- state & data layer ---------- */
 const TARGETS=['Lydeka','Ešerys','Starkis','Šamas','Vėgėlė','Kuoja','Karšis'];
-const S={tab:'trip',more:'',activeTrip:null,gear:[],trips:[],waters:[],hyp:[],briefs:[],forecasts:[],dossiers:[],launches:[],cat:'all',q:'',sub:'fish',fish:'lydeka',gsub:'src',
+const S={tab:'trip',more:'',activeTrip:null,gear:[],trips:[],waters:[],hyp:[],briefs:[],forecasts:[],dossiers:[],launches:[],marks:[],cat:'all',q:'',sub:'fish',fish:'lydeka',gsub:'src',
   plan:{date:today(),time:'',end:'',type:TRIPTYPES[0],waterId:'',species:['Lydeka'],recent:'',temp:'',pressure:'',trend:'',wind:'',dir:'',sky:'',wtemp:''},
   brief:null,_used:new Set(),out:{},dbOK:null};
 let db=null;
 const OWNED=['gear','trips','briefs','hyp'],PEOPLE=['Arnas','Rokas'];const ALL={};
 try{S.who=localStorage.getItem('zz_who')||''}catch(e){S.who=''}
 if(!PEOPLE.includes(S.who))S.who='';
-const COLL=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches'];
+const COLL=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks'];
 
 function norm(d){const x=typeof d.data==='function'?d.data():(d.data&&typeof d.data==='object'?d.data:d);return {...x,id:d.id||x.id}}
 function rows(s){if(!s)return[];if(Array.isArray(s))return s.map(norm);const out=[];if(s.docs)s.docs.forEach(d=>out.push(norm(d)));else if(s.forEach)s.forEach(d=>out.push(norm(d)));return out}
@@ -2154,7 +2154,8 @@ function bathyMapSVG(lk,spots,opt={}){
       if(t===4&&lk.pts.length<=2000)lk.pts.forEach(p=>{if(p[2]==null)return;const x=+X(p[0]),y=+Y(p[1])-9;if(ok(x,y)){got.push([x,y]);lab+=`<text class="lt4 pt" ${at(x,y)} dy="4" text-anchor="middle">${fmt1(Math.abs(p[2]))}</text>`}})});
     lab=`<g font-size="11" font-weight="700" fill="#0d3550" stroke="#f4efe4" stroke-width="3" paint-order="stroke" stroke-linejoin="round" pointer-events="none">${lab}</g>`}
   const leg=full?'':`<g font-size="11" fill="#16425b"><rect x="${pad}" y="${H-pad-5}" width="70" height="7" rx="3.5" fill="url(#${uid}g)"/><text x="${pad+76}" y="${H-pad+2}">0–${fmt1(md)} m</text><text x="${W-pad}" y="${H-pad+2}" text-anchor="end">šiaurė ↑</text></g>`;
-  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#ede3d1;border-radius:${full?0:10}px;display:block">${paths}${dots}${lab}${lau}${my}${mk}${leg}</svg>`;
+  const wd=opt.wind&&opt.wind.windDeg!=null?`<g transform="translate(${pad+22} ${pad+22})" pointer-events="none"><circle r="19" fill="rgba(255,255,255,.9)" stroke="#16425b" stroke-width="1"/><path d="M0 -13 L6 5 L0 1 L-6 5Z" fill="#16425b" transform="rotate(${(opt.wind.windDeg+180)%360})"/></g><text x="${pad+46}" y="${pad+19}" font-size="11" font-weight="700" fill="#16425b" pointer-events="none">vėjas ${degDir(opt.wind.windDeg)} ${fmt1(Math.round(opt.wind.windMs))} m/s</text><text x="${pad+46}" y="${pad+32}" font-size="10" fill="#16425b" pointer-events="none">rodyklė: kur pučia</text>`:'';
+  const svg=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(lk.name)} gylių žemėlapis" style="width:100%;height:auto;background:#ede3d1;border-radius:${full?0:10}px;display:block">${paths}${dots}${lab}${lau}${my}${mk}${full?'':wd}${leg}</svg>`;
   if(full)return svg;
   const MR=bathyMapSVG.reg=bathyMapSVG.reg||{};MR[uid]={lk,spots,opt};const ks=Object.keys(MR);if(ks.length>30)delete MR[ks[0]];
   return `<div class="bmapw" data-act="mapZoom" data-v="${uid}" role="button" tabindex="0" aria-label="Padidinti gylių žemėlapį">${svg}<span class="bmapz">⤢ Padidinti</span></div>`}
@@ -2202,6 +2203,37 @@ function compassOpen(lat,lon,name){
     else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else{dirB.hidden=true;note.textContent='Claude programa šiam langui telefono krypties neduoda. Naudok telefono Compass programą.'}}).catch(()=>{dirB.hidden=true;note.textContent='Telefono kryptis šiame lange neprieinama. Naudok telefono Compass programą.'})});
   q('[data-x="close"]').focus()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-compass]');if(!b)return;const [la,lo]=b.dataset.compass.split(',').map(Number);compassOpen(la,lo,b.dataset.name||'Vieta')});
+/* ---------- Orai ežerui: pirma gyva Open-Meteo prognozė ežero koordinatėms; jei šis langas jos neleidžia, forecast.json (Trakų apylinkės) ---------- */
+const WX={},DIRDEG={'Š':0,'ŠR':45,'R':90,'PR':135,'P':180,'PV':225,'V':270,'ŠV':315},degDir=d=>['Š','ŠR','R','PR','P','PV','V','ŠV'][Math.round(((d%360)+360)%360/45)%8];
+function wxLoad(lk){if(WX[lk.id])return;WX[lk.id]={state:'load'};
+  const la=((lk.bbox[1]+lk.bbox[3])/2).toFixed(3),lo=((lk.bbox[0]+lk.bbox[2])/2).toFixed(3),ctl=new AbortController(),tm=setTimeout(()=>ctl.abort(),8000);
+  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${la}&longitude=${lo}&hourly=temperature_2m,wind_speed_10m,wind_direction_10m,wind_gusts_10m,pressure_msl,cloud_cover&wind_speed_unit=ms&timezone=Europe%2FVilnius&forecast_days=2`,{signal:ctl.signal})
+   .then(r=>r.ok?r.json():Promise.reject(new Error('HTTP '+r.status))).then(j=>{const h=j.hourly,ix=h.time.map((t,i)=>[t,i]).filter(([t])=>t.startsWith(today())),day=ix.filter(([t])=>{const hh=+t.slice(11,13);return hh>=7&&hh<=17}).map(x=>x[1]);
+     if(!day.length)throw new Error('nėra šios dienos');const avg=a=>a.reduce((x,y)=>x+y,0)/a.length,pick=k=>day.map(i=>h[k][i]).filter(v=>v!=null);
+     const R=Math.PI/180,wx=avg(day.map(i=>h.wind_speed_10m[i]*Math.sin(h.wind_direction_10m[i]*R))),wy=avg(day.map(i=>h.wind_speed_10m[i]*Math.cos(h.wind_direction_10m[i]*R)));
+     const all=ix.map(x=>h.temperature_2m[x[1]]).filter(v=>v!=null),p=pick('pressure_msl'),dp=p[p.length-1]-p[0],cl=avg(pick('cloud_cover'));
+     WX[lk.id]={state:'live',tMin:Math.min(...all),tMax:Math.max(...all),windDeg:(Math.atan2(wx,wy)/R+360)%360,windMs:avg(pick('wind_speed_10m')),gust:Math.max(...pick('wind_gusts_10m')),press:avg(p),trend:dp>1.5?'kyla':dp<-1.5?'krenta':'stabilus',cloud:cl<25?'giedra':cl<75?'dalinai debesuota':'debesuota'}})
+   .catch(()=>{WX[lk.id]={state:'fail'}}).finally(()=>{clearTimeout(tm);if(S.tab==='trip')renderLive()})}
+function wxFor(lk){const w=WX[lk.id];if(w&&w.state==='live')return w;const f=(S.fcFile||[]).find(x=>x.date===today());if(!f)return null;
+  return {state:'file',tMin:num(f.tMin),tMax:num(f.tMax),windDeg:DIRDEG[f.windDir],windMs:num(f.windMs),gust:num(f.gustMs),press:num(f.pressure),trend:(f.pressure||'').split(', ')[1]||'',cloud:(f.cloud||'').split(' (')[0].toLowerCase()}}
+/* vieta toje ežero pusėje, į kurią pučia vėjas (metodinis žymėjimas, tik kai vėjas >= 3 m/s) */
+function windSide(lk,s,wx){if(!wx||wx.windDeg==null||!(wx.windMs>=3))return false;const R=Math.PI/180,to=(wx.windDeg+180)*R,cy=(lk.bbox[1]+lk.bbox[3])/2,cx=(lk.bbox[0]+lk.bbox[2])/2,kx=Math.cos(cy*R);
+  const half=Math.max((lk.bbox[2]-lk.bbox[0])*kx,lk.bbox[3]-lk.bbox[1])/2;return ((s.lon-cx)*kx*Math.sin(to)+(s.lat-cy)*Math.cos(to))>half*.15}
+const hm2=m=>{m=Math.round(m);return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};
+function bestTimeHTML(lk,wx){const ll={lat:(lk.bbox[1]+lk.bbox[3])/2,lon:(lk.bbox[0]+lk.bbox[2])/2},tw=twilightWindows(today(),ll),nm=nowMin(),fs=dashSpecies(),rows=[];
+  const row=(t,why,ev)=>rows.push(`<div class="lu-r"><div><b>${t}</b><div class="small muted">${why}</div></div>${ev?srcEv(ev):''}</div>`);
+  if(tw.length===2){const left=tw.filter(w=>w[1]>nm),nx=left[0];
+    const head=nx?(nx[0]<=nm?`Dabar prieblanda, iki ${hm2(nx[1])}`:`Būk ant vandens ${hm2(nx[0])}–${hm2(nx[1])}`):'Šiandien prieblandos jau praėjo';
+    if(fs.includes('Lydeka'))row(head,`Lydeka geriau kimba prieblandoje. Ryto ${hm2(tw[0][0])}–${hm2(tw[0][1])}, vakaro ${hm2(tw[1][0])}–${hm2(tw[1][1])}.`,'EV1');
+    if(fs.includes('Starkis'))row(fs.includes('Lydeka')?'Starkiui tas pats laikas':head,`Starkis judriausias prieblandoje, mažiausiai naktį. Ryto ${hm2(tw[0][0])}–${hm2(tw[0][1])}, vakaro ${hm2(tw[1][0])}–${hm2(tw[1][1])}.`,'EV7');
+    if(fs.includes('Ešerys'))row('Ešeriui paros laiko įrodymų neturiu','Šaltiniai sako tik tiek, kad rudenį ešerių pagavimai didesni.','EV9')}
+  if(fs.includes('Lydeka')){const mo=moon(today()),nf=moonNewFull(today(),2);row(`Mėnulis: ${mo.name.toLowerCase()}, ${mo.ill} %`,nf?'Šalia jaunaties ar pilnaties (±2 d.): lydekai mažas pliusas, pasitikėjimas žemas.':'Ne šalia jaunaties ar pilnaties: mėnulis šiandien nieko neprideda.','EV3');
+    if(wx&&wx.windMs!=null)row(`Vėjas ${degDir(wx.windDeg)} ${fmt1(Math.round(wx.windMs))} m/s`,wx.windMs>=5?'Vėjuota: tyrime lydeka vėjuotomis dienomis kibo geriau. Slenksčio šaltinis nenurodo, „5 m/s“ yra mano riba.':'Vėjas silpnas: vėjo pliuso lydekai šiandien nėra.','EV2')}
+  return rows.length?`<div class="panel"><h3>Kada šiandien</h3>${rows.join('')}</div>`:''}
+/* jų pačių laimikiai šiame ežere pagal gylį (iš žemėlapio žymių) */
+function ownDepthLine(lk,se){const m=(S.marks||[]).filter(x=>x.lakeId===lk.id&&x.dlo!=null);if(!m.length)return '';
+  return dashSpecies().map(sp=>{const a=m.filter(x=>x.species===sp);if(!a.length)return '';const lo=Math.min(...a.map(x=>x.dlo)),hi=Math.max(...a.map(x=>x.dhi==null?x.dlo:x.dhi)),[b0,b1]=bandFor(lk,se,sp);
+    const rel=hi<b0?'sekliau nei sezono juosta':lo>b1?'giliau nei sezono juosta':'sutampa su sezono juosta';return `Jūsų pažymėti laimikiai: ${sp.toLowerCase()} ×${a.length}, gylis ${fmt1(lo)}–${fmt1(hi)} m (${rel} ${fmt1(b0)}–${fmt1(b1)} m).`}).filter(Boolean)}
 /* ---------- Masalų pasiūlymas: žuvis + sezono gylis + skaidrumas. Kiekviena eilutė turi pagrindą: įrodymo ID arba "metodinis". ---------- */
 const CLAR=['Skaidrus','Šiek tiek drumstas','Drumstas'];
 function clarityFor(c){const id=c.lk.id;if(S.clar&&S.clar[id])return {v:S.clar[id],src:'tavo pasirinkta'};
@@ -2255,6 +2287,7 @@ function dashScore(c){const lk=c.lk,p={date:today(),species:dashSpecies()},se=se
   if(top.length)why.push(`Reljefas: ${top.length} statūs kritimai sezono gyliuose, iki ${fmt1(Math.round(top[0]))}°.`);else why.push('Reljefas: ryškių kritimų sezono gyliuose plane nerasta.');
   const tr=S.trips.filter(t=>c.w&&(t.waterId===c.w.id||bkey(t.waterName)===bkey(c.w.name))),hrs=tr.reduce((a,t)=>a+tripHours(t),0),fish=tr.reduce((a,t)=>a+(t.catches||[]).length,0);
   if(tr.length>=2&&hrs>0){const r=fish/hrs;sc+=Math.min(2,r);why.push(`Jūsų žurnalas: ${tr.length} žvejybos, ${fmt1(r)} žuvies per valandą.`)}else why.push(tr.length?'Jūsų žurnalas: tik 1 žvejyba, išvadoms per mažai.':'Jūsų žurnale šio ežero dar nėra.');
+  (ownDepthLine(lk,se)||[]).forEach(x=>why.push(x));
   const km=kmFrom(lk,VILNIUS);sc-=Math.min(2,km/50);why.push(`Apie ${Math.round(km)} km nuo Vilniaus tiesia linija.`);
   const st=c.w&&c.w.legal&&c.w.legal.status||'';
   if(['išnuomotas','limituota','uždraustas'].includes(st)){sc-=5;warn.push(`Statusas „${st}“: patikrink, ar galima žvejoti.`)}else if(!st)warn.push('Teisinis statusas nepatikrintas: pažiūrėk ALIS prieš važiuodamas.');
@@ -2267,18 +2300,20 @@ function dashHTML(){
   const head=heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:cur&&cur.w?cur.w.id:''});
   if(!cur)return head+`<div class="panel small muted">Ežerų su gylių planais netoli nerasta.</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`;
   const lk=cur.lk,r=cur.r,L=launchesFor(lk)[0],dest=L?[L.lat,L.lon]:[+((lk.bbox[1]+lk.bbox[3])/2).toFixed(5),+((lk.bbox[0]+lk.bbox[2])/2).toFixed(5)];
-  const f=(S.fcFile||[]).find(x=>x.date===today()),W=waterTempFor({date:today()});
+  wxLoad(lk);const wx=wxFor(lk),W=waterTempFor({date:today()}),live=wx&&wx.state==='live';
   const tile=(k,v,sub)=>`<div class="dtile"><div class="small muted">${k}</div><b>${v}</b><div class="small muted">${sub}</div></div>`;
-  const cond=f||W?`<div class="dgrid">${f?tile('Oras',esc(f.tMin.split(',')[0]+'…'+f.tMax.split(',')[0])+'°',esc((f.cloud||'').split(' (')[0].toLowerCase()))+tile('Vėjas',esc(f.windDir+' '+f.windMs.split(',')[0]),'gūsiai '+esc(f.gustMs.split(',')[0])+' m/s')+tile('Slėgis',esc((f.pressure||'').split(' ')[0]),esc((f.pressure||'').split(', ')[1]||'hPa')):''}${W?tile('Vanduo','~'+Math.round(W.t)+'°','įvertis'):''}</div>
-    <div class="small muted" style="margin:6px 2px 0">${f?'Prognozė Trakų apylinkėms (LHMT, Open-Meteo), ne būtinai šiam ežerui. ':''}${W?'Vanduo matuotas upėse, ne ežere.':''}</div>`:'';
+  const cond=wx||W?`<div class="dgrid">${wx?tile('Oras',Math.round(wx.tMin)+'…'+Math.round(wx.tMax)+'°',esc(wx.cloud||''))+tile('Vėjas',degDir(wx.windDeg)+' '+Math.round(wx.windMs),'gūsiai '+Math.round(wx.gust)+' m/s')+tile('Slėgis',Math.round(wx.press),esc(wx.trend||'hPa')):''}${W?tile('Vanduo','~'+Math.round(W.t)+'°','įvertis'):''}</div>
+    <div class="small muted" style="margin:6px 2px 0">${wx?(live?'Gyva prognozė šiam ežerui (Open-Meteo), dienos 7–17 val. vidurkiai. ':'Prognozė Trakų apylinkėms (LHMT, Open-Meteo), ne būtinai šiam ežerui'+(WX[lk.id]&&WX[lk.id].state==='fail'?'; gyvos prognozės šis langas neleido pasiimti. ':'. ')):''}${W?'Vanduo matuotas upėse, ne ežere.':''}</div>`:'';
   return head+`<div class="chips" style="margin:2px 0 10px">${cs.map(c=>`<button class="chip" data-dash="lake" data-v="${c.lk.id}" aria-pressed="${c===cur}">${c===best?'★ ':''}${short(c.lk.name)}</button>`).join('')}<button class="chip" data-dash="other">＋ Kitas</button></div>
-  <div class="panel" style="padding:10px">${r.load?`<div class="small muted" style="text-align:center;padding:40px 12px">${lk._err?'Gylių duomenys neužsikrovė: '+esc(lk._err):'Kraunami gyliai…'}</div>`:bathyMapSVG(lk,r.sp,{mine:cur.w?mineOn(cur.w,lk):[]})}
+  <div class="panel" style="padding:10px">${r.load?`<div class="small muted" style="text-align:center;padding:40px 12px">${lk._err?'Gylių duomenys neužsikrovė: '+esc(lk._err):'Kraunami gyliai…'}</div>`:bathyMapSVG(lk,r.sp,{mine:mineOn(cur.w,lk),wind:wx})}
+    ${!r.load&&wx&&wx.windMs>=3&&r.sp.some(x=>windSide(lk,x,wx))?`<div class="small" style="margin-top:8px">Pusėje, į kurią pučia vėjas: <b>${r.sp.filter(x=>windSide(lk,x,wx)).map(x=>x.n).join(', ')}</b> vietos. <span class="muted">Metodinis žymėjimas: vėjas ten neša paviršinį vandenį ir maistą.</span></div>`:''}
     <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
   ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
     <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
     <a class="btn waze" href="https://waze.com/ul?ll=${dest[0]},${dest[1]}&navigate=yes" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg> Važiuoti su Waze</a>
     <div class="small muted" style="margin-top:6px">${L?`Ves į įleidimo vietą „${esc(L.name)}“.`:'Ves prie ežero vidurio, iki artimiausio kelio. Pažymėk įleidimo vietą žemėlapyje ir ves tiksliai į ją.'}</div></div>`}
+  ${r.load?'':bestTimeHTML(lk,wx)}
   ${r.load?'':lureHTML(cur,r)}
   ${cond}
   <button class="btn hot big" style="margin-top:14px" data-act="${cur.w?'lakeBrief':'lakeAdd'}" data-v="${cur.w?cur.w.id:lk.id}">${cur.w?'Parengti brifą šiam ežerui':'Pridėti ežerą ir parengti brifą'}</button>
@@ -2345,17 +2380,25 @@ function mapOpen(id){const m=(bathyMapSVG.reg||{})[id];if(!m)return;const lk=m.l
   const up=e=>{if(!P.has(e.pointerId))return;const p=P.get(e.pointerId);P.delete(e.pointerId);last=null;
     if(e.type==='pointerup'&&moved<8&&!P.size){const u=(p[0]-tx)/(z*fit),v=(p[1]-ty)/(z*fit);pu=[u,v];apply();
       const lon=pr.lon(u),lat=pr.lat(v),tol=12/(z*fit)/((pr.W-2*pr.pad))*(lk.bbox[2]-lk.bbox[0])*Math.cos(lat*Math.PI/180);
+      const mh=(S.marks||[]).filter(k=>k.lakeId===lk.id).find(k=>Math.hypot((+pr.X(k.lon)-u)*z*fit,(+pr.Y(k.lat)-v)*z*fit)<20);
+      if(mh){info.innerHTML=`<div class="row between" style="flex-wrap:nowrap"><span>Laimikis: <b>${esc(mh.species||'')}${mh.len?' '+esc(mh.len)+' cm':''}</b> <span class="muted">${esc(mh.date||'')}${mh.by?' · '+esc(mh.by):''}</span></span><button class="btn sm" data-x="delC" data-id="${mh.id}">Ištrinti</button></div>`;return}
       const hit=launchesFor(lk).find(l=>{const lu=+pr.X(l.lon),lv=+pr.Y(l.lat);return Math.hypot((lu-u)*z*fit,(lv-v)*z*fit)<22});
       if(hit){info.innerHTML=`<div class="row between" style="flex-wrap:nowrap"><span>Įleidimo vieta: <b>${esc(hit.name)}</b></span><span class="row" style="flex-wrap:nowrap"><button class="btn sm" data-compass="${hit.lat},${hit.lon}" data-name="${esc(hit.name)}">Kompasas</button></span></div>`;return}
       const d=depthAt(lk,lon,lat,tol);
       info.dataset.lat=lat;info.dataset.lon=lon;
-      info.innerHTML=`<div class="row between" style="flex-wrap:nowrap;gap:8px"><span>`+(!d?'Čia kontūrų nėra: seklu prie kranto arba duomenų nėra.':d.exact!=null?`Gylis <b>${fmt1(d.exact)} m</b> (išmatuotas taškas).`:d.hi==null?`Gylis <b>daugiau nei ${fmt1(d.lo)} m</b> (giliausias kontūras).`:`Gylis <b>tarp ${fmt1(d.lo)} ir ${fmt1(d.hi)} m</b> (tarp kontūrų, ne matavimas).`)+`</span><button class="btn sm" data-x="addL" style="white-space:nowrap">＋ Įleidimo vieta čia</button></div>`}};
+      info.innerHTML=`<div class="row between" style="flex-wrap:nowrap;gap:8px"><span>`+(!d?'Čia kontūrų nėra: seklu prie kranto arba duomenų nėra.':d.exact!=null?`Gylis <b>${fmt1(d.exact)} m</b> (išmatuotas taškas).`:d.hi==null?`Gylis <b>daugiau nei ${fmt1(d.lo)} m</b> (giliausias kontūras).`:`Gylis <b>tarp ${fmt1(d.lo)} ir ${fmt1(d.hi)} m</b> (tarp kontūrų, ne matavimas).`)+`</span><span style="display:flex;flex-direction:column;gap:6px"><button class="btn sm primary" data-x="addC" style="white-space:nowrap">＋ Laimikis čia</button><button class="btn sm" data-x="addL" style="white-space:nowrap">＋ Įleidimo vieta</button></span></div>`}};
+  const remine=()=>{m.opt={...m.opt,mine:[...(m.opt.mine||[]).filter(x=>!x.id),...mineOn(null,lk)]}};
   const redraw=()=>{const n=document.createElement('div');n.innerHTML=bathyMapSVG(lk,m.spots,{...m.opt,full:true});svg.replaceWith(n.firstElementChild);svg=inn.querySelector('svg');apply()};
   st.addEventListener('pointerup',up);st.addEventListener('pointercancel',up);
   st.addEventListener('wheel',e=>{e.preventDefault();const p=rel(e);zoomAt(z*Math.exp(-e.deltaY*0.0015),p[0],p[1])},{passive:false});
   const close=()=>{ov.remove();document.body.style.overflow=prevOv;removeEventListener('keydown',key);removeEventListener('resize',reset)};
   const key=e=>{if(e.key==='Escape')close()};addEventListener('keydown',key);addEventListener('resize',reset);
   ov.addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(!b)return;const x=b.dataset.x,r=st.getBoundingClientRect();
+    if(x==='delC'){S.marks=S.marks.filter(k=>k.id!==b.dataset.id);removeDoc('marks',b.dataset.id);info.textContent='Laimikis ištrintas.';remine();redraw();renderLive();return}
+    if(x==='addC'){info.innerHTML=`<form class="row" style="flex-wrap:nowrap;gap:8px" data-cform><select name="sp" style="flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface)">${SPECIES.map(k=>`<option${dashSpecies()[0]===k?' selected':''}>${k}</option>`).join('')}</select><input name="len" inputmode="decimal" placeholder="cm" style="width:64px;border:1px solid var(--line);border-radius:8px;padding:8px;background:var(--surface)"><button class="btn sm primary">Išsaugoti</button></form>`;
+      const f=info.querySelector('form');f.onsubmit=async ev=>{ev.preventDefault();const la=+info.dataset.lat,lo=+info.dataset.lon,d=depthAt(lk,lo,la,0);const now=new Date();
+        const o={lakeId:lk.id,lake:lk.name,lat:+la.toFixed(5),lon:+lo.toFixed(5),species:f.sp.value,len:f.len.value.trim(),date:today(),time:String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0'),by:S.who||'',dlo:d?(d.exact!=null?d.exact:d.lo):null,dhi:d?(d.exact!=null?d.exact:d.hi):null};
+        const r=await save('marks',o);if(r){if(!S.marks.some(k=>k.id===r.id))S.marks=[...S.marks,r];pu=null;pin.setAttribute('hidden','');info.innerHTML=`Laimikis pažymėtas${o.dlo!=null?`: gylis ${o.dlo===o.dhi?fmt1(o.dlo):fmt1(o.dlo)+'–'+(o.dhi==null?'?':fmt1(o.dhi))} m`:''}.`;remine();redraw();renderLive()}};return}
     if(x==='addL'){info.innerHTML=`<form class="row" style="flex-wrap:nowrap;gap:8px" data-lform><input name="n" placeholder="Pavadinimas, pvz. Prie stovyklavietės" style="flex:1;min-width:0;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--surface)"><button class="btn sm primary">Išsaugoti</button></form>`;
       const f=info.querySelector('form');f.n.focus();f.onsubmit=async ev=>{ev.preventDefault();const r=await addLaunch(lk,info.dataset.lat,info.dataset.lon,f.n.value);if(r){pu=null;pin.setAttribute('hidden','');info.innerHTML='Įleidimo vieta pažymėta. Bakstelėk ją, kad atidarytum kompasą.';redraw();renderLive()}};return}
     if(x==='close')close();else if(x==='fit')reset();else zoomAt(z*(x==='in'?1.6:1/1.6),r.width/2,r.height/2)});
@@ -2379,8 +2422,8 @@ function bathyRings(lk){
   closed.forEach(r=>{if(r.par&&r.d<r.par.d){const i=levels.indexOf(r.d);r.fd=i>0?levels[i-1]:r.d/2}else r.fd=r.d});
   const order=[],walk=list=>list.sort((a,b)=>b.area-a.area).forEach(r=>{order.push(r);walk(r.kids)});walk(roots);
   return lk._rings={src:lk.cont,order,open}}
-function mineOn(w,lk){ // jo paties laimikiai su GPS (iš nuotraukų EXIF)
-  const out=[];S.trips.forEach(t=>{if(w&&(t.waterId===w.id||bkey(t.waterName)===bkey(w.name)))(t.catches||[]).forEach(c=>{if(c.lat&&c.lon)out.push({lat:+c.lat,lon:+c.lon,t:`${t.date} ${c.species||''}`})})});return out}
+function mineOn(w,lk){ // jų laimikiai: iš nuotraukų EXIF ir pažymėti bakstelėjus žemėlapį (marks)
+  const out=(S.marks||[]).filter(m=>m.lakeId===lk.id).map(m=>({lat:+m.lat,lon:+m.lon,t:`${m.date} ${m.species||''}${m.len?' '+m.len+' cm':''}`,sp:m.species,id:m.id}));S.trips.forEach(t=>{if(w&&(t.waterId===w.id||bkey(t.waterName)===bkey(w.name)))(t.catches||[]).forEach(c=>{if(c.lat&&c.lon)out.push({lat:+c.lat,lon:+c.lon,t:`${t.date} ${c.species||''}`})})});return out}
 function bathyHTML(b){
   if(!b||!b.water)return '';
   if(!BATHY.lakes){loadBathy();return ''}
@@ -2472,7 +2515,7 @@ function zipStore(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
 async function exportProject(btn){
   const old=btn.textContent;btn.disabled=true;btn.textContent='Renku…';const files=[],miss=[];
   try{
-    const colls=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches'],dump={exported:new Date().toISOString(),note:'Visi savininkai (Arnas, Rokas). Su nuotraukų miniatiūromis.'};
+    const colls=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks'],dump={exported:new Date().toISOString(),note:'Visi savininkai (Arnas, Rokas). Su nuotraukų miniatiūromis.'};
     colls.forEach(c=>{dump[c]=(typeof ALL!=='undefined'&&ALL[c])?ALL[c]:(S[c]||[])});
     files.push({name:'data/export.json',data:JSON.stringify(dump,null,1)});
     for(const f of ['index.html','lakes-index.json','forecast.json']){
