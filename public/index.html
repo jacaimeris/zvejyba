@@ -28,6 +28,7 @@
 .dtile b{font-family:var(--display);font-size:20px;display:block;margin:2px 0}.dtile .small{font-size:12px}
 .dwhy{margin:8px 0 10px;padding-left:20px;font-size:.92rem}.dwhy li{margin:3px 0}.dwhy li.w{color:var(--warn);font-weight:600}
 .btn.waze{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#33ccff;border-color:#33ccff;color:#06283a;font-weight:700;text-decoration:none;min-height:48px}
+.lu-r{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 .sl-g{margin-bottom:14px}
 .sl-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:2px solid;padding-bottom:6px;margin-bottom:2px}
 .sl-h b{font-family:var(--display);font-size:17px}
@@ -378,7 +379,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.6 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.6.1 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -552,6 +553,10 @@ const SRC={
  P7:{t:'Dainys ir kt. 2022, Fishes 7(5):232 (Kauno marios)',g:'A',ap:'aukštas',url:'https://www.mdpi.com/2410-3888/7/5/232/htm',n:'Mėgėjų žvejyba stabdo starkių ir ešerių atsistatymą.'},
  P8:{t:'Žuvininkystės tarnyba / LIFE: lydekų jauniklių išleidimas Vilniaus ir Trakų ežeruose, 2025-10-02',g:'B',ap:'aukštas',url:'https://lifesipvanduo.apva.lt/en/news/i-vilniaus-ir-traku-rajonu-ezerus-isleista-daugiau-kaip-2-tukstanciai-dirbtiniu-budu-uzaugintu-lydekaiciu-jaunikliu/',n:'Institucijos pranešimas.'},
  P9:{t:'Ann. Zool. Fennici 33:669-678 (1996), Baltijos ešerio aktyvumas',g:'A',ap:'vidutinis',url:'https://www.annzool.net/PDF/anzf33/anzf33-669p.pdf',n:'Aktyvumas koreliuoja su temperatūra ir dienos ilgiu.'},
+ P10:{t:'Arlinghaus, Alós, Pieterek, Klefoth 2017, Fisheries Research 186:648-657 (lydeka, viso ežero eksperimentas, Vokietija)',g:'A',ap:'vidutinis',url:'https://www.sciencedirect.com/science/article/abs/pii/S0165783616303022',n:'Vienas 25 ha silpnai eutrofinis ežeras prie Berlyno. Skaičiau tik santrauką ir pagrindines išvadas, ne visą tekstą.'},
+ P11:{t:'Does Survey Angling CPUE Reflect Population Density of Northern Pike in Small Boreal Lakes? Fish. Manag. Ecol. 2026 (16 Suomijos ežerų)',g:'A-',ap:'vidutinis',url:'https://jukuri.luke.fi/server/api/core/bitstreams/f6895bb3-b9fb-488f-aa01-8730f93b049e/content',n:'16 ežerų po 3,4-22,1 ha, 95,2 val. standartizuotos žvejybos, mažas žvejybos spaudimas. Pilno teksto atidaryti nepavyko: išvados iš santraukos ir ištraukų; viena ištrauka sako, kad masalo tipas modelio nepagerino, todėl tipo efektas vertinamas atsargiai.'},
+ P12:{t:'Arlinghaus, Klefoth, Kobler, Cooke 2008, N. Am. J. Fish. Manag. 28:123-134 (lydeka: masalo tipas ir dydis)',g:'A',ap:'vidutinis',url:'https://www.agrar.hu-berlin.de/de/institut/departments/dntw/jp_bfm/publ_html/NAMFA_html',n:'Du mezotrofiniai ežerai Vokietijoje ir Kanadoje. Skaičiau santrauką.'},
+ P13:{t:'Bruskotter ir kt. 2020, J. Great Lakes Research (šviesiaakis starkis, masalo spalva ir drumstumas, Erio ežeras)',g:'A-',ap:'žemas',url:'https://doi.org/10.1016/j.jglr.2020.03.002',n:'Kita rūšis (Sander vitreus, starkio giminaitis) ir labai didelis ežeras. Kapitonų žurnalai + mažas kontroliuotas bandymas; autoriai patys rezultatus laiko preliminariais.'},
  N1:{t:'In-Fisherman perpasakojimas apie J. Casselmano tyrimus (lydeka po ledu)',g:'C',ap:'žemas',url:'https://www.in-fisherman.com/editorial/understanding-winter-pike/387779',n:'Specializuota spauda, Kanados skydo ežerai. Tik hipotezei.'}
 };
 
@@ -569,14 +574,18 @@ const EVID=[
  {id:'EV10',f:'Ešerio aktyvumas',sp:'Ešerys',claim:'Ešerio plaukimo aktyvumas sezoniškai kinta pagal temperatūrą ir dienos ilgį, nerštavietėje pikas.',src:['P9'],conf:'vidutinis',ap:'Baltijos populiacija.'},
  {id:'EV11',f:'Deguonis po ledu',sp:'visos',claim:'Mažuose rytų Lietuvos ežeruose ilgai tvyrant ledui deguonies stygius pasitaiko nereguliariai. Tai keičia žuvų vietą ir kibimą.',src:['P6'],conf:'vidutinis',ap:'Tiesiogiai Lietuva, bet tik 4 ištirti ežerai.'},
  {id:'EV12',f:'Šviesa po ledu (hipotezė)',sp:'Lydeka',claim:'Specializuotos spaudos teigimu, žiemą po ledu šviesa gali būti artima optimaliai lydekai, o įtekantys upeliai turtingesni deguonies. NEPATVIRTINTA recenzuotu šaltiniu.',src:['N1'],conf:'žemas',ap:'Kanados ežerai.'},
- {id:'EV13',f:'Masalo parinkimas',sp:'visos',claim:'Rasta TIK tiek: konkretaus masalo (tipo, spalvos, dydžio) pranašumo Lietuvos ežeruose recenzuotų duomenų nėra. Masalų rekomendacijos remiasi tavo paties pagavimais ir metodiniu principu, ne literatūra.',src:[],conf:'žemas',ap:'Tyrimų spraga.'}
+ {id:'EV13',f:'Masalo parinkimas',sp:'visos',claim:'Lietuvos ežeruose recenzuotų duomenų apie konkretaus masalo (tipo, spalvos, dydžio) pranašumą nėra. Užsienio tyrimai yra tik lydekai (EV14, EV15) ir preliminarūs spalvai (EV16). Ešeriui ir starkiui kontroliuotų masalo dydžio ar tipo bandymų neradau, todėl jiems rekomendacijos yra metodinės.',src:[],conf:'žemas',ap:'Tyrimų spraga.'},
+ {id:'EV14',f:'Masalo tipas (lydeka)',sp:'Lydeka',claim:'Viename ežere guminiai masalai (šadai) davė reikšmingai daugiau lydekų per laiką nei blizgės. 16 Suomijos ežerų blizgė lenkė spinnerbait; kiti skirtumai nereikšmingi. Pagautų lydekų dydis nuo masalo tipo nepriklausė.',src:['P10','P11'],conf:'vidutinis',ap:'Vokietija ir Suomija, maži ežerai. Sezonas ir masalų modeliai konkretūs tyrimams.'},
+ {id:'EV15',f:'Masalo dydis (lydeka)',sp:'Lydeka',claim:'Dideli dirbtiniai masalai ir dideli natūralūs masalai mažina mažų (nedydinių) lydekų užkibimą. Tai dydžio atranka, ne didesnis kibimų skaičius.',src:['P12'],conf:'vidutinis',ap:'Du ežerai, Vokietija ir Kanada.'},
+ {id:'EV16',f:'Masalo spalva',sp:'visos',claim:'Spalvos pranašumas NEĮRODYTAS. Lydekai fluorescencinės ir natūralios spalvos kibimo nepakeitė (16 Suomijos ežerų). Starkio giminaičiui žurnaluose skaidriame vandenyje sekėsi balta, drumstame nuo nuosėdų geltona, žydinčiame juoda, bet kontroliuotame bandyme skaidriame vandenyje skirtumo tarp spalvų nebuvo.',src:['P11','P13'],conf:'žemas',ap:'Kita rūšis ir kiti ežerai; autoriai rezultatus laiko preliminariais.'},
+ {id:'EV17',f:'Gylis ir augmenija (lydeka)',sp:'Lydeka',claim:'Viso ežero eksperimente lydekų kibimas ir dydis buvo didžiausi sekliose apaugusiose vietose; gilesnėje zonoje kibo mažiausios lydekos.',src:['P10'],conf:'vidutinis',ap:'Vienas ežeras; ar galioja vėlų rudenį nunykus augmenijai, tyrimas nesako.'}
 ];
 
 /* Metodika: kaip programa daro išvadas */
 const PROC=[
  ['1. Šaltinių tikrinimas','Kiekvienas šaltinis registre turi patikimumo žymą (A, A-, B, C, D) ir taikomumo Lietuvai vertinimą. Teisės faktams naudojami tik oficialūs šaltiniai (AAD atmintinės, vėliau pirminis taisyklių tekstas). Agregatorių duomenys (B-) niekada nelaikomi galutine tiesa, o ežero nuoma tikrinama ALIS.'],
  ['2. Teisinė dalis','Brifo teisinė dalis skaičiuojama taisyklėmis, o ne generuojama dirbtinio intelekto. Taisyklės įkeltos iš AAD atmintinių su šaltinio nuoroda. Kiekviena eilutė rodo, ar taisyklė patikrinta pirminiame akte (kol kas ne).'],
- ['3. Sąlygų vertinimas','Programa lygina tavo nurodytas sąlygas su įrodymų lentele (EV1-EV13). Jei šaltinis veiksnio nepatvirtina arba šaltiniai prieštarauja (pvz. slėgis), veiksnys nevertinamas ir tai parašoma.'],
+ ['3. Sąlygų vertinimas','Programa lygina tavo nurodytas sąlygas su įrodymų lentele (EV1-EV17). Jei šaltinis veiksnio nepatvirtina arba šaltiniai prieštarauja (pvz. slėgis), veiksnys nevertinamas ir tai parašoma.'],
  ['4. Masalai ir sistema','Dirbtinis intelektas parenka tik iš tavo spintos ir privalo prie kiekvieno pasirinkimo nurodyti įrodymų ID. Kai įrodymo nėra, rekomendacija ženklinama "nepatvirtinta" ir žemu pasitikėjimu. Komplektas sudaromas taip, kad skirtingi masalai duotų informacijos tavo duomenims (metodinis sprendimas, ne literatūros).'],
  ['5. Laimikių įrašymas','Tu fotografuoji laimikį su masalu. Laikas ir vieta paimami iš nuotraukos EXIF, žuvis ir masalas atpažįstami iš nuotraukos, o tu patvirtini. Žvejybos pradžia ir pabaiga duoda pastangas.'],
  ['6. Statistika','Rodikliai skaičiuojami per valandą (pastangos). Kiekviena išvada žymima pasitikėjimu pagal duomenų kiekį. Masalų lentelė rodo tik pagavimus be bandymų skaičiaus, todėl ji nerodo masalo efektyvumo.'],
@@ -1561,7 +1570,7 @@ function briefPrompt(p,w,cond){
 GRIEŽTOS TAISYKLĖS:
 1. Masalus renkiesi TIK iš žemiau pateiktos spintos, naudok jų id. Jei reikiamo nėra, įrašyk į "gaps" (tipas ir parametrai, ne prekės ženklas).
 2. Kiekvienas pasirinkimas privalo turėti "evid" (įrodymų ID iš sąrašo žemiau) arba "basis". Jei įrodymo nėra, "evid":[] ir nieko nerašyk apie veiksmingumą.
-3. Konkretaus masalo veiksmingumui (spalva, tipas, dydis) literatūros įrodymų NĖRA (EV13). Todėl masalų parinkimo pagrindas yra: "pagavimai" (jo paties pagavimai šiame vandenyje, žemiau) arba "metodinis" (komplektas turi apimti skirtingus pateikimo būdus: skirtingą greitį ir gylį, kad jo duomenys sužinotų daugiau). Neteigk, kad konkretus masalas "kimba geriau" be duomenų.
+3. Masalams literatūros įrodymų yra TIK lydekai: tipas (EV14), dydis (EV15); spalvos pranašumas neįrodytas (EV16). Ešeriui ir starkiui įrodymų nėra (EV13). Kur įrodymo nėra, masalų parinkimo pagrindas yra: "pagavimai" (jo paties pagavimai šiame vandenyje, žemiau) arba "metodinis" (komplektas turi apimti skirtingus pateikimo būdus: skirtingą greitį ir gylį, kad jo duomenys sužinotų daugiau). Neteigk, kad konkretus masalas "kimba geriau" be duomenų.
 4. Nespėliok gylių, vedimo greičių ar sezoninių taisyklių, kurių nepagrindžia pateikti įrodymai. Jei nežinai, įrašyk į "unknowns".
 5. "confidence" yra "vidutinis" tik jei evid įrašo pasitikėjimas vidutinis; visais kitais atvejais "žemas".
 6. Sistemai (rig) lydekai ir kietiesiems masalams naudok EV8. Atsižvelk į teisinius apribojimus: iš viso iki 6 kabliukų, gumos iki 40 cm, jei ledas ir žvejoji su žuvele, tik iki 2 įrankių su žuvele.
@@ -2193,6 +2202,41 @@ function compassOpen(lat,lon,name){
     else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else{dirB.hidden=true;note.textContent='Claude programa šiam langui telefono krypties neduoda. Naudok telefono Compass programą.'}}).catch(()=>{dirB.hidden=true;note.textContent='Telefono kryptis šiame lange neprieinama. Naudok telefono Compass programą.'})});
   q('[data-x="close"]').focus()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-compass]');if(!b)return;const [la,lo]=b.dataset.compass.split(',').map(Number);compassOpen(la,lo,b.dataset.name||'Vieta')});
+/* ---------- Masalų pasiūlymas: žuvis + sezono gylis + skaidrumas. Kiekviena eilutė turi pagrindą: įrodymo ID arba "metodinis". ---------- */
+const CLAR=['Skaidrus','Šiek tiek drumstas','Drumstas'];
+function clarityFor(c){const id=c.lk.id;if(S.clar&&S.clar[id])return {v:S.clar[id],src:'tavo pasirinkta'};
+  const t=S.trips.filter(t=>c.w&&(t.waterId===c.w.id||bkey(t.waterName)===bkey(c.w.name))&&t.w&&t.w.clarity).sort((a,b)=>b.date.localeCompare(a.date))[0];
+  return t?{v:t.w.clarity,src:'iš žvejybos '+t.date}:{v:'',src:''}}
+function lureAdvice(sp,band,clar,se){const cold=se.k==='late'||se.k==='winter',deep=`${fmt1(band[0])}–${fmt1(band[1])} m`,o=[];
+  const A=(t,why,ev)=>o.push({t,why,ev});
+  if(sp==='Lydeka'){
+    A('Guminis masalas (šadas), po jo blizgė','Tyrime šadai davė daugiau lydekų nei blizgės, o blizgė lenkė spinnerbait.','EV14');
+    A('Dydis: 12 cm ir daugiau','Dideli masalai rečiau užkabina mažas lydekas. „12 cm“ yra mano riba, tyrimas skaičiaus neduoda.','EV15');
+    A(`Gylis: vesk ${deep}, pradėk nuo seklesnio krašto`,'Sezono gylio juosta; tyrime lydekos geriau kibo sekliau prie augmenijos, todėl pirma tikrink viršutinę juostos dalį.','EV17')}
+  else if(sp==='Ešerys'){
+    A('Maži guminukai 5–8 cm ant džigo galvutės arba dropshot','Kontroliuotų bandymų ešeriui neradau; tai įprasta praktika.','metodinis');
+    A(`Gylis: prie dugno, ${deep}`,'Sezono gylio juosta ties kritimais.','metodinis')}
+  else{
+    A('Guminukas 10–12 cm ant džigo galvutės, prie pat dugno','Kontroliuotų bandymų starkiui neradau; tai įprasta praktika.','metodinis');
+    A(`Gylis: ${deep}, kritimų papėdės`,'Sezono gylio juosta.','metodinis')}
+  A(`Svoris: toks, kad jaustum dugną ${deep} gylyje`,'Galvutės svoris priklauso nuo gylio, vėjo ir valo; skaičiaus be tavo įrangos neduodu.','metodinis');
+  if(cold)A('Vedimas: lėtai, su pauzėmis','Šaltame vandenyje žuvys mažiau aktyvios.','metodinis');
+  if(clar==='Skaidrus')A('Spalva: natūrali arba balta','Spalvos pranašumas neįrodytas; skaidriame vandenyje bandyme skirtumo tarp spalvų nebuvo, todėl rinkis natūralią.','EV16');
+  else if(clar==='Drumstas')A('Spalva: ryški (geltona, chartreuse) arba tamsus siluetas','Starkio giminaičiui drumstame vandenyje žurnaluose sekėsi geltona, žydinčiame juoda. Preliminaru.','EV16');
+  else if(clar)A('Spalva: paimk vieną natūralią ir vieną ryškią','Spalvos pranašumas neįrodytas; du kontrastingi variantai leidžia patikrinti patiems.','EV16');
+  else A('Spalva: nurodyk vandens skaidrumą','Be skaidrumo spalvos nesiūlau. Ežerų skaidrumo duomenų neturiu.','');
+  return o}
+function gearMatch(sp){const re=sp==='Lydeka'?/gum|šad|sad|shad|blizg/i:/gum|šad|sad|shad|jig|twist|dropshot/i;
+  return S.gear.filter(g=>['lure','ice'].includes(g.cat)&&re.test([g.type,g.name,g.model].join(' ')))}
+function lureHTML(cur,r){const lk=cur.lk,cl=clarityFor(cur);
+  return `<div class="panel"><h3>Masalai šiam ežerui</h3>
+   <div class="small muted" style="margin:4px 0 6px">Vandens skaidrumas${cl.src?` (${esc(cl.src)})`:': ežerų duomenų neturiu, pasirink pats'}</div>
+   <div class="chips" style="margin-bottom:10px">${CLAR.map(k=>`<button class="chip" data-dash="clar" data-v="${k}" data-lake="${lk.id}" aria-pressed="${cl.v===k}">${k}</button>`).join('')}</div>
+   ${dashSpecies().map(sp=>{const band=bandFor(lk,r.se,sp),g=gearMatch(sp);return `<div class="sl-g"><div class="sl-h" style="border-color:${SPCOL[sp]}"><b>${sp}</b><span class="small muted">${fmt1(band[0])}–${fmt1(band[1])} m</span></div>
+     ${lureAdvice(sp,band,cl.v,r.se).map(a=>`<div class="lu-r"><div><b>${esc(a.t)}</b><div class="small muted">${esc(a.why)}</div></div>${a.ev==='metodinis'?'<span class="pill" style="background:var(--muted);color:#fff">metodinis</span>':a.ev?srcEv(a.ev):''}</div>`).join('')}
+     <div class="small" style="margin-top:8px">${S.gear.length?(g.length?'<b>Iš spintos tiktų:</b> '+g.slice(0,5).map(x=>esc(gl(x))).join(', '):'Spintoje tinkamų masalų neradau.'):'<span class="muted">Spinta tuščia: įkelk masalus (Daugiau → Spinta) ir parodysiu, kurie tinka.</span>'}</div></div>`}).join('')}
+   <div class="small muted">Įrodymai yra tik lydekai ir iš užsienio ežerų. „Metodinis“ reiškia įprastą praktiką be tyrimo. Šaltiniai: Daugiau → Žinynas.</div></div>`}
+const srcEv=id=>{const e=EVID.find(x=>x.id===id);return `<span style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex:0 0 auto"><span class="pill good">${id}</span>${e?srcChips(e.src):''}</span>`};
 /* ---------- Pradžia: kur važiuoti. Pasiūlymas iš reljefo, sezono gylių, tavo žurnalo ir atstumo; ne iš žuvų kiekio duomenų. ---------- */
 const VILNIUS=[54.6872,25.2797];
 const kmFrom=(lk,o)=>{const la=(lk.bbox[1]+lk.bbox[3])/2,lo=(lk.bbox[0]+lk.bbox[2])/2;return Math.hypot((la-o[0])*111,(lo-o[1])*111*Math.cos(la*Math.PI/180))};
@@ -2235,11 +2279,13 @@ function dashHTML(){
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
     <a class="btn waze" href="https://waze.com/ul?ll=${dest[0]},${dest[1]}&navigate=yes" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg> Važiuoti su Waze</a>
     <div class="small muted" style="margin-top:6px">${L?`Ves į įleidimo vietą „${esc(L.name)}“.`:'Ves prie ežero vidurio, iki artimiausio kelio. Pažymėk įleidimo vietą žemėlapyje ir ves tiksliai į ją.'}</div></div>`}
+  ${r.load?'':lureHTML(cur,r)}
   ${cond}
   <button class="btn hot big" style="margin-top:14px" data-act="${cur.w?'lakeBrief':'lakeAdd'}" data-v="${cur.w?cur.w.id:lk.id}">${cur.w?'Parengti brifą šiam ežerui':'Pridėti ežerą ir parengti brifą'}</button>
   <button class="btn" style="margin-top:8px;align-self:center" data-act="planOpen">Planuoti kitaip</button>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-dash]');if(!b)return;const a=b.dataset.dash,v=b.dataset.v;
   if(a==='lake')S.dashLake=v;
+  else if(a==='clar'){S.clar=S.clar||{};S.clar[b.dataset.lake]=S.clar[b.dataset.lake]===v?'':v}
   else if(a==='fish'){const s=S.plan.species,i=s.indexOf(v);if(i>=0){if(dashSpecies().length>1||!dashSpecies().includes(v))s.splice(i,1)}else s.push(v)}
   else if(a==='other'){S.tab='more';S.more='lakes';S.lake='';renderAll();window.scrollTo(0,0);return}
   else if(a==='back'){S.planOpen=false;window.scrollTo(0,0)}
