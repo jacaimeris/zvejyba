@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Žvejo žurnalas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Principai: vienas pagrindinis veiksmas ekrane, didelės paspaudimo zonos, detalės sulenktos. */
+:root{
+  --bg:#f5f3ee; --surface:#ffffff; --ink:#15221f; --muted:#68746f; --line:#e3dfd4;
+  --accent:#1f5a4a; --accent-ink:#ffffff; --hot:#c4501b; --good:#2e7d52; --warn:#b87a14; --bad:#b23a2a;
+  --soft:#ebe8df;
+  --display:'Bricolage Grotesque',system-ui,sans-serif; --body:'Public Sans',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#101a18; --surface:#182623; --ink:#e6eeeb; --muted:#8fa39d; --line:#27403b;
+  --accent:#5cbf9f; --accent-ink:#08201a; --hot:#ee8a58; --good:#63c28b; --warn:#e2b255; --bad:#ec8472; --soft:#1e312d; color-scheme:dark;}}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;-webkit-text-size-adjust:100%}
+h1,h2,h3,h4{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:2rem;letter-spacing:-.01em} h2{font-size:1.4rem} h3{font-size:1.05rem} h4{font-size:1rem}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--hot);outline-offset:2px}
+header.top{padding:10px 20px 0;display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:640px;margin:0 auto}
+header.top h1{font-size:.95rem;font-weight:700;color:var(--muted);letter-spacing:.02em}
+header.top small{color:var(--muted);font-size:.75rem}
+main{max-width:640px;margin:0 auto;padding:8px 20px 120px;display:flex;flex-direction:column;gap:18px}
+nav#tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;padding-bottom:env(safe-area-inset-bottom)}
+nav#tabs button{flex:1;max-width:214px;border:0;background:none;padding:14px 4px 13px;font-size:.95rem;font-weight:600;color:var(--muted);cursor:pointer;position:relative}
+nav#tabs button[aria-current="true"]{color:var(--accent)}
+nav#tabs button[aria-current="true"]::before{content:"";position:absolute;top:0;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--accent)}
+.hero{padding-top:14px} .eyebrow{font-size:.8rem;font-weight:600;color:var(--muted);letter-spacing:.02em;margin-bottom:2px}
+.eyebrow::first-letter{text-transform:uppercase}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+.summary{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+.grow{flex:1 1 auto;min-width:0}
+.muted{color:var(--muted)} .small{font-size:.86rem}
+.clamp{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.tile b{display:block;font-family:var(--display);font-size:1.6rem;font-variant-numeric:tabular-nums;line-height:1.1}
+.tile span{color:var(--muted);font-size:.8rem}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:11px 16px;font-weight:600;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.hot{background:var(--hot);color:#fff;border-color:var(--hot)}
+.btn.danger{color:var(--bad)}
+.btn.sm{align-self:flex-start;padding:6px 12px;font-size:.88rem;min-height:36px;border-radius:10px}
+.btn.big{width:100%;min-height:58px;font-size:1.1rem;border-radius:14px}
+.btn.cam{display:flex;align-items:center;justify-content:center;gap:12px;min-height:96px;font-size:1.4rem;font-family:var(--display)}
+.btn:disabled{opacity:.5;cursor:default}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-size:.9rem;cursor:pointer;font-weight:500;min-height:38px}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:flex;flex-direction:column;gap:12px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;gap:12px;cursor:pointer;text-align:left;width:100%}
+.item.static{cursor:default;padding:10px}
+.item:hover:not(.static){border-color:var(--accent)}
+.item.more{padding:18px}
+.thumb{width:52px;height:52px;border-radius:10px;object-fit:cover;background:var(--soft);flex:none;display:grid;place-items:center;font-family:var(--display);font-weight:700;color:var(--accent);font-size:1.2rem}
+.thumb.big{width:76px;height:76px}
+.badge{background:var(--soft);border-radius:999px;padding:1px 10px;font-size:.78rem;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{border-radius:999px;padding:1px 9px;font-size:.76rem;font-weight:600;color:#fff;white-space:nowrap}
+.pill.good{background:var(--good)} .pill.warn{background:var(--warn)} .pill.bad{background:var(--bad)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.82rem;color:var(--muted);font-weight:600;min-width:0}
+label.f input,label.f select,label.f textarea{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 12px;font-weight:400;color:var(--ink);width:100%;min-width:0;min-height:44px}
+label.f.big{font-size:.9rem} label.f.big select{font-size:1.1rem;min-height:54px;font-family:var(--display);font-weight:600}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sect{font-family:var(--display);font-weight:700;font-size:1rem;margin:6px 0 2px}
+#modal{position:fixed;inset:0;z-index:20;background:rgba(5,15,12,.5);display:flex;justify-content:center;align-items:flex-start;overflow-y:auto;padding:0}
+#modal[hidden]{display:none}
+.sheet{background:var(--bg);border-radius:0 0 18px 18px;width:100%;max-width:640px;margin:0 auto auto;padding:18px 20px 28px;display:flex;flex-direction:column;gap:14px}
+.sheet .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;background:var(--bg);padding:2px 0 8px;z-index:2}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:84px;z-index:30;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;font-size:.92rem;max-width:90%;display:none}
+.bars{display:flex;flex-direction:column;gap:6px}
+.bar-row{display:grid;grid-template-columns:minmax(90px,150px) 1fr auto;gap:8px;align-items:center;font-size:.88rem}
+.bar-track{background:var(--soft);border-radius:4px;height:14px;overflow:hidden}
+.bar-fill{background:var(--accent);height:100%;border-radius:4px}
+.hist{display:flex;align-items:flex-end;gap:3px;height:110px;padding-top:8px}
+.hist div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:.65rem;color:var(--muted);gap:2px}
+.hist i{display:block;width:100%;background:var(--hot);border-radius:3px 3px 0 0;min-height:2px}
+.prose{white-space:pre-wrap;line-height:1.6}
+.prose h4{margin:12px 0 4px}
+table{border-collapse:collapse;width:100%;font-size:.88rem;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:.78rem}
+.scroll-x{overflow-x:auto}
+.step{display:flex;gap:10px;margin:4px 0}
+.step b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-size:.78rem}
+.banner{background:var(--soft);border-left:4px solid var(--warn);padding:12px 14px;border-radius:8px;font-size:.9rem}
+.check{display:flex;gap:8px;align-items:center;font-size:.9rem}
+.catchrow{border:1px solid var(--line);border-radius:14px;padding:12px;background:var(--surface);display:flex;flex-direction:column;gap:10px}
+.src{display:inline-block;border:1px solid var(--line);background:var(--soft);border-radius:6px;padding:0 6px;font-size:.72rem;font-weight:700;cursor:pointer;margin-right:4px;color:var(--ink)}
+.src.g-A{border-color:var(--good)} .src.g-Am{border-color:var(--accent)} .src.g-B,.src.g-Bm{border-color:var(--warn)} .src.g-C,.src.g-D{border-color:var(--bad)}
+.lrow{display:flex;gap:8px;align-items:flex-start;padding:7px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.lrow .pill{flex:none;margin-top:2px}
+.thumbs{display:flex;gap:4px;margin:8px 0 0;overflow:hidden}
+.thumbs img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+a{color:var(--accent)}
+details>summary{cursor:pointer;font-weight:600;list-style:none;display:flex;align-items:center;gap:8px;min-height:36px}
+details>summary::-webkit-details-marker{display:none}
+details>summary::after{content:"+";margin-left:auto;color:var(--muted);font-weight:400;font-size:1.2rem}
+details[open]>summary::after{content:"–"}
+details.fold{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 14px}
+details.hyp{padding:8px 14px}
+.verdict{border-radius:16px;padding:18px;border:1px solid var(--line);background:var(--surface);border-left-width:6px;display:flex;flex-direction:column;gap:6px}
+.verdict.good{border-left-color:var(--good)} .verdict.warn{border-left-color:var(--warn)} .verdict.bad{border-left-color:var(--bad)}
+.verdict .vt{font-family:var(--display);font-size:1.35rem;font-weight:700}
+.verdict .vl{font-size:.92rem;padding-top:4px}
+.verdict details{margin-top:6px;border-top:1px solid var(--line);padding-top:4px}
+.pick{padding:10px 0;border-bottom:1px solid var(--line)} .pick:last-child{border-bottom:0}
+.live{background:var(--accent);color:var(--accent-ink);border-radius:20px;padding:22px}
+.live .muted{color:inherit;opacity:.8}
+.live h1{font-size:1.6rem} .live .eyebrow{color:inherit;opacity:.8}
+.elapsed{font-family:var(--display);font-size:3.4rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.1;margin:6px 0}
+@media (prefers-reduced-motion:no-preference){.item,.btn,.chip{transition:border-color .15s,background .15s}}
+
+/* ===== judesys ===== */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes tailw{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+@keyframes finw{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+@keyframes bubup{0%{transform:translateY(0);opacity:0}15%{opacity:.7}100%{transform:translateY(-190px);opacity:0}}
+@keyframes drawl{to{stroke-dashoffset:0}}
+@keyframes popin{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes wavemove{to{transform:translateX(-50%)}}
+@keyframes sheen{from{transform:translateX(-120%)}to{transform:translateX(220%)}}
+@keyframes fadeswap{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#main.enter>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+#main.enter>*:nth-child(2){animation-delay:.05s} #main.enter>*:nth-child(3){animation-delay:.1s} #main.enter>*:nth-child(4){animation-delay:.15s} #main.enter>*:nth-child(5){animation-delay:.2s} #main.enter>*:nth-child(n+6){animation-delay:.25s}
+.btn:active,.chip:active,.item:active,.fcard:active,.ftile:active,.tile-big:active{transform:scale(.975)}
+.fish .fa-body{animation:bob 4.2s ease-in-out infinite}
+.fish .fa-tail{transform-box:fill-box;transform-origin:100% 50%;animation:tailw 1.4s ease-in-out infinite alternate}
+.fish .fa-fin{transform-box:fill-box;transform-origin:50% 0;animation:finw 2s ease-in-out infinite alternate}
+.fish.big .fa-tail{animation-duration:1.1s}
+.wavebox{overflow:hidden;height:34px;margin:10px -20px 0;position:relative}
+.waves{width:200%;height:100%;display:block;animation:wavemove 14s linear infinite}
+.waves .w1{fill:var(--accent);opacity:.18} .waves .w2{fill:var(--accent);opacity:.3;transform:translateX(-12%)}
+.wavebox.inlive{position:absolute;left:0;right:0;bottom:0;margin:0;height:46px;opacity:.55}
+.wavebox.inlive .waves .w1,.wavebox.inlive .waves .w2{fill:#fff}
+.live{position:relative;overflow:hidden}
+.live>*{position:relative}.live>.wavebox{position:absolute}
+.noscroll{overflow:hidden}
+/* žuvų galerija */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fcard{position:relative;overflow:hidden;border:0;border-radius:20px;padding:12px 12px 14px;text-align:left;color:#fff;background:linear-gradient(160deg,var(--a),var(--b));cursor:pointer;display:flex;flex-direction:column;min-height:150px;animation:rise .55s cubic-bezier(.2,.7,.2,1) both;box-shadow:0 6px 18px -10px rgba(0,0,0,.5)}
+.fcard.wide{grid-column:1/-1;min-height:190px}
+.fgrid .fcard:nth-child(2){animation-delay:.06s}.fgrid .fcard:nth-child(3){animation-delay:.12s}.fgrid .fcard:nth-child(4){animation-delay:.18s}.fgrid .fcard:nth-child(5){animation-delay:.24s}.fgrid .fcard:nth-child(6){animation-delay:.3s}.fgrid .fcard:nth-child(7){animation-delay:.36s}
+.fcard .fart{flex:1;display:grid;align-items:center}
+.fcard .fart svg{width:100%;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))}
+.fcard:hover .fish .fa-tail{animation-duration:.6s}
+.fmeta{display:flex;flex-direction:column}.fmeta b{font-family:var(--display);font-size:1.15rem}.fmeta span{font-size:.78rem;opacity:.8;font-style:italic}
+.fbadge{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.2);backdrop-filter:blur(4px);border-radius:999px;padding:2px 10px;font-size:.74rem;font-weight:600}
+.fthumb{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.85)}
+.shine{position:absolute;inset:0;pointer-events:none;overflow:hidden}.shine::after{content:"";position:absolute;top:0;bottom:0;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.14),transparent);transform:translateX(-120%)}
+.fcard:hover .shine::after{animation:sheen 1s ease}
+/* žuvies ekranas */
+#stage{position:fixed;inset:0;z-index:25;background:var(--bg);opacity:0;transform:translateY(22px) scale(.985);transition:opacity .26s ease,transform .3s cubic-bezier(.2,.7,.2,1)}
+#stage.open{opacity:1;transform:none}
+#stage[hidden]{display:none}
+.stage-scroll{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.fstage,.kstage{max-width:640px;margin:0 auto;min-height:100%}
+.fs-hero{position:relative;color:#fff;padding:64px 20px 26px;background:linear-gradient(170deg,var(--a),var(--b));border-radius:0 0 32px 32px;overflow:hidden}
+.fs-art{position:relative;z-index:1}.fs-art svg{width:100%;filter:drop-shadow(0 14px 14px rgba(0,0,0,.4))}
+.fs-hero h1{margin-top:10px;font-size:2.4rem}.fs-hero .lat{font-style:italic;opacity:.8;margin-top:2px}
+.chips2{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.chip-lite{background:rgba(255,255,255,.18);border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:600}
+.chip-lite.warn{background:var(--soft);color:var(--muted)}
+.chips2.dark .chip-lite{background:var(--soft);color:var(--ink)}
+.xbtn{position:absolute;top:14px;right:14px;z-index:3;width:44px;height:44px;border-radius:50%;border:0;background:rgba(0,0,0,.28);color:#fff;font-size:1.6rem;line-height:1;cursor:pointer;backdrop-filter:blur(6px)}
+.xbtn.dark{background:var(--soft);color:var(--ink)}
+.bubs{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.bub{position:absolute;bottom:-10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);animation:bubup 4.5s ease-in infinite}
+.fs-body{padding:20px 20px 60px;display:flex;flex-direction:column;gap:14px}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px}
+.sec h3{font-size:1.15rem;margin-bottom:8px}.sec h4{font-size:.9rem;color:var(--muted)}.sec p{margin:0;line-height:1.6}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}.rv.in{opacity:1;transform:none}
+.seg2{display:flex;background:var(--soft);border-radius:12px;padding:3px;gap:2px;margin-bottom:12px}
+.seg2 button{flex:1;border:0;background:none;border-radius:10px;padding:8px 2px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer;transition:background .2s,color .2s}
+.seg2 button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.swap{animation:fadeswap .35s ease both}
+.thumbs.big img{width:64px;height:64px;border-radius:12px}
+/* Ko ieškai */
+.ftiles{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x proximity;margin:0 -2px}
+.ftile{flex:none;width:112px;scroll-snap-align:start;border:2px solid transparent;border-radius:16px;padding:8px 6px 8px;background:linear-gradient(160deg,var(--a),var(--b));color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55;transition:opacity .2s,transform .2s,border-color .2s}
+.ftile svg{width:100%}.ftile span{font-size:.8rem;font-weight:600}
+.ftile[aria-pressed="true"]{opacity:1;border-color:var(--hot);transform:translateY(-2px)}
+.mini{display:flex;flex:none}.mini svg{width:54px;margin-right:-14px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25))}
+.summary{align-items:center}
+.chip-lite{display:inline-block}
+/* Daugiau */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile-big{border:0;border-radius:20px;padding:14px;color:#fff;background:linear-gradient(160deg,var(--a),var(--b));text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-height:150px;box-shadow:0 6px 18px -10px rgba(0,0,0,.5)}
+.tile-big.knots{background:linear-gradient(160deg,#1f5a4a,#3d8a73)}
+.tile-big .tart{flex:1;display:grid;align-items:center}.tile-big .tart svg{width:100%}
+.tile-big b{font-family:var(--display);font-size:1.15rem}.tile-big span{font-size:.8rem;opacity:.85}
+.kscene.still .kl{animation:none;stroke-dashoffset:0}.kscene.still text{display:none}
+.kscene.still .kl{stroke:#fff}.tile-big .kscene .kh{stroke:rgba(255,255,255,.7)}
+/* mazgai */
+.kcard{animation:rise .5s both;animation-delay:var(--d,0s);align-items:center}
+.kthumb{width:110px;flex:none;background:var(--soft);border-radius:12px;padding:4px}.kthumb svg{width:100%;display:block}
+.ks-top{position:relative;padding:60px 20px 8px}.ks-top h1{font-size:2rem}
+.kstageBox{margin:12px 20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:10px 10px 14px;position:relative;background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:18px 18px}
+.kscene{width:100%;display:block}
+.kl{stroke-dasharray:1;stroke-dashoffset:1;animation:drawl .9s cubic-bezier(.4,0,.2,1) forwards}
+.kh{animation:popin .4s ease both}.kl2{animation:popin .4s .5s ease both;transform-box:fill-box;transform-origin:center}
+.klab{font-size:14px;fill:var(--muted);font-weight:600;font-family:var(--body);animation:fadeswap .5s ease both}
+.kprog{display:flex;gap:8px;justify-content:center;margin-top:6px}
+.kdot{width:28px;height:8px;border-radius:6px;border:0;background:var(--line);cursor:pointer;padding:0;transition:background .3s,width .3s}
+.kdot.done{background:var(--accent);opacity:.5}.kdot.on{background:var(--hot);width:44px}
+.kcap{margin:6px 20px;display:flex;gap:14px;align-items:flex-start;animation:fadeswap .45s ease both}
+.knum{font-family:var(--display);font-size:2.6rem;font-weight:700;color:var(--hot);line-height:1}.knum span{font-size:1rem;color:var(--muted);font-weight:500}
+.kcap p{margin:2px 0 0;font-size:1.1rem;line-height:1.5}
+.kctl{margin:14px 20px 40px}.kctl .btn{flex:1}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.kl{stroke-dashoffset:0}}
+@media (min-width:700px){.fgrid{grid-template-columns:1fr 1fr 1fr}.fcard.wide{grid-column:span 2}}
+</style>
+</head>
+<body>
+<header class="top"><h1>Žvejo žurnalas</h1><small id="sync">kraunasi…</small></header>
+<main id="main"></main>
+<nav id="tabs" aria-label="Skyriai"></nav>
+<div id="modal" hidden></div>
+<div id="stage" hidden></div>
+<div id="toast" role="status"></div>
+<input type="file" id="file" accept="image/*" multiple hidden>
+<input type="file" id="cfile" accept="image/*" multiple hidden>
+
+<script>
+const FISH=[
+{id:'lydeka',name:'Lydeka',lat:'Esox lucius',
+intro:'Pagrindinis plėšrūnas. Puola iš pasalos, todėl ieško struktūros ir slėptuvių: žolės, nendrės, kritę medžiai, gylio pokyčiai.',
+where:'Žolynų ir nendrynų kraštai, nuskendę medžiai, kritimai nuo seklumos į gilumą, upių posūkiai, įplaukos ir užutėkiai.',
+seasons:{
+'Pavasaris':'Prieš neršią ir po jo laikosi sekliuose, greičiau šylančiuose užutėkiuose. Nerštui ir plėšrūnų žvejybai galioja draudimai, tikrink Mėgėjų žvejybos taisykles.',
+'Vasara':'Karštomis dienomis traukiasi į gilesnį vandenį ir šešėlį, aktyviausios aušroje ir sutemose. Ankstų rytą gerai veikia seklūs žolynai.',
+'Ruduo':'Geriausias laikas dideliems masalams. Vanduo vėsta, smulkmė telkiasi, lydekos intensyviai ryja prieš žiemą.',
+'Žiema':'Aktyviausios pirmo ir paskutinio ledo metu. Viduržiemį kibimas trumpais langais, dažnai keli kibimai per dieną.'},
+lures:'Vobleriai (jerkbait, minnow 10–15 cm), gumytės ir šadai 10–20 cm, sukriukės ir spinnerbait, didelės blizgės, vasarą paviršiniai masalai žolėse. Žiemą: didelės blizgutės ir balansyrai.',
+tackle:'Pavadėlis būtinas: plieninis arba storas fluorokarbonas, nes dantys perpjauna valą. Pintas pagrindinis valas, kieta meškerė, didelis graibštas, ilgos žnyplės kabliukams išimti, burnos atvėriklis.',
+weather:'Slėgio poveikis lydekos kibimui neįrodytas: recenzuotame tyrime jis nebuvo reikšmingas, nerecenzuotame darbe žemas slėgis didino pagavimus (žr. Šaltiniai, EV6). Geriau patvirtintas dalykas yra prieblanda ir žvejybos spaudimas ežere (EV1, EV5).',
+tips:'Paskutinius metrus prie kranto ar valties pravesk aštuoniuke, nes lydeka dažnai seka masalą ir atakuoja prie pat. Keisk tempą ir pauzes. Atlaisvinant: šlapios rankos, kuo trumpiau ore.',
+mistakes:'Per plonas pavadėlis. Vienodas vedimas. Per greitas vedimas šaltame vandenyje. Per ilgas žuvies laikymas ore.'},
+{id:'eserys',name:'Ešerys',lat:'Perca fluviatilis',
+intro:'Būrinė žuvis, kimba beveik visus metus. Radus vieną, greičiausiai šalia yra daugiau.',
+where:'Kritimai, akmenynai, nuskendę medžiai, tiltų ir prieplaukų atramos, žolių ribos, upių duobės ir posūkiai.',
+seasons:{
+'Pavasaris':'Po neršto ima aktyviai sekliuose šylančiuose plotuose.',
+'Vasara':'Aktyviausi ryte ir vakare. Dieną dažnai gilesnėse struktūrose arba šešėlyje.',
+'Ruduo':'Stambūs būriai gaudo smulkmę. Dažnai geriausias sezonas stambiam ešeriui.',
+'Žiema':'Vienas patikimiausių žieminių objektų. Būriai juda, todėl neradus kibimo per kelias minutes keisk skylę ir gylį.'},
+lures:'Mažos gumytės 5–8 cm ant jig galvučių, sukriukės nr. 1–3, mažos blizgės, mažesni vobleriai, drop shot. Žiemą: mormyškos, balansyrai, mažos blizgutės.',
+tackle:'Ultralight arba lengvas spiningas, plonas valas. Dideliems ešeriams ir lydekų paplitimo vietose praverčia plonas fluorokarbono pavadėlis.',
+weather:'Ešerio aktyvumas kinta pagal temperatūrą ir dienos ilgį (EV10). Slėgio poveikis neįrodytas. Kuriame gylyje ir kokiu masalu kimba, parodys tavo žurnalas.',
+tips:'Radus būrį, kelis kartus iš eilės mesk į tą pačią vietą. Jei kimba tik smulkus, pakelk masalo dydį arba pakeisk gylį.',
+mistakes:'Per didelis masalas vėsiu metu. Per greitas vedimas. Kai būrys nustoja kibti, ilgai stovėjimas toje pačioje vietoje.'},
+{id:'starkis',name:'Starkis',lat:'Sander lucioperca',
+intro:'Jautrus šviesai plėšrūnas. Mėgsta drumstesnį vandenį, tvirtą dugną ir prieblandą.',
+where:'Gilesnės duobės, nuo smėlio ir žvyro iki akmeninių pylimų, krantų įtvirtinimai, kritimai prie gilumos, upių posūkiai.',
+seasons:{
+'Pavasaris':'Prieš neršią ir po jo gali būti pasyvus, kimba lėtai. Draudimai nerštui galioja, tikrink taisykles.',
+'Vasara':'Dieną gilumoje, aktyvus aušroje, sutemose ir naktį.',
+'Ruduo':'Vienas geriausių sezonų. Vėsstantis vanduo ir aktyvi smulkmė pagerina kibimą.',
+'Žiema':'Kimba iš ledo prie dugno gilesnėse vietose, dažniausiai prieblandoje.'},
+lures:'Gumytės ir šadai 8–12 cm ant jig galvučių, vedamos prie dugno. Giliau nardantys vobleriai, vertikalūs blizgutės ir balansyrai žiemą.',
+tackle:'Jautri meškerė su greita viršūne ir pintas valas, kad pajaustum švelnų kibimą. Burna kieta, todėl kirtis turi būti ryžtingas ir kabliukas aštrus.',
+weather:'Dažnai kimba geriau apsiniaukus ar vėjuotą dieną, kai vanduo drumstesnis. Giedras ir ramus oras dieną dažnai pasyvesnis.',
+tips:'Kibimas dažnai tik lengvas pastuktelėjimas ar masalo „sunkumas“. Po kiekvieno nuleidimo palik masalą ramiai, nes kimba ant krintančio ar gulinčio masalo.',
+mistakes:'Per silpnas kirtis. Per greitas vedimas. Žvejyba tik dieną giedrą dieną sekliame vandenyje.'},
+{id:'samas',name:'Šamas',lat:'Silurus glanis',
+intro:'Didžiausias mūsų gėlavandenis plėšrūnas. Aktyvus šiltuoju metu, dažnai naktį.',
+where:'Gilios duobės, upių posūkiai, nuskendę medžiai, tiltų atramos. Nemunas, Neris ir kai kurie dideli ežerai.',
+seasons:{
+'Pavasaris':'Prasideda šilimu, kai vanduo sušyla.',
+'Vasara':'Pagrindinis sezonas, ypač naktį ir prieblandoje.',
+'Ruduo':'Aktyvus, kol vanduo nepaaušta.',
+'Žiema':'Praktiškai pasyvus.'},
+lures:'Spiningu sunkūs gumos masalai ir dideli vobleriai. Dažniausiai žvejojamas klonku ar su gyvu masalu.',
+tackle:'Visa įranga turi būti žymiai stipresnė nei lydekai: pintas valas, stiprūs kabliukai, didelis graibštas ar kėlimo rankos. Gyvo masalo ir klonko naudojimas reglamentuotas, tikrink taisykles.',
+weather:'Šilti, tvankūs vakarai prieš audrą dažnai duoda aktyvumo.',
+tips:'Šamo žvejyba reikalauja kantrybės ir saugaus žuvies paleidimo plano dar prieš užmetant.',
+mistakes:'Per silpna įranga. Neturint plano, kaip saugiai ištraukti ir paleisti didelę žuvį.'},
+{id:'upetakis',name:'Upėtakis',lat:'Salmo trutta',
+intro:'Tekančio, šalto ir deguonies turtingo vandens žuvis. Daug upių turi ypatingas žvejybos sąlygas.',
+where:'Upelių ir upių srovės, riedulių užtakiai, duobės po slenksčiais, šešėlis po medžiais.',
+seasons:{
+'Pavasaris':'Padidėjęs vanduo, gali būti sunkiau, bet srovės kraštai duoda kibimą.',
+'Vasara':'Ryte ir vakare. Dieną laikosi šešėlyje ir gilesnėse vietose.',
+'Ruduo':'Daug upių uždraustos žvejybos nerštui, tikrink taisykles.',
+'Žiema':'Dauguma vandens telkinių uždrausti.'},
+lures:'Mažos sukriukės (nr. 0–2), mažos blizgės, mažesni vobleriai (3–6 cm), lengvos gumytės.',
+tackle:'Ultralight arba lengvas spiningas, plonas fluorokarbono pavadėlis. Naudok bekabliukius arba pritrauktus kabliukus, jei reikalauja taisyklės.',
+weather:'Skaidrus vanduo ir stiprus saulės šviesumas daro žuvį atsargią. Po lietaus, kai vanduo kiek drumstesnis, kimba drąsiau.',
+tips:'Meskite prieš srovę arba įstrižai ir veskite masalą su srove, vengdami šešėlio ant vandens.',
+mistakes:'Per didelis masalas. Žvejyba prie pat žuvies, nuo pat kranto, be paslėpimo.'},
+{id:'sapalas',name:'Šapalas',lat:'Squalius cephalus',
+intro:'Upinė žuvis, pagaunama spiningu mažais masalais. Atsargi ir matanti.',
+where:'Upių srovės, užtakiai, medžių šešėlis, slenksčių apačia.',
+seasons:{
+'Pavasaris':'Aktyvus po sušilimo.',
+'Vasara':'Gerai kimba ant paviršinių ir mažų sukriukių.',
+'Ruduo':'Aktyvus iki vėsstančio vandens.',
+'Žiema':'Mažai aktyvus.'},
+lures:'Mažos sukriukės, mažos blizgės, mažos vobleriai, paviršiniai masalai šiltuoju metu.',
+tackle:'Lengvas spiningas, plonas fluorokarbonas.',
+weather:'Skaidrus vanduo reikalauja atsargaus priartėjimo.',
+tips:'Mesk iš toliau ir iš šono. Šapalas dažnai pastebi šešėlį ir judesį.',
+mistakes:'Per aukštas ir triukšmingas priėjimas prie kranto.'},
+{id:'vegele',name:'Vėgėlė',lat:'Lota lota',
+intro:'Šaltavandenė žuvis, aktyvi žiemą ir naktį.',
+where:'Gilesnės vietos su tvirtu dugnu, upių duobės, ežerų gilios vietos.',
+seasons:{
+'Pavasaris':'Mažai aktyvi.',
+'Vasara':'Laikosi gilumoje, retai žvejojama.',
+'Ruduo':'Pradeda aktyvėti vėstant vandeniui.',
+'Žiema':'Pagrindinis sezonas, ypač prieblandoje ir naktį.'},
+lures:'Dažniausiai pasyvūs masalai prie dugno: žuvies gabaliukai, kirmėlės. Žiemą kartais ima ir blizgutes.',
+tackle:'Tvirtas dugninis montažas, patikimi kabliukai.',
+weather:'Šaltas oras ir šaltas vanduo yra jos stichija.',
+tips:'Nusileisk iki dugno ir laikyk masalą netoli jo. Kimba dažniausiai prieblandoje.',
+mistakes:'Per ankstyva žvejyba šiltu vandeniu.'}
+];
+
+const PRINCIPLES=[
+['Atmosferos slėgis','Neįrodyta. Du šaltiniai nesutaria (EV6): recenzuotame tyrime slėgis nebuvo reikšmingas, o nerecenzuotame darbe žemas slėgis didino lydekos pagavimus. Todėl brifas slėgio nevertina. Tavo žurnalas turės parodyti, ar tavo vandenyse yra ryšys (hipotezė H7).'],
+['Vandens temperatūra','Nulemia žuvies ritmą labiau nei oro temperatūra. Šaltame vandenyje masalą vesk lėčiau ir naudok mažesnį. Šiltėjančiame vandenyje ieškok aktyvių žuvų sekliau, o vasaros karštyje gilesnėse vietose.'],
+['Vėjas','Vėjas sukelia plankton ir smulkmę prie pavėjinio kranto, todėl ten dažnai telkiasi ir plėšrūnai. Banguotas paviršius sumažina žuvies atsargumą.'],
+['Šviesa ir vandens skaidrumas','Skaidriame vandenyje rinkis natūralius, matinius tonus ir ploną pavadėlį. Drumstame vandenyje ryškūs, kontrastingi arba triukšmingi masalai (sukriukės, rattlin voblerai).'],
+['Mėnulis','Moksliniai įrodymai silpni. Žurnalas įrašys fazę, kad pamatytum, ar tavo duomenyse yra pasikartojimas.'],
+['Ledo saugumas','Patikrink ledą grąžtu kas kelis metrus. Dažnai cituojama, kad pėsčiajam reikia bent apie 10 cm švaraus kieto ledo, bet tai orientacinė riba. Visada turėk ledo spyglius (ice picks), virvę ir niekada nežvejok vienas ant abejotino ledo.'],
+['Žuvies paleidimas','Šlapios rankos, kuo trumpiau ore, kabliuką išimk žnyplėmis. Sunkią žuvį laikyk horizontaliai. Bekabliukiai ar prispausti kabliukai atleidžia greičiau.'],
+['Taisyklės ir leidimai','Minimalūs dydžiai, draudimo laikotarpiai, leidimai ir leidžiami masalai keičiasi. Prieš sezoną ir prieš naują vandens telkinį perskaityk galiojančias Mėgėjų žvejybos taisykles.']
+];
+
+const KNOTS=[
+{name:'Palomar',use:'Masalas ar kabliukas prie pinto valo. Vienas stipriausių mazgų, lengvai surišamas.',steps:['Perlenk valą dvigubai (maždaug 15 cm) ir perkišk kilpą pro kabliuko ar žiedo skylutę.','Dvigubu valu surišk paprastą mazgą, bet neveržk ne iki galo.','Kilpą užmauk ant viso masalo (ar kabliuko).','Sudrėkink ir sutempk, laikydamas už pagrindinio valo ir už galiuko.','Nukirpk galiuką, palikęs apie 2–3 mm.']},
+{name:'Pagerintas clinch',use:'Monofilis ir fluorokarbonas prie masalo ar kabliuko.',steps:['Perkišk valą per skylutę ir apvyniok galiuką 5–7 kartus aplink pagrindinį valą.','Galiuką perkišk pro mažą kilpą prie pat skylutės.','Tada perkišk pro didelę kilpą, susidariusią virš pirmosios.','Sudrėkink ir sutempk, slinkdamas apvijas link skylutės.','Nukirpk galiuką.']},
+{name:'Uni',use:'Universalus mazgas: masalas, kabliukas, o su dviem valais ir sujungimas.',steps:['Perkišk valą per skylutę ir sulenk atgal, kad prie pagrindinio valo susidarytų kilpa.','Galiuku apvyniok 4–6 apvijas aplink abu valus pro kilpą.','Sudrėkink ir patrauk galiuką, kad apvijos susispaustų.','Nuslinkęs prie skylutės užveržk, patempdamas pagrindinį valą.','Nukirpk galiuką.']},
+{name:'Atvira kilpa (non-slip loop)',use:'Voblerams, jerkbaitams ir lengviems jig, kai masalui reikia laisvo judesio.',steps:['Užrišk laisvą paprastą mazgą pagrindiniame vale, apie 10 cm nuo galo.','Galą perkišk pro masalo žiedą ir tada atgal pro paprastą mazgą ta pačia kryptimi.','Apvyniok galą aplink pagrindinį valą 3–5 kartus.','Galą vėl perkišk pro paprastą mazgą.','Sudrėkink ir užveržk, palikdamas norimo dydžio kilpą priekyje.']},
+{name:'Dvigubas Uni (valų sujungimas)',use:'Pinto valo sujungimas su fluorokarbono pavadėliu.',steps:['Padėk abu valus vieną šalia kito, persidengiančius apie 15 cm.','Vienu galu surišk Uni mazgą aplink kitą valą (pintam dažniau daugiau apvijų, fluorokarbonui mažiau).','Tą patį padaryk su kitu galu aplink pirmąjį.','Sudrėkink ir patempk valus į priešingas puses, mazgai suslys vienas prie kito.','Nukirpk galus.']},
+{name:'FG',use:'Plonas, lygus pinto valo ir pavadėlio sujungimas, lengvai praeina pro žiedus. Reikalauja praktikos.',steps:['Pavadėlį įtempk, o pintą valą austi aplink jį pakaitomis iš viršaus ir iš apačios maždaug 16–20 kartų.','Užrakink 2–3 pusiniais mazgais aplink pavadėlį.','Paskui 3–5 pusiniais mazgais aplink abu valus.','Sutempk ir nukirpk galus.']}
+];
+
+const BASICS={
+spin:[
+['Pavadėliai (plieniniai ar fluorokarbono)',/pavad|leader|plienin|fluor/i],
+['Ilgos žnyplės kabliukams išimti',/žnypl|plier|išėmik|forcep/i],
+['Graibštas',/graibšt|\bnet\b|landing/i],
+['Burnos atvėriklis',/atvėr|spreader/i],
+['Valo žirklės ar pintų valų žirklės',/žirkl|cutter/i],
+['Svarstyklės ir matuoklė',/svarstykl|matuokl|scale|measure/i]],
+ice:[
+['Ledo grąžtas',/grąžt|auger/i],
+['Samtelis ledui',/samtel|skimmer/i],
+['Ledo spygliai (ice picks)',/spygl|ice pick/i],
+['Gelbėjimo virvė',/virv|rope/i],
+['Dėžė ar kėdė ir rogutės',/dėž|kėd|roguč|sled/i]],
+boat:[
+['Gelbėjimo liemenės',/liemen|life ?jacket|pfd/i],
+['Irklai',/irkl|paddle|oar/i],
+['Inkaras',/inkar|anchor/i],
+['Žibintai',/žibint|light/i]]
+};
+
+/* ============================================================
+   ŽINIŲ BAZĖ. Kiekvienas teiginys turi šaltinio ID.
+   Patikimumas: A recenzuotas / oficialus teisės aktas,
+   A- oficiali institucijos atmintinė (ne teisės aktas),
+   B institucijos pranešimas ar agregatorius, C magistro darbas ar specializuota spauda, D nepatikrinta.
+   Taikomumas Lietuvai: aukštas / vidutinis / žemas.
+   Paskutinis tikrinimas: 2026-11-13.
+   ============================================================ */
+const KB_DATE='2026-11-13';
+
+const SRC={
+ A1:{t:'AAD atmintinė: žvejybos laikotarpiai, dydžiai, kiekiai (infografikas, PDF)',g:'A-',ap:'aukštas',url:'https://aad.lrv.lt/lt/konsultacijos/atmintines/zvejyba/zvejybos-atmintine/',n:'Puslapis atnaujintas 2026-11-10, infografike nurodyta 2026.05.15. Perskaityta 2026-11-13. Ne teisės aktas.'},
+ A2:{t:'AAD atmintinė: žvejybos įrankiai ir būdai',g:'A-',ap:'aukštas',url:'https://aad.lrv.lt/lt/konsultacijos/atmintines/zvejyba/zvejybos-irankiai-budai/',n:'Atnaujinta 2026-10-29. Perskaityta 2026-11-13.'},
+ A3:{t:'AAD atmintinė: mėgėjų žvejybos leidimai',g:'A-',ap:'aukštas',url:'https://aad.lrv.lt/lt/konsultacijos/atmintines/zvejyba/megeju-zvejybos-leidimai/',n:'Atnaujinta 2026-10-28.'},
+ A4:{t:'AAD atmintinė: poledinė žūklė',g:'A-',ap:'aukštas',url:'https://aad.lrv.lt/lt/konsultacijos/atmintines/zvejyba/poledine-zukle/',n:'Atnaujinta 2026-10-27.'},
+ A5:{t:'AAD atmintinė: žvejybos sąlygos konkrečiuose vandens telkiniuose',g:'A-',ap:'aukštas',url:'https://aad.lrv.lt/lt/konsultacijos/atmintines/zvejyba/zvejybos-draudimai-upiu-ruozuose/',n:'Perskaityta 2026-11-13. Upių sąrašas čia įkeltas tik iš dalies (Vilniaus ir Trakų regionas).'},
+ A6:{t:'Mėgėjų žvejybos vidaus vandenyse taisyklės (pirminis tekstas, e-seimas TAIS.441228)',g:'A',ap:'aukštas',url:'https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/TAIS.441228/asr',n:'NEPERSKAITYTA: e-seimas blokuoja automatinį skaitymą. Taisyklių suvestinė laukia, kol Arnas ją pateiks.'},
+ B1:{t:'zvejogidas.lt (ežerų duomenų agregatorius)',g:'B-',ap:'aukštas',url:'https://zvejogidas.lt/ezeras/ezeras-viesai-traku-raj',n:'Ežero ribos sutampa su AAD (A1), kitų laukų šaltinio nėra. Atnaujinimo datos nėra. Naudoti tik kaip užuominą, nuomą tikrinti ALIS.'},
+ P1:{t:'Kuparinen, Klefoth, Arlinghaus 2010, Fisheries Research 105:111-117 (lydeka, Vokietijos ežeras)',g:'A',ap:'vidutinis',url:'https://doi.org/10.1016/j.fishres.2010.03.011',n:'Vienas ežeras. Skaitytos tik santraukos.'},
+ P2:{t:'Roste 2020, NMBU magistro darbas (lydeka, Norvegija)',g:'C',ap:'žemas',url:'https://static02.nmbu.no/mina/studier/moppgaver/2020-Roste.pdf',n:'Nerecenzuota, vienas ežeras, spalis.'},
+ P3:{t:'Bursell, Arlinghaus 2018, PeerJ 6:e4744 (release-rig, Baltijos lydeka)',g:'A-',ap:'aukštas',url:'https://peerj.com/articles/4744',n:'Piliečių mokslo duomenys, ne griežtas eksperimentas.'},
+ P4:{t:'Heermann ir kt. 2013, Fish. Manag. Ecol. 20:187-200 (ešerys, 21 ežeras Vokietijoje)',g:'A',ap:'aukštas',url:'https://doi.org/10.1111/fme.12000',n:'Žvejų žurnalai + eksperimentinė žvejyba.'},
+ P5:{t:'Horký ir kt. 2008, Hydrobiologia 614:151-157 (starkis, Elbė)',g:'A',ap:'vidutinis',url:'https://vuzv.cz/publikace/a-telemetry-study-on-the-diurnal-distribution-and-activity-of-adult-pikeperch-sander-lucioperca-l-in-a-riverine-environment',n:'Upė, telemetrija. Poulet ir kt. 2005 (Hydrobiologia 543:79-90, pietų Prancūzija) rodo tą patį, bet šiltas klimatas.'},
+ P6:{t:'Rakauskas ir kt. 2019, KMAE (mažų rytų Lietuvos ežerų biokontrolė)',g:'A',ap:'aukštas',url:'https://www.kmae-journal.org/10.1051/kmae/2019013',n:'Ištirti ežerai: Beržuvis, Bevardis, Cirkliškis, Stūgliai. Tomas ir puslapiai nepatikrinti.'},
+ P7:{t:'Dainys ir kt. 2022, Fishes 7(5):232 (Kauno marios)',g:'A',ap:'aukštas',url:'https://www.mdpi.com/2410-3888/7/5/232/htm',n:'Mėgėjų žvejyba stabdo starkių ir ešerių atsistatymą.'},
+ P8:{t:'Žuvininkystės tarnyba / LIFE: lydekų jauniklių išleidimas Vilniaus ir Trakų ežeruose, 2025-10-02',g:'B',ap:'aukštas',url:'https://lifesipvanduo.apva.lt/en/news/i-vilniaus-ir-traku-rajonu-ezerus-isleista-daugiau-kaip-2-tukstanciai-dirbtiniu-budu-uzaugintu-lydekaiciu-jaunikliu/',n:'Institucijos pranešimas.'},
+ P9:{t:'Ann. Zool. Fennici 33:669-678 (1996), Baltijos ešerio aktyvumas',g:'A',ap:'vidutinis',url:'https://www.annzool.net/PDF/anzf33/anzf33-669p.pdf',n:'Aktyvumas koreliuoja su temperatūra ir dienos ilgiu.'},
+ N1:{t:'In-Fisherman perpasakojimas apie J. Casselmano tyrimus (lydeka po ledu)',g:'C',ap:'žemas',url:'https://www.in-fisherman.com/editorial/understanding-winter-pike/387779',n:'Specializuota spauda, Kanados skydo ežerai. Tik hipotezei.'}
+};
+
+/* Pagrindas rekomendacijoms. Brifas gali remtis TIK šiais įrašais. */
+const EVID=[
+ {id:'EV1',f:'Prieblanda (lydeka)',sp:'Lydeka',claim:'Lydekos kibimas (pagavimai per valandą) didesnis prieblandoje (aušra ir sutemos) nei kitu paros metu.',src:['P1'],conf:'vidutinis',ap:'Vienas Vokietijos ežeras, eksperimentinė žvejyba. Klimatas ir ežero tipas panašūs.'},
+ {id:'EV2',f:'Vėjas (lydeka)',sp:'Lydeka',claim:'Stipresnio vėjo dienomis lydeka kibo geriau. Slenksčio šaltinis nenurodo.',src:['P1'],conf:'vidutinis',ap:'Vienas ežeras.'},
+ {id:'EV3',f:'Mėnulis (lydeka)',sp:'Lydeka',claim:'Pagavimai didesni aplink pilnatį ir jaunatį. Ką reiškia "aplink", šaltinio santraukoje nepasakyta; programa naudoja ±2 d. (savo apibrėžimas).',src:['P1'],conf:'žemas',ap:'Vienas ežeras, santraukos lygis.'},
+ {id:'EV4',f:'Vandens temperatūra (lydeka)',sp:'Lydeka',claim:'Aukštėjant vandens temperatūrai lydekos pagavimai mažėjo.',src:['P1'],conf:'vidutinis',ap:'Vienas ežeras; tyrimo temperatūrų intervalas man nežinomas.'},
+ {id:'EV5',f:'Žvejybos spaudimas',sp:'Lydeka',claim:'Intensyvi žvejyba per paskutines 2 dienas statistiškai reikšmingai mažino pagavimus ir buvo stipriausias iš veiksnių. Pagavimai krito net be žuvų pasilikimo.',src:['P1'],conf:'vidutinis',ap:'Vienas ežeras. Mažiems, lengvai prieinamiems Vilniaus ežerams logiška, bet neįrodyta.'},
+ {id:'EV6',f:'Oro slėgis',sp:'visos',claim:'NEĮRODYTA. Recenzuotame tyrime (P1) slėgis tarp reikšmingų veiksnių nepaminėtas, nerecenzuotame magistro darbe (P2) žemas slėgis didino pagavimus. Šaltiniai nesutaria, todėl slėgis brife nevertinamas.',src:['P1','P2'],conf:'žemas',ap:'Prieštarauja.'},
+ {id:'EV7',f:'Prieblanda (starkis)',sp:'Starkis',claim:'Starkio judrumas didžiausias prieblandoje, mažiausias naktį. Tai bendra tendencija, o ne taisyklė.',src:['P5'],conf:'vidutinis',ap:'Upė Čekijoje.'},
+ {id:'EV8',f:'Sistema (lydeka)',sp:'Lydeka',claim:'"Release-rig" sistema (smulkesni kabliukai, kitoks tvirtinimas) pakėlė sėkmingą ištraukimą nuo 45% iki 85%. Masalo tipas ir vandens temperatūra ištraukimui įtakos neturėjo. Kietieji masalai su įprasta sistema sukėlė daugiau sužalojimų.',src:['P3'],conf:'vidutinis',ap:'Baltijos lydeka, spiningavimas. Piliečių mokslo duomenys.'},
+ {id:'EV9',f:'Ešerys: žvejas ir sezonas',sp:'Ešerys',claim:'Ešerių pagavimus stipriai veikia paties žvejo veiksniai (patirtis, tikslinė rūšis, masalas), vandens skaidrumas ir sezonas. Rudenį pagavimai didesni dėl maisto stygiaus.',src:['P4'],conf:'vidutinis',ap:'21 ežeras Vokietijoje, ledynų formuotas kraštovaizdis. Konkretaus masalo šaltinis nenurodo.'},
+ {id:'EV10',f:'Ešerio aktyvumas',sp:'Ešerys',claim:'Ešerio plaukimo aktyvumas sezoniškai kinta pagal temperatūrą ir dienos ilgį, nerštavietėje pikas.',src:['P9'],conf:'vidutinis',ap:'Baltijos populiacija.'},
+ {id:'EV11',f:'Deguonis po ledu',sp:'visos',claim:'Mažuose rytų Lietuvos ežeruose ilgai tvyrant ledui deguonies stygius pasitaiko nereguliariai. Tai keičia žuvų vietą ir kibimą.',src:['P6'],conf:'vidutinis',ap:'Tiesiogiai Lietuva, bet tik 4 ištirti ežerai.'},
+ {id:'EV12',f:'Šviesa po ledu (hipotezė)',sp:'Lydeka',claim:'Specializuotos spaudos teigimu, žiemą po ledu šviesa gali būti artima optimaliai lydekai, o įtekantys upeliai turtingesni deguonies. NEPATVIRTINTA recenzuotu šaltiniu.',src:['N1'],conf:'žemas',ap:'Kanados ežerai.'},
+ {id:'EV13',f:'Masalo parinkimas',sp:'visos',claim:'Rasta TIK tiek: konkretaus masalo (tipo, spalvos, dydžio) pranašumo Lietuvos ežeruose recenzuotų duomenų nėra. Masalų rekomendacijos remiasi tavo paties pagavimais ir metodiniu principu, ne literatūra.',src:[],conf:'žemas',ap:'Tyrimų spraga.'}
+];
+
+/* Metodika: kaip programa daro išvadas */
+const PROC=[
+ ['1. Šaltinių tikrinimas','Kiekvienas šaltinis registre turi patikimumo žymą (A, A-, B, C, D) ir taikomumo Lietuvai vertinimą. Teisės faktams naudojami tik oficialūs šaltiniai (AAD atmintinės, vėliau pirminis taisyklių tekstas). Agregatorių duomenys (B-) niekada nelaikomi galutine tiesa, o ežero nuoma tikrinama ALIS.'],
+ ['2. Teisinė dalis','Brifo teisinė dalis skaičiuojama taisyklėmis, o ne generuojama dirbtinio intelekto. Taisyklės įkeltos iš AAD atmintinių su šaltinio nuoroda. Kiekviena eilutė rodo, ar taisyklė patikrinta pirminiame akte (kol kas ne).'],
+ ['3. Sąlygų vertinimas','Programa lygina tavo nurodytas sąlygas su įrodymų lentele (EV1-EV13). Jei šaltinis veiksnio nepatvirtina arba šaltiniai prieštarauja (pvz. slėgis), veiksnys nevertinamas ir tai parašoma.'],
+ ['4. Masalai ir sistema','Dirbtinis intelektas parenka tik iš tavo spintos ir privalo prie kiekvieno pasirinkimo nurodyti įrodymų ID. Kai įrodymo nėra, rekomendacija ženklinama "nepatvirtinta" ir žemu pasitikėjimu. Komplektas sudaromas taip, kad skirtingi masalai duotų informacijos tavo duomenims (metodinis sprendimas, ne literatūros).'],
+ ['5. Laimikių įrašymas','Tu fotografuoji laimikį su masalu. Laikas ir vieta paimami iš nuotraukos EXIF, žuvis ir masalas atpažįstami iš nuotraukos, o tu patvirtini. Žvejybos pradžia ir pabaiga duoda pastangas.'],
+ ['6. Statistika','Rodikliai skaičiuojami per valandą (pastangos). Kiekviena išvada žymima pasitikėjimu pagal duomenų kiekį. Masalų lentelė rodo tik pagavimus be bandymų skaičiaus, todėl ji nerodo masalo efektyvumo.'],
+ ['7. Hipotezės','Hipotezes sudariau iš šaltinių (EV). Kiekviena turi aiškų testą. Rezultatas skaičiuojamas pagal tavo duomenis: pagavimų per valandą santykis (RR) su 95% intervalu, kurio paklaida padidinta 1,5 karto (mano konservatyvus sprendimas dėl netolygaus kibimo, ne literatūros skaičius). Mažiausia imtis: 5 žvejybos kiekvienoje grupėje ir 10 žuvų iš viso, kitaip rašoma "nepakanka duomenų".'],
+ ['8. Dokumentavimas','Mygtukas "Įvertinti ir įrašyti" išsaugo hipotezės rezultatą su data ir imtimi. Taip matyti, kaip išvada keitėsi augant duomenims.']
+];
+
+/* Taisyklės. Lietuvos mėgėjų žvejyba vidaus vandenyse. */
+const SPECIES_RULES={
+ 'Lydeka':{closed:[[2,1,4,30]],limit:2,min:50,max:80,src:'A1',note:'Dydžio ribojimas netaikomas 2 priede nurodytose upėse; 7 priede nurodytuose telkiniuose leidžiama pasilikti vieną ne mažesnę nei 65 cm lydeką.'},
+ 'Starkis':{closed:[[3,1,5,31]],limit:2,min:50,max:65,src:'A1',note:''},
+ 'Šamas':{closed:[[1,1,4,1],[11,1,12,31]],limit:1,min:75,src:'A1',note:''},
+ 'Vėgėlė':{closed:[[12,15,12,31],[1,1,1,31]],limit:3,min:45,src:'A1',note:''},
+ 'Ešerys':{closed:[],limit:null,min:null,src:'A1',note:'Ešerys nėra atskirai išvardytas (kitos žuvys): ribos neturi, galioja bendras 5 kg svorio limitas.'},
+ 'Upėtakis':{closed:[],limit:2,min:30,max:40,src:'A1',note:'Margasis upėtakis: žvejojamas limituotoje žvejyboje, kortelė; sezonai pagal limituotos žvejybos telkinį.'},
+ 'Kuoja':{closed:[],limit:null,min:null,src:'A1',note:''},
+ 'Karšis':{closed:[],limit:null,min:null,src:'A1',note:''}
+};
+const WEIGHT_RULE='Vienos žvejybos metu sugautų žuvų (kurioms nėra savo normos) bendras svoris negali viršyti 5 kg (Kuršių mariose 7 kg).';
+const YEAR_BAN='Visus metus draudžiama žvejoti: skersnukius, vijūnus, jūrines ir mažąsias nėges, nėgių vingilius, aštriašnipius erškėtus (ersketus), sterles ir plačiažnyplius vėžius (pavadinimus tikrinti infografike).';
+
+/* Upės, kuriose žvejyba uždrausta spalio 1 d. - gruodžio 31 d. (A5). DALINIS sąrašas: Vilniaus ir Trakų regionas.
+   Pilnas sąrašas AAD puslapyje. */
+const RIVER_BAN_OCT_DEC=['Bezdonė','Bražuolė','Dūkšta','Juodė','Kamaja','Kena','Vilnia','Laukysta','Lokys','Lomena','Manierka','Mozūriškanka','Musė','Nemenčia','Riešė','Rudamina','Saidė','Strūna','Strečia','Taurija','Veršupis','Vokė','Žalesa','Žiežmara','Žeimena','Jusinė','Lakaja','Luknelė','Mera','Peršokšna','Petruškė','Saria','Skerdiksna','Skirda','Merkys','Cirvija','Lukna','Geluža','Grūda','Spengla','Ūla','Verknė','Samė','Strūzda'];
+const NEMUNAS_BAN_JUL_DEC='Nemuno ruožai, kuriuose žvejyba draudžiama liepos 1 d. - gruodžio 1 d.: Jūros žiotys (+100 m dešiniu krantu), 150 m aukščiau Dubysos žiočių iki Meškupio žiočių, nuo Piliakalnio upelio žiočių iki Upesnio žiočių, Nevėžio žiotys (+100 m dešiniu krantu).';
+const ECO_WATERS={'Alovė':'','Antakmenių ež.':'','Biržulis':'Iš valčių draudžiama žvejoti nuo navigacijos pradžios iki liepos 31 d.; karpinių žvejyba be bilieto negalioja.','Dviragis':'','Gėlių ež.':'','Ilgės ež.':'Draudžiama žvejoti balandžio 1 d. - rugpjūčio 1 d.','Ilmėdas':'','Imbradas':'','Kalvių':'','Kampuolis':'','Kaviškis':'','Kiaunas':'','Kiementas':'','Mūšėjus':'','Lūkstas':'','Mosėdžio I tvenkinys':'','Neveiglas':'','Paršežeris':'','Prapuntas':'','Riešė':'Draudžiama gaudyti baltuosius plačiakakčius.','Savistas':'','Simno ež.':'','Širvys':'','Šventas':'Draudžiama gaudyti baltuosius plačiakakčius.','Veisiejis':'Niedaus ornitologinio draustinio teritorijoje draudžiama žvejoti balandžio 1 d. - rugpjūčio 1 d.','Zapsys':'','Žiezdrelis':''};
+const ECO_RULES='Ekologinei būklei gerinti skirti telkiniai (A5): plėšriąsias žuvis galima žvejoti tik dirbtiniais masalais; vienas žvejys naudoja ne daugiau kaip 1 įrankį; per žvejybą galima pasilikti vieną lydeką ir vieną starkį (abu ne mažesni nei 65 cm); jei žvejojama naudojant sonarą ar kitus žuvis aptikti padedančius prietaisus, visas lydekas ir starkius reikia paleisti; karpines žuvis galima žvejoti be bilieto (išskyrus Biržulį).';
+const BANNED_WATERS='Žvejyba uždrausta: Jūra (Tauragė), Nemunas žemiau Kauno HE (500 m), Šventoji (Kavarskas ir Anykščių ruožai), Kuršių marių pakrantė tarp Atmatos ir Skirvytės (<1 km nuo kranto) ir Kniaupo įlanka, Krokų lankos draustinis, rezervatų vandens telkiniai (be limituotos žvejybos) ir valstybiniai akvakultūros tvenkiniai.';
+
+/* Vandenų profiliai su kilme. Į programą įkeliami mygtuku. */
+const KB_WATERS=[
+ {name:'Viesai',kind:'Ežeras',region:'Trakų r., ~8 km į vakarus nuo Trakų',area:'45.42',maxDepth:'20.86',meanDepth:'7.12',coords:'54.633432, 24.796452',
+  bottom:'',access:'Parkavimas ir valčių nuleidimo vietos šaltinyje nenurodyti. Automobilio negalima statyti arčiau nei 25 m nuo vandens.',
+  notes:'Įžuvinimas: 2023-10-27 išleista 440 lydekų šiųmetukų (B1). Žuvų sudėtis nepatvirtinta (B1). Matuota: 45,42 ha, vidutinis gylis 7,12 m (B1).',
+  legal:{status:'neišnuomotas',tenant:'',prevTenant:'Spearfishing Club Rykliukas (leidimas galiojo iki 2025-07-27)',ticket:'L05.1 (žvejo mėgėjo bilietas)',
+   boat:'Elektrinis variklis arba be variklio. Benzininiai varikliai: šaltinis neaiškus, TIKRINTI. Benzininės valtys: 100 m nuo kranto tik minimaliu greičiu.',
+   src:'B1',checked:KB_DATE,verifiedPrimary:false,todo:'ALIS: patikrinti, ar po 2025-07-27 nėra naujo nuomininko; patikrinti variklių taisykles pagal pirminį tekstą.'}}
+];
+
+/* Hipotezės: sudarytos iš EVID. Testas apibrėžtas logic.js */
+const HYP=[
+ {id:'H1',text:'Lydekos kimba geriau prieblandoje (1 val. aplink saulėtekį ir saulėlydį) nei kitu paros metu.',ev:['EV1'],test:'twilight',sp:['Lydeka'],exp:'+'},
+ {id:'H2',text:'Starkiai kimba geriau prieblandoje nei kitu paros metu.',ev:['EV7'],test:'twilight',sp:['Starkis'],exp:'+'},
+ {id:'H3',text:'Žvejybose su stipresniu vėju (virš tavo duomenų medianos) lydekų per valandą daugiau.',ev:['EV2'],test:'wind',sp:['Lydeka'],exp:'+'},
+ {id:'H4',text:'Aplink jaunatį ir pilnatį (±2 d.) lydekų per valandą daugiau.',ev:['EV3'],test:'moon',sp:['Lydeka'],exp:'+'},
+ {id:'H5',text:'Šaltesnio vandens žvejybose (žemiau tavo duomenų medianos, ne ledas) lydekų per valandą daugiau.',ev:['EV4'],test:'wtemp',sp:['Lydeka'],exp:'+'},
+ {id:'H6',text:'Kai ežeras buvo intensyviai žvejotas per paskutines 2 dienas, lydekų per valandą mažiau.',ev:['EV5'],test:'pressure2d',sp:['Lydeka'],exp:'-'},
+ {id:'H7',text:'Žemo slėgio (<1010 hPa) dienomis lydekų per valandą daugiau nei aukšto (≥1015 hPa). Ginčytina: šaltiniai nesutaria.',ev:['EV6'],test:'airpressure',sp:['Lydeka'],exp:'+'}
+];
+
+/* ============ GRYNA LOGIKA (testuojama be naršyklės) ============ */
+const toMin=t=>{if(!t||!/^\d{1,2}:\d{2}/.test(t))return null;const[h,m]=t.split(':').map(Number);return h*60+m};
+const fromMin=m=>{m=((Math.round(m)%1440)+1440)%1440;return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};
+const DEF_LL={lat:54.69,lon:25.28}; // Vilnius, kai vandens koordinatės nežinomos
+
+function tzOffsetMin(ds){ // Europe/Vilnius poslinkis nuo UTC tą dieną
+  try{const h=+new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Vilnius',hour:'2-digit',hour12:false}).format(new Date(ds+'T12:00:00Z'));return ((h%24)-12)*60}catch(e){return 120}}
+function sunTimes(ds,lat,lon){ // NOAA apytikslis metodas. Grąžina minutes vietiniu laiku.
+  const d=new Date(ds+'T12:00:00Z');const y0=Date.UTC(d.getUTCFullYear(),0,0);const doy=Math.round((d-y0)/864e5);
+  const g=2*Math.PI/365*(doy-1);
+  const eq=229.18*(0.000075+0.001868*Math.cos(g)-0.032077*Math.sin(g)-0.014615*Math.cos(2*g)-0.040849*Math.sin(2*g));
+  const dec=0.006918-0.399912*Math.cos(g)+0.070257*Math.sin(g)-0.006758*Math.cos(2*g)+0.000907*Math.sin(2*g)-0.002697*Math.cos(3*g)+0.00148*Math.sin(3*g);
+  const la=lat*Math.PI/180;const c=(Math.cos(90.833*Math.PI/180)/(Math.cos(la)*Math.cos(dec)))-Math.tan(la)*Math.tan(dec);
+  if(c>1||c<-1)return null;const ha=Math.acos(c)*180/Math.PI;
+  const off=tzOffsetMin(ds);
+  return {rise:720-4*(lon+ha)-eq+off,set:720-4*(lon-ha)-eq+off}}
+function llFrom(coords){const m=String(coords||'').match(/(-?\d{1,2}\.\d+)\s*[,;\s]\s*(-?\d{1,3}\.\d+)/);return m?{lat:+m[1],lon:+m[2]}:DEF_LL}
+/* prieblandos langai: 60 min prieš ir po saulėtekio / saulėlydžio (mano operacinis apibrėžimas) */
+const TW=60;
+function twilightWindows(ds,ll){const s=sunTimes(ds,ll.lat,ll.lon);if(!s)return [];return [[s.rise-TW,s.rise+TW],[s.set-TW,s.set+TW]]}
+function overlap(a0,a1,b0,b1){return Math.max(0,Math.min(a1,b1)-Math.max(a0,b0))}
+function tripSpan(t){const a=toMin(t.start),b0=toMin(t.end);if(a==null||b0==null)return null;let b=b0;if(b<a)b+=1440;return [a,b]}
+function twilightMinutes(t,ll){const sp=tripSpan(t);if(!sp||!t.date)return null;let tw=0;
+  for(const off of [0,1440]){const w=twilightWindows(t.date,ll).map(([x,y])=>[x+off,y+off]);w.forEach(([x,y])=>tw+=overlap(sp[0],sp[1],x,y))}
+  return {tw,total:sp[1]-sp[0]}}
+function inTwilight(ds,min,ll){return twilightWindows(ds,ll).some(([x,y])=>min>=x&&min<=y)}
+
+function moonAge(ds){const d=new Date(ds+'T12:00:00Z');const syn=29.530588853;let a=((d-Date.UTC(2000,0,6,18,14))/864e5)%syn;if(a<0)a+=syn;return a}
+function moonNewFull(ds,tol=2){const a=moonAge(ds),syn=29.530588853;const dn=Math.min(a,syn-a),df=Math.abs(a-syn/2);return Math.min(dn,df)<=tol}
+
+/* ---- EXIF (JPEG): DateTimeOriginal ir GPS ---- */
+function parseExif(buf){
+  try{const v=new DataView(buf);if(v.getUint16(0)!==0xFFD8)return {};let p=2;
+    while(p<v.byteLength-4){const m=v.getUint16(p);if(m===0xFFE1){const len=v.getUint16(p+2);const s=p+4;
+        if(v.getUint32(s)!==0x45786966)return {};const t=s+6;const le=v.getUint16(t)===0x4949;const g16=o=>v.getUint16(o,le),g32=o=>v.getUint32(o,le);
+        const ifd0=t+g32(t+4);const out={};
+        const readIfd=(off,cb)=>{const n=g16(off);for(let i=0;i<n;i++){const e=off+2+i*12;cb(g16(e),g16(e+2),g32(e+4),e+8)}};
+        const str=(type,cnt,vo)=>{const o=cnt>4?t+g32(vo):vo;let r='';for(let i=0;i<cnt-1;i++)r+=String.fromCharCode(v.getUint8(o+i));return r};
+        const rat=(o)=>g32(o)/(g32(o+4)||1);
+        let exifOff=null,gpsOff=null;
+        readIfd(ifd0,(tag,ty,cnt,vo)=>{if(tag===0x8769)exifOff=g32(vo);if(tag===0x8825)gpsOff=g32(vo);if(tag===0x0132&&!out.dt)out.dt=str(ty,cnt,vo)});
+        if(exifOff!=null)readIfd(t+exifOff,(tag,ty,cnt,vo)=>{if(tag===0x9003)out.dt=str(ty,cnt,vo)});
+        if(gpsOff!=null){const gp={};readIfd(t+gpsOff,(tag,ty,cnt,vo)=>{if(tag===1||tag===3)gp[tag]=String.fromCharCode(v.getUint8(vo));
+          if(tag===2||tag===4){const o=t+g32(vo);gp[tag]=rat(o)+rat(o+8)/60+rat(o+16)/3600}});
+          if(gp[2]!=null&&gp[4]!=null){out.lat=(gp[1]==='S'?-1:1)*gp[2];out.lon=(gp[3]==='W'?-1:1)*gp[4]}}
+        if(out.dt){const m2=out.dt.match(/(\d{4}):(\d\d):(\d\d) (\d\d):(\d\d)/);if(m2){out.date=`${m2[1]}-${m2[2]}-${m2[3]}`;out.time=`${m2[4]}:${m2[5]}`}}
+        return out}
+      if((m&0xFF00)!==0xFF00)break;p+=2+v.getUint16(p+2)}
+  }catch(e){}
+  return {}}
+
+/* ---- Teisinė dalis: taisyklių variklis ---- */
+const dInRange=(ds,[m1,d1,m2,d2])=>{const m=+ds.slice(5,7),d=+ds.slice(8,10),x=m*100+d,a=m1*100+d1,b=m2*100+d2;return a<=b?(x>=a&&x<=b):(x>=a||x<=b)};
+const normName=s=>String(s||'').toLowerCase().replace(/\b(ežeras|ež\.|upė|tvenkinys|kūdra)\b/g,'').replace(/[^\p{L}\d]+/gu,' ').trim();
+function legal(w,type,ds,species){
+  const out=[];const L=(lvl,text,src,ver)=>out.push({lvl,text,src,ver:ver||'antrinis'});
+  const lg=(w&&w.legal)||{};const isIce=/žiemin/i.test(type||'');const isBoat=/valt|trol/i.test(type||'');
+  const kind=(w&&w.kind)||'';const nm=normName(w&&w.name);
+  if(!w){L('warn','Vandens telkinys nepasirinktas, teisinė suvestinė negalima.','');return out}
+  /* 1. bilietas / leidimas */
+  const st=lg.status||'nežinoma';
+  if(st==='uždraustas')L('stop','Šiame telkinyje mėgėjų žvejyba uždrausta.',lg.src||'A5');
+  else if(st==='neišnuomotas')L('ok','Valstybinis neišnuomotas telkinys: pakanka žvejo mėgėjo bilieto (L05.1). Metinis bilietas tinka. '+(lg.ticket&&!/L05\.1/.test(lg.ticket)?lg.ticket:''),'A3');
+  else if(st==='išnuomotas')L('stop','Išnuomotas telkinys: metinio bilieto NEPAKANKA, reikia nuomininko leidimo'+(lg.tenant?' ('+lg.tenant+')':'')+'. Leidimą pirk iš nuomininko arba ALIS.','A3');
+  else if(st==='limituota')L('stop','Limituota žvejyba: reikia žvejo mėgėjo kortelės (ir bilieto sąlygų pagal telkinio limitą).','A3');
+  else if(st==='ekologinis')L('ok','Ekologinės būklės gerinimo telkinys: plėšrūnams galioja speciali tvarka (žemiau). Bilieto reikalavimas pagal A5 skiriasi tik karpinėms žuvims.','A5');
+  else L('warn','Telkinio statusas nežinomas. Prieš išvykstant ALIS sistemoje patikrink, ar jis išnuomotas ar limituotas.','A3');
+  if(lg.checked){const age=(new Date(ds)-new Date(lg.checked))/864e5;
+    if(age>30)L('warn','Statusas paskutinį kartą tikrintas '+lg.checked+' (prieš '+Math.round(age)+' d.). Nuoma gali būti pasikeitusi, patikrink ALIS.','');
+    else L('info','Statusas tikrintas '+lg.checked+' šaltinyje '+(lg.src||'?')+(lg.verifiedPrimary?'.':'. Pirminis teisės aktas NEPERSKAITYTAS.'),lg.src||'')}
+  if(lg.todo)L('warn','Neišspręsta: '+lg.todo,'');
+  /* 2. ekologinis sąrašas ir draudžiami vandenys */
+  const eco=Object.keys(ECO_WATERS).find(k=>normName(k)===nm);
+  if(eco&&kind!=='Upė'){L('info',ECO_RULES,'A5');if(ECO_WATERS[eco])L('warn',ECO_WATERS[eco],'A5')}
+  /* 3. sezoniniai upių draudimai */
+  if(kind==='Upė'){
+    if(dInRange(ds,[10,1,12,31])){
+      const hit=RIVER_BAN_OCT_DEC.find(r=>normName(r)===nm||nm.startsWith(normName(r)+' '));
+      if(hit)L('stop','Ši upė ('+hit+') yra sąraše, kuriame mėgėjų žvejyba uždrausta spalio 1 d. - gruodžio 31 d.','A5');
+      else L('warn','Spalio 1 d. - gruodžio 31 d. daugelyje upių žvejyba uždrausta. Šios upės mano dalinis sąrašas neįvardija, bet pilną sąrašą (A5) reikia patikrinti.','A5')}
+    if(/nemun/.test(nm)&&dInRange(ds,[7,1,12,1]))L('warn',NEMUNAS_BAN_JUL_DEC,'A5');
+  }
+  /* 4. rūšys */
+  (species||[]).forEach(sp=>{const r=SPECIES_RULES[sp];if(!r)return;
+    const closed=r.closed.some(x=>dInRange(ds,x));
+    if(closed)L('stop',sp+': šiuo laikotarpiu žvejoti draudžiama (nerštas / draudimo laikotarpis). Pagautą paleisk.',r.src);
+    const bits=[];if(r.min)bits.push('mažiausias dydis '+r.min+' cm');if(r.max)bits.push('didžiausias '+r.max+' cm (nesuvartoti didesnių)');if(r.limit)bits.push('iki '+r.limit+' vnt. per dieną');
+    if(bits.length&&!closed)L('info',sp+': '+bits.join(', ')+'. '+(r.note||''),r.src);
+    else if(!bits.length&&!closed&&r.note)L('info',sp+': '+r.note,r.src);
+    if(sp==='Lydeka'&&!closed&&kind==='Upė')L('warn','Lydekos dydžio ribojimas netaikomas 2 priede nurodytose upėse. Ar ši upė ten įrašyta, nepatikrinta (priedas neperskaitytas).','A1')});
+  /* 5. įrankiai ir būdai */
+  L('info','Vienu metu iki 4 meškerių (įrankių), iš jų ne daugiau kaip 2 su žuvele kaip masalu; iš valties žvejojant judant ne daugiau kaip 2 meškerės (inkaru sustojus galioja bendros sąlygos). Kabliukų iš viso iki 6; dvišakis ir trišakis skaičiuojamas kaip 1.','A2');
+  L('info','Draudžiamos gumos ilgesnės nei 40 cm, nepritvirtinti plūdriniai įrankiai (popkės), išskyrus žvejybą nuo ledo.','A2');
+  L('info','Būti prie vandens (arčiau nei 25 m) su žvejybos įrankiais be teisės žvejoti draudžiama.','A2');
+  L('info',WEIGHT_RULE,'A1');L('info',YEAR_BAN,'A1');
+  if(dInRange(ds,[1,2,4,30]))L('warn','Nuo sausio 2 d. iki balandžio 30 d. draudžiama žvejoti naudojant žuvelę kaip masalą (išskyrus žuvies gabalėlį). Tai liečia ir ledo žvejybą su gyvu ar negyvu žuvele.','A2');
+  if(isIce){L('warn','Ant ledo privaloma turėti du lanksčia jungtimi sujungtus smaigus lengvai pasiekiamoje vietoje. Draudžiama eiti ant ledo, kai LHMT paskelbė ledo pavojų.','A4');
+    L('info','AAD: ledas žmogui saugus nuo 7 cm, grupei nuo 12 cm. Tai minimumai, o ne rekomenduojama riba.','A4')}
+  if(isBoat&&lg.boat)L('warn','Valtis/variklis: '+lg.boat,lg.src||'');
+  return out}
+
+/* ---- Sąlygų vertinimas pagal EVID ---- */
+function condEval(p,w){
+  const ds=p.date,ll=llFrom(w&&w.coords);const out=[];const E=id=>EVID.find(e=>e.id===id);
+  const A=(ev,state,txt)=>out.push({ev,state,txt});
+  const sp=tripSpan({date:ds,start:p.time,end:p.end||p.time});
+  const targets=p.species||[];const pike=!targets.length||targets.includes('Lydeka'),zander=targets.includes('Starkis');
+  const ice=/žiemin/i.test(p.type||'');
+  if(ds&&p.time){const tw=twilightMinutes({date:ds,start:p.time,end:p.end||fromMin(toMin(p.time)+240)},ll);
+    const s=sunTimes(ds,ll.lat,ll.lon);
+    const sunTxt=s?` Saulėtekis ${fromMin(s.rise)}, saulėlydis ${fromMin(s.set)}.`:'';
+    if(tw){const share=Math.round(tw.tw/tw.total*100);
+      if(pike)A('EV1',share>=30?'+':share>0?'0':'-',`Prieblandoje praleisi ${tw.tw} min iš ${tw.total} (${share}%).${sunTxt}`);
+      if(zander)A('EV7',share>=30?'+':share>0?'0':'-',`Prieblandoje praleisi ${tw.tw} min iš ${tw.total} (${share}%).${sunTxt}`)}}
+  if(ds){const mn=moonNewFull(ds,2);if(pike)A('EV3',mn?'+':'0',mn?'Data patenka į ±2 d. nuo jaunaties ar pilnaties.':'Data ne šalia jaunaties ar pilnaties.')}
+  const wind=num(p.wind);if(pike&&wind!=null)A('EV2','info',`Vėjas ${fmt1(wind)} m/s. Šaltinis tvirtina, kad stipresnis vėjas = geresni pagavimai, bet slenksčio nenurodo. Palyginsiu su tavo duomenimis, kai jų bus.`);
+  const wt=num(p.wtemp);if(pike&&wt!=null&&!ice)A('EV4','info',`Vandens temperatūra ${fmt1(wt)} °C. Šaltinis: aukštesnė temperatūra = mažiau pagavimų; tyrimo temperatūrų intervalo nežinau, todėl skaičiaus nevertinu.`);
+  if(pike){if(p.recent==='daug')A('EV5','-','Ežeras intensyviai žvejotas paskutines 2 d. Tai stipriausias iš tirtų veiksnių, tikėtini prastesni pagavimai.');
+    else if(p.recent==='mažai')A('EV5','+','Paskutines 2 d. ežeras buvo mažai žvejotas. Palanku pagal šaltinį.');
+    else A('EV5','info','Nenurodei, ar ežeras buvo žvejotas paskutines 2 d. Tai svarbiausias iš žinomų veiksnių, jei gali, sužinok.')}
+  if(num(p.pressure)!=null)A('EV6','info',`Slėgis ${p.pressure} hPa${p.trend?' ('+p.trend.toLowerCase()+')':''}: šaltiniai nesutaria, įtaka neįrodyta, todėl neįvertinta.`);
+  if(ice){const small=w&&((num(w.area)!=null&&num(w.area)<10)||(num(w.maxDepth)!=null&&num(w.maxDepth)<4));
+    A('EV11',small?'-':'info',small?'Mažas arba seklus telkinys: po ledu deguonies stygiaus rizika didesnė (mano slenkstis: <10 ha arba <4 m, ne iš šaltinio). Ieškok įtekančių upelių ir gilesnių vietų.':'Telkinys nėra mažas ir seklus pagal mano slenkstį (<10 ha ar <4 m), bet deguonies po ledu pamatuoti negali.');
+    A('EV12','info','Specializuotos spaudos hipotezė apie šviesą po ledu: nepatvirtinta, nenaudojama sprendimui.')}
+  return out.map(o=>({...o,e:E(o.ev)}))}
+
+/* ---- Statistika ir hipotezių testai ---- */
+function tripHours(t){const sp=tripSpan(t);return sp?(sp[1]-sp[0])/60:0}
+function catchesOf(t,sp){return (t.catches||[]).filter(c=>!sp||!sp.length||sp.includes(c.species))}
+function median(a){const s=[...a].sort((x,y)=>x-y);if(!s.length)return null;const m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
+function rateRatio(a,ta,b,tb,minTrips){ // a,b = žuvų skaičiai, ta,tb = valandos
+  if(!(ta>0&&tb>0))return {ok:false,why:'trūksta valandų (reikia pradžios ir pabaigos laiko)'};
+  if(a<1||b<1)return {ok:false,why:'vienoje grupėje nulis žuvų, santykio apskaičiuoti negalima'};
+  const rr=(a/ta)/(b/tb);const se=Math.sqrt(1/a+1/b)*1.5;
+  return {ok:true,rr,lo:Math.exp(Math.log(rr)-1.96*se),hi:Math.exp(Math.log(rr)+1.96*se),ra:a/ta,rb:b/tb}}
+function verdict(res,exp){if(!res.ok)return 'nepakanka duomenų';
+  const up=res.lo>1,down=res.hi<1;
+  if(exp==='+')return up?'palaiko':down?'prieštarauja':'neapibrėžta';
+  return down?'palaiko':up?'prieštarauja':'neapibrėžta'}
+function evalHyp(h,trips,waters){
+  const sp=h.sp;const base=trips.filter(t=>tripHours(t)>0);
+  const mk=(A,B,labA,labB,extra)=>{
+    const a=A.reduce((s,t)=>s+catchesOf(t,sp).length,0),b=B.reduce((s,t)=>s+catchesOf(t,sp).length,0);
+    const ta=A.reduce((s,t)=>s+tripHours(t),0),tb=B.reduce((s,t)=>s+tripHours(t),0);
+    const info={n:{A:A.length,B:B.length},fishA:a,fishB:b,hA:ta,hB:tb,labA,labB,extra};
+    if(A.length<5||B.length<5||a+b<10)return {...info,res:{ok:false,why:'mažiausia imtis: 5 žvejybos kiekvienoje grupėje ir 10 žuvų iš viso'},verdict:'nepakanka duomenų'};
+    const res=rateRatio(a,ta,b,tb);return {...info,res,verdict:verdict(res,h.exp)}};
+  const open=base.filter(t=>!/žiemin/i.test(t.type||''));
+  switch(h.test){
+   case 'twilight':{let a=0,b=0,ta=0,tb=0,nt=0;
+     base.forEach(t=>{const w=waters.find(x=>x.id===t.waterId||x.name===t.waterName);const ll=llFrom(w&&w.coords);
+       const cs=catchesOf(t,sp);if(cs.some(c=>!c.time))return;const x=twilightMinutes(t,ll);if(!x)return;nt++;
+       ta+=x.tw/60;tb+=(x.total-x.tw)/60;cs.forEach(c=>{const m=toMin(c.time);const mm=(m<toMin(t.start)?m+1440:m);const tw=twilightWindows(t.date,ll).some(([p,q])=>mm>=p&&mm<=q||mm-1440>=p&&mm-1440<=q);tw?a++:b++})});
+     const info={n:{A:nt,B:nt},fishA:a,fishB:b,hA:ta,hB:tb,labA:'prieblanda',labB:'kitas laikas'};
+     if(nt<5||a+b<10)return {...info,res:{ok:false,why:'mažiausia imtis: 5 žvejybos su laikais ir 10 žuvų iš viso'},verdict:'nepakanka duomenų'};
+     const res=rateRatio(a,ta,b,tb);return {...info,res,verdict:verdict(res,h.exp)}}
+   case 'wind':{const v=base.map(t=>num(t.w&&t.w.wind)).filter(x=>x!=null);const m=median(v);if(m==null)return mk([],[],'','');
+     return mk(base.filter(t=>num(t.w&&t.w.wind)>m),base.filter(t=>num(t.w&&t.w.wind)!=null&&num(t.w.wind)<=m),'vėjas > '+fmt1(m)+' m/s','vėjas ≤ '+fmt1(m)+' m/s')}
+   case 'moon':return mk(base.filter(t=>t.date&&moonNewFull(t.date,2)),base.filter(t=>t.date&&!moonNewFull(t.date,2)),'jaunatis/pilnatis ±2 d.','kitos dienos');
+   case 'wtemp':{const v=open.map(t=>num(t.w&&t.w.wtemp)).filter(x=>x!=null);const m=median(v);if(m==null)return mk([],[],'','');
+     return mk(open.filter(t=>num(t.w&&t.w.wtemp)!=null&&num(t.w.wtemp)<=m),open.filter(t=>num(t.w&&t.w.wtemp)>m),'vanduo ≤ '+fmt1(m)+' °C','vanduo > '+fmt1(m)+' °C')}
+   case 'pressure2d':return mk(base.filter(t=>t.recent==='daug'),base.filter(t=>t.recent==='mažai'),'intensyviai žvejota','mažai žvejota');
+   case 'airpressure':return mk(base.filter(t=>num(t.w&&t.w.pressure)!=null&&num(t.w.pressure)<1010),base.filter(t=>num(t.w&&t.w.pressure)>=1015),'<1010 hPa','≥1015 hPa');
+  }
+  return {res:{ok:false,why:'nežinomas testas'},verdict:'nepakanka duomenų',n:{A:0,B:0},fishA:0,fishB:0,hA:0,hB:0}}
+function confLabel(trips,fish,hours){return (trips<5||fish<10||hours<10)?'žemas':(fish<30||trips<10)?'vidutinis':'aukštesnis'}
+
+/* ---------- iliustracijos: žuvys (vektorinės, originalios) ---------- */
+/* Kiekviena žuvis žiūri į dešinę. Klasės: .fa-body (siūbuoja), .fa-tail, .fa-fin. Animacijas valdo CSS. */
+let _artN=0;
+function fishSVG(id,cls=''){
+  const u='g'+(++_artN);
+  const defs=(top,mid,bot)=>`<defs><linearGradient id="${u}b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${bot}"/></linearGradient></defs>`;
+  const eye=(x,y,r,iris)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${iris}"/><circle cx="${x}" cy="${y}" r="${r*.55}" fill="#10130f"/><circle cx="${x-r*.25}" cy="${y-r*.3}" r="${r*.2}" fill="#fff" opacity=".85"/>`;
+  const A={
+  lydeka:()=>`${defs('#2f4a22','#6a8a3c','#e3dfb0')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M74 64 L26 36 Q40 64 26 94 L74 72Z" fill="#59773a"/>
+    <path class="fa-fin" d="M92 52 L108 28 L142 30 L152 50Z" fill="#4c6a30"/>
+    <path class="fa-fin" d="M96 82 L112 104 L140 100 L150 84Z" fill="#6f8c3f"/>
+    <path class="fa-fin" d="M176 86 L168 106 L192 94Z" fill="#8aa04c"/>
+    <path d="M70 62 C100 46 170 42 236 50 C266 54 290 58 308 63 L308 69 C290 73 266 80 238 84 C170 94 100 88 70 72Z" fill="url(#${u}b)"/>
+    <g fill="#e9e6b5" opacity=".85"><circle cx="110" cy="60" r="3"/><circle cx="130" cy="56" r="3.4"/><circle cx="152" cy="62" r="3"/><circle cx="174" cy="57" r="3.4"/><circle cx="196" cy="62" r="3"/><circle cx="218" cy="58" r="3"/><circle cx="120" cy="72" r="2.6"/><circle cx="144" cy="74" r="2.8"/><circle cx="168" cy="72" r="2.6"/><circle cx="192" cy="75" r="2.8"/><circle cx="214" cy="72" r="2.4"/><circle cx="96" cy="66" r="2.4"/></g>
+    <path d="M296 66 L250 67" stroke="#1d2a14" stroke-width="1.4" fill="none" opacity=".6"/>
+    <path d="M238 52 C246 62 246 74 238 84" stroke="#1d2a14" stroke-width="1.6" fill="none" opacity=".45"/>
+    ${eye(270,57,5,'#e0b840')}
+   </g>`,
+  eserys:()=>`${defs('#2f4a24','#8fa23a','#f0e9a4')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M84 66 L38 44 Q48 66 38 90 L84 70Z" fill="#d9772a"/>
+    <path class="fa-fin" d="M150 36 L156 8 L172 14 L184 6 L198 14 L212 8 L218 38Z" fill="#46603a"/>
+    <path class="fa-fin" d="M220 40 L228 22 L254 26 L250 46Z" fill="#6e8a3c"/>
+    <path class="fa-fin" d="M118 94 L112 114 L142 102Z" fill="#e4552b"/>
+    <path class="fa-fin" d="M176 98 L168 120 L204 104Z" fill="#e4552b"/>
+    <path id="${u}p" d="M82 64 C110 30 180 26 242 40 C272 46 292 58 302 66 C292 76 270 90 240 98 C180 110 110 100 82 72Z" fill="url(#${u}b)"/>
+    <clipPath id="${u}c"><use href="#${u}p"/></clipPath>
+    <g clip-path="url(#${u}c)" fill="#26361b" opacity=".62"><path d="M118 20 Q134 66 124 118 L140 118 Q150 66 134 20Z"/><path d="M152 20 Q168 66 158 118 L174 118 Q184 66 168 20Z"/><path d="M186 20 Q202 66 192 118 L208 118 Q218 66 202 20Z"/><path d="M220 24 Q234 66 226 118 L240 118 Q248 66 236 24Z"/><path d="M90 40 Q104 66 96 110 L108 110 Q118 66 104 40Z"/></g>
+    <path d="M240 42 C250 62 250 82 240 98" stroke="#1d2a14" stroke-width="1.6" fill="none" opacity=".4"/>
+    ${eye(274,58,5.5,'#e8892f')}
+   </g>`,
+  starkis:()=>`${defs('#4c5a40','#9aa386','#e9ebdc')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M72 66 L22 40 Q36 68 22 98 L72 72Z" fill="#7d8770"/>
+    <path class="fa-fin" d="M130 54 L138 28 L190 30 L200 55Z" fill="#79836b"/>
+    <path class="fa-fin" d="M206 56 L214 38 L248 40 L250 58Z" fill="#8a9479"/>
+    <path class="fa-fin" d="M100 80 L112 98 L146 90 L150 80Z" fill="#8a9479"/>
+    <path id="${u}p" d="M68 64 C110 52 180 50 242 54 C270 56 290 62 306 68 C290 76 268 82 242 84 C180 90 110 82 68 72Z" fill="url(#${u}b)"/>
+    <clipPath id="${u}c"><use href="#${u}p"/></clipPath>
+    <g clip-path="url(#${u}c)" fill="#3b4430" opacity=".4"><path d="M110 40 L124 90 L136 90 L124 40Z"/><path d="M150 40 L164 90 L176 90 L164 40Z"/><path d="M190 40 L204 90 L216 90 L204 40Z"/></g>
+    <g fill="#27301f" opacity=".6"><circle cx="146" cy="40" r="1.8"/><circle cx="160" cy="38" r="1.8"/><circle cx="174" cy="40" r="1.8"/><circle cx="224" cy="48" r="1.6"/><circle cx="236" cy="48" r="1.6"/></g>
+    <path d="M300 68 L256 69" stroke="#1d2a14" stroke-width="1.4" opacity=".6"/>
+    <path d="M244 56 C252 66 252 76 244 84" stroke="#1d2a14" stroke-width="1.6" fill="none" opacity=".4"/>
+    <circle cx="272" cy="60" r="8.5" fill="#dfe6c7"/>${eye(272,60,6.5,'#dfe6c7')}
+   </g>`,
+  samas:()=>`${defs('#2a2d1e','#4e5030','#c3b27c')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M66 70 C42 58 28 62 20 70 C28 80 44 84 66 78Z" fill="#363922"/>
+    <path class="fa-fin" d="M96 80 C140 112 206 112 236 90 L236 82Z" fill="#3a3d26"/>
+    <path class="fa-fin" d="M200 50 L208 38 L224 52Z" fill="#363922"/>
+    <path d="M62 68 C110 52 180 50 224 52 C258 52 286 58 304 72 C304 84 262 94 224 94 C180 98 110 86 62 76Z" fill="url(#${u}b)"/>
+    <g fill="#1f2216" opacity=".45"><circle cx="110" cy="64" r="5"/><circle cx="150" cy="60" r="6"/><circle cx="190" cy="64" r="5"/><circle cx="130" cy="74" r="4"/><circle cx="170" cy="76" r="5"/><circle cx="214" cy="68" r="4"/></g>
+    <path d="M304 76 C290 80 270 82 252 80" stroke="#15170e" stroke-width="1.6" fill="none"/>
+    <g class="fa-fin" stroke="#2b2e1a" stroke-width="2.2" fill="none" stroke-linecap="round"><path d="M302 70 C306 96 280 108 244 106"/><path d="M300 68 C312 90 296 112 270 116"/><path d="M296 82 C298 92 288 98 276 98"/><path d="M290 84 C290 92 284 96 274 96"/></g>
+    <circle cx="276" cy="60" r="3.4" fill="#d6c27a"/><circle cx="276" cy="60" r="1.7" fill="#0f100a"/>
+   </g>`,
+  upetakis:()=>`${defs('#4b5a3a','#a39a72','#efe9d0')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M66 66 L20 42 Q32 66 20 94 L66 72Z" fill="#8d8760"/>
+    <path class="fa-fin" d="M150 46 L160 24 L196 28 L196 48Z" fill="#8a8a5c"/>
+    <path class="fa-fin" d="M118 52 L124 44 L134 52Z" fill="#7b7a4f"/>
+    <path class="fa-fin" d="M122 88 L132 106 L160 94Z" fill="#c68b4a"/>
+    <path id="${u}p" d="M62 66 C100 46 170 40 234 48 C266 52 290 58 304 66 C290 74 266 86 234 92 C170 100 100 90 62 72Z" fill="url(#${u}b)"/>
+    <clipPath id="${u}c"><use href="#${u}p"/></clipPath>
+    <g clip-path="url(#${u}c)" fill="none" stroke="#c9382b" stroke-width="2"><circle cx="150" cy="72" r="3.4"/><circle cx="182" cy="76" r="3.4"/><circle cx="212" cy="70" r="3.4"/><circle cx="130" cy="68" r="3"/></g>
+    <g fill="#2a2a1c" opacity=".7"><circle cx="110" cy="58" r="2.6"/><circle cx="140" cy="54" r="2.8"/><circle cx="170" cy="56" r="2.6"/><circle cx="200" cy="58" r="2.8"/><circle cx="228" cy="60" r="2.4"/><circle cx="124" cy="78" r="2.2"/><circle cx="164" cy="82" r="2.4"/><circle cx="196" cy="84" r="2.2"/><circle cx="252" cy="62" r="2"/><circle cx="96" cy="66" r="2.2"/></g>
+    <path d="M298 68 L256 69" stroke="#1d2a14" stroke-width="1.3" opacity=".6"/>
+    <path d="M238 50 C248 62 248 78 238 92" stroke="#1d2a14" stroke-width="1.5" fill="none" opacity=".35"/>
+    ${eye(272,58,5,'#d8c58a')}
+   </g>`,
+  sapalas:()=>`${defs('#4d5a38','#b3b58b','#f2eed8')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M76 66 L30 42 Q42 66 30 92 L76 70Z" fill="#7a5a3a"/>
+    <path class="fa-fin" d="M160 40 L168 20 L206 24 L204 42Z" fill="#6a7048"/>
+    <path class="fa-fin" d="M100 90 C110 108 146 108 156 94Z" fill="#d46a2a"/>
+    <path class="fa-fin" d="M184 94 L178 114 L212 100Z" fill="#d46a2a"/>
+    <path id="${u}p" d="M74 66 C104 38 180 34 240 44 C268 48 290 58 300 66 C290 76 268 90 240 94 C180 104 104 96 74 70Z" fill="url(#${u}b)"/>
+    <clipPath id="${u}c"><use href="#${u}p"/></clipPath>
+    <defs><pattern id="${u}s" width="14" height="12" patternUnits="userSpaceOnUse"><path d="M0 12 Q7 0 14 12" fill="none" stroke="#3d4a2a" stroke-width="1.1" opacity=".5"/></pattern></defs>
+    <rect x="70" y="30" width="190" height="80" fill="url(#${u}s)" clip-path="url(#${u}c)"/>
+    <path d="M296 68 L262 68" stroke="#1d2a14" stroke-width="1.3" opacity=".6"/>
+    <path d="M246 46 C256 62 256 78 246 94" stroke="#1d2a14" stroke-width="1.5" fill="none" opacity=".35"/>
+    ${eye(274,58,5.5,'#e5d9a0')}
+   </g>`,
+  vegele:()=>`${defs('#4a3a1f','#8b7233','#d9c98a')}
+   <g class="fa-body">
+    <path class="fa-tail" d="M58 70 C34 58 20 66 18 72 C22 80 36 86 58 76Z" fill="#6b5a2a"/>
+    <path class="fa-fin" d="M96 56 C130 40 190 40 214 54Z" fill="#6f5c2b"/>
+    <path class="fa-fin" d="M222 54 L228 42 L252 44 L252 56Z" fill="#6f5c2b"/>
+    <path class="fa-fin" d="M100 86 C140 108 200 106 232 88Z" fill="#7a6630"/>
+    <path id="${u}p" d="M54 70 C96 56 170 54 232 56 C266 58 290 64 306 70 C290 78 264 84 232 86 C170 92 96 84 54 76Z" fill="url(#${u}b)"/>
+    <clipPath id="${u}c"><use href="#${u}p"/></clipPath>
+    <g clip-path="url(#${u}c)" fill="#2e2412" opacity=".5"><circle cx="100" cy="66" r="9"/><circle cx="144" cy="62" r="11"/><circle cx="190" cy="66" r="9"/><circle cx="120" cy="80" r="7"/><circle cx="170" cy="82" r="8"/><circle cx="220" cy="70" r="7"/></g>
+    <path d="M304 72 L268 73" stroke="#1d150a" stroke-width="1.4" opacity=".6"/>
+    <path class="fa-fin" d="M290 78 C292 92 284 100 272 102" stroke="#6b5a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="276" cy="64" r="3.6" fill="#d6c27a"/><circle cx="276" cy="64" r="1.8" fill="#0f0c06"/>
+   </g>`
+  };
+  const f=A[id];if(!f)return '';
+  return `<svg class="fish ${cls}" viewBox="0 0 330 130" role="img" aria-label="${id}" xmlns="http://www.w3.org/2000/svg">${f()}</svg>`;
+}
+const FISH_BG={lydeka:['#12392c','#2f6b4b'],eserys:['#10353b','#2c7a74'],starkis:['#162b3a','#3b6a86'],samas:['#14201c','#3a4d3a'],upetakis:['#14344a','#3d86a5'],sapalas:['#1b3a30','#4a8a64'],vegele:['#1c2a2e','#4a6a63']};
+const FISH_NAME={lydeka:'Lydeka',eserys:'Ešerys',starkis:'Starkis',samas:'Šamas',upetakis:'Upėtakis',sapalas:'Šapalas',vegele:'Vėgėlė'};
+
+/* ---------- iliustracijos: mazgai (schemos) ---------- */
+/* Kiekvienas žingsnis = SVG scena. Linija piešiama animacija (stroke-dashoffset). Pagrindinis valas žalias, laisvas galas oranžinis. */
+const KC={m:'var(--accent)',t:'var(--hot)'};
+const kline=(d,c='m',delay=0,w=5)=>`<path class="kl" pathLength="1" d="${d}" stroke="${KC[c]}" stroke-width="${w}" fill="none" stroke-linecap="round" stroke-linejoin="round" style="animation-delay:${delay}s"/>`;
+const khook=()=>`<g class="kh" stroke="#8d98a3" stroke-width="5" fill="none" stroke-linecap="round"><circle cx="260" cy="100" r="12"/><path d="M260 112 L260 160 C260 196 214 196 214 160"/><path d="M214 160 L222 146" stroke-width="4"/></g>`;
+const klure=()=>`<g class="kh" stroke="#8d98a3" stroke-width="5" fill="none" stroke-linecap="round"><circle cx="262" cy="100" r="11"/></g><path class="kh" d="M273 100 C300 84 316 96 316 112 C316 130 296 134 273 106" fill="#e6efe9" stroke="#8d98a3" stroke-width="3"/>`;
+const klabel=t=>`<text x="12" y="22" class="klab">${t}</text>`;
+const coil=(x,y,n,dx=9,c='t',delay=.2)=>Array.from({length:n},(_,i)=>kline(`M${x+i*dx} ${y-9} C${x+i*dx+6} ${y-9} ${x+i*dx+6} ${y+9} ${x+i*dx} ${y+9}`,c,delay+i*.12,3.6)).join('');
+const knotScene=body=>`<svg class="kscene" viewBox="0 0 330 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}</svg>`;
+const KNOT_ART={
+'Palomar':[
+ knotScene(khook()+kline('M10 94 L270 94 C290 94 290 108 270 108 L10 108','m',0)+klabel('Dvigubas valas')),
+ knotScene(khook()+kline('M10 94 L96 94 C120 94 132 62 160 64 C190 66 182 112 150 106 C128 102 138 82 170 96 L262 96 C280 96 280 108 262 108 L170 108 C150 108 130 108 10 108','m',0)+klabel('Paprastas mazgas')),
+ knotScene(khook()+kline('M10 100 L196 100','m',0)+kline('M196 100 C200 60 320 70 312 140 C304 206 214 214 214 170 C214 130 250 104 262 100','t',.3)+klabel('Kilpa per kabliuką')),
+ knotScene(khook()+kline('M10 100 L246 100','m',0)+`<circle class="kl2" cx="236" cy="100" r="9" fill="var(--accent)"/>`+kline('M246 100 L300 70','t',.3,4)+klabel('Sutempk')),
+ knotScene(khook()+kline('M10 100 L246 100','m',0)+`<circle cx="236" cy="100" r="9" fill="var(--accent)"/>`+kline('M246 100 L256 94','t',.3,4)+klabel('Nukirpk galiuką 2–3 mm'))],
+'Pagerintas clinch':[
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+kline('M262 100 L270 100','m')+coil(150,100,6,12,'t',.3)+klabel('Apvijos 5–7 kartus')),
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+coil(176,100,5,12,'m',0)+kline('M236 100 C250 70 232 64 226 90','t',.4)+klabel('Pro mažą kilpą prie skylutės')),
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+coil(176,100,5,12,'m',0)+kline('M236 100 C250 60 210 40 214 80 C216 96 230 98 246 70','t',.4)+klabel('Ir pro didelę kilpą')),
+ knotScene(khook()+kline('M10 100 L250 100','m',0)+coil(222,100,5,5,'m',.1)+kline('M246 100 L296 80','t',.5,4)+klabel('Sutempk ir pastumk apvijas prie skylutės')),
+ knotScene(khook()+kline('M10 100 L250 100','m',0)+coil(222,100,5,5,'m',0)+kline('M246 100 L254 96','t',.3,4)+klabel('Nukirpk galiuką'))],
+'Uni':[
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+kline('M262 100 C292 100 292 130 262 130 L130 130','t',.3)+klabel('Atlenk galiuką atgal')),
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+kline('M262 100 C292 100 292 130 262 130 L150 130','t',0)+coil(168,115,5,12,'t',.3)+klabel('4–6 apvijos per kilpą')),
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+coil(200,100,5,6,'t',0)+kline('M262 100 C290 100 290 130 262 130 L222 130','t',0)+klabel('Patrauk galiuką, apvijos susispaus')),
+ knotScene(khook()+kline('M10 100 L262 100','m',0)+coil(238,100,5,4,'t',0)+kline('M262 100 C268 100 268 112 262 112','t',0)+klabel('Pastumk prie skylutės, patempk valą')),
+ knotScene(khook()+kline('M10 100 L250 100','m',0)+coil(238,100,5,3.4,'t',0)+klabel('Nukirpk galiuką'))],
+'Atvira kilpa (non-slip loop)':[
+ knotScene(klure()+kline('M10 100 L100 100 C118 100 130 76 150 78 C170 80 166 112 146 108 C128 104 134 90 156 100 L210 100','m',0)+klabel('Laisvas paprastas mazgas, ~10 cm nuo galo')),
+ knotScene(klure()+kline('M10 100 L100 100 C118 100 130 76 150 78 C170 80 166 112 146 108 C128 104 134 90 156 100 L212 100 C240 100 240 78 262 88 L262 112','t',.2)+klabel('Pro masalo žiedą, atgal pro mazgą')),
+ knotScene(klure()+kline('M10 100 L150 100','m',0)+coil(150,100,4,9,'t',.2)+kline('M186 100 L212 100 C240 100 240 78 262 88','t',0)+klabel('3–5 apvijos aplink valą')),
+ knotScene(klure()+kline('M10 100 L170 100','m',0)+coil(150,100,4,8,'t',0)+kline('M176 100 C190 70 150 70 150 96','t',.4)+klabel('Vėl pro paprastą mazgą')),
+ knotScene(klure()+kline('M10 100 L150 100','m',0)+`<circle cx="150" cy="100" r="9" fill="var(--accent)"/>`+kline('M158 100 C190 100 200 60 240 70 C262 76 266 92 262 96','t',.3)+klabel('Užveržk, kilpa lieka laisva'))],
+'Dvigubas Uni (valų sujungimas)':[
+ knotScene(kline('M10 92 L220 92','m',0,5)+kline('M110 120 L320 120','t',.2,5)+klabel('Valai persidengia ~15 cm')),
+ knotScene(kline('M10 92 L220 92','m',0)+kline('M110 120 L320 120','t',0)+coil(150,106,5,9,'m',.3)+klabel('Uni mazgas pirmu galu')),
+ knotScene(kline('M10 92 L220 92','m',0)+kline('M110 120 L320 120','t',0)+coil(150,106,5,9,'m',0)+coil(230,106,5,9,'t',.3)+klabel('Tą patį kitu galu')),
+ knotScene(kline('M10 106 L320 106','m',0)+`<circle cx="150" cy="106" r="10" fill="var(--accent)"/><circle cx="176" cy="106" r="10" fill="var(--hot)"/>`+klabel('Patempk į priešingas puses')),
+ knotScene(kline('M10 106 L320 106','m',0)+`<circle cx="156" cy="106" r="10" fill="var(--accent)"/><circle cx="170" cy="106" r="10" fill="var(--hot)"/>`+klabel('Nukirpk galus'))],
+'FG':[
+ knotScene(kline('M10 106 L320 106','t',0)+kline('M10 80 C40 80 40 132 80 132 C120 132 120 80 160 80 C200 80 200 132 240 132 C270 132 270 106 300 106','m',.2,3.4)+klabel('Pintas valas pina pavadėlį')),
+ knotScene(kline('M10 106 L320 106','t',0)+kline('M10 80 C40 80 40 132 80 132 C120 132 120 80 160 80 C200 80 200 132 240 132','m',0,3.4)+coil(244,106,3,10,'m',.4)+klabel('2–3 pusiniai mazgai ant pavadėlio')),
+ knotScene(kline('M10 106 L320 106','t',0)+coil(212,106,3,10,'m',0)+coil(250,106,5,8,'m',.3)+klabel('3–5 pusiniai mazgai ant abiejų')),
+ knotScene(kline('M10 106 L320 106','t',0)+`<rect x="196" y="97" width="66" height="18" rx="9" fill="var(--accent)"/>`+klabel('Sutempk, nukirpk galus'))]
+};
+
+/* ---------- helpers ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const num=v=>{const n=parseFloat(String(v??'').replace(',','.'));return isNaN(n)?null:n};
+const fmt1=n=>n==null?'–':(Math.round(n*10)/10).toString().replace('.',',');
+const MONTHS=['sausis','vasaris','kovas','balandis','gegužė','birželis','liepa','rugpjūtis','rugsėjis','spalis','lapkritis','gruodis'];
+function toast(m,ms=3500){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast._t);toast._t=setTimeout(()=>t.style.display='none',ms)}
+function md(s){let h=esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
+  h=h.split('\n').map(l=>/^#{1,4} /.test(l)?'<h4>'+l.replace(/^#{1,4} /,'')+'</h4>':l.replace(/^[-*] /,'• ')).join('\n');return h}
+
+/* ---------- constants ---------- */
+const CATS={
+ rod:{n:'Meškerės',one:'Meškerė',types:['Spiningas','Ultralight spiningas','Jig / gumytės','Trolingo','Žieminė','Kita'],size:'Ilgis',weight:'Metimo svoris (g)'},
+ reel:{n:'Ritės',one:'Ritė',types:['Bekotė','Multiplikatorius','Žieminė','Kita'],size:'Dydis (pvz. 2500)',weight:'Perdavimo skaičius'},
+ line:{n:'Valai ir pavadėliai',one:'Valas',types:['Pintas','Monofilis','Fluorokarbonas','Plieninis pavadėlis','Kita'],size:'Skersmuo (mm)',weight:'Testas (kg / lb)'},
+ lure:{n:'Masalai',one:'Masalas',types:['Vobleris','Gumytė','Šadas','Blizgė','Sukriukė','Spinnerbait','Paviršinis','Jig galvutė','Kita'],size:'Ilgis (cm)',weight:'Svoris (g)'},
+ terminal:{n:'Kabliukai ir smulkmenos',one:'Smulkmena',types:['Kabliukas','Offset kabliukas','Trigubas','Sukutis','Karabinas','Lenktas žiedas','Pasvaras','Kita'],size:'Dydis',weight:'Svoris (g)'},
+ ice:{n:'Žieminė įranga',one:'Žieminis daiktas',types:['Mormyška','Balansyras','Žieminė blizgutė','Žieminė meškerė','Žieminė ritė','Grąžtas','Kita'],size:'Dydis / ilgis',weight:'Svoris (g)'},
+ boat:{n:'Valtis',one:'Valtis',types:['Guminė','PVC','Aliuminio','Kita'],size:'Ilgis (m)',weight:'Svoris / talpa'},
+ motor:{n:'Varikliai',one:'Variklis',types:['Elektrinis','Benzininis','Kita'],size:'Galia (AG / lb thrust)',weight:'Svoris (kg)'},
+ sonar:{n:'Echolotai',one:'Echolotas',types:['Echolotas','Su GPS','Kita'],size:'Ekrano dydis',weight:'Daviklis'},
+ tool:{n:'Įrankiai ir aksesuarai',one:'Daiktas',types:['Žnyplės','Graibštas','Svarstyklės','Matuoklė','Dėžė','Kita'],size:'Dydis',weight:'Svoris'},
+ clothing:{n:'Apranga',one:'Apranga',types:['Kostiumas','Batai','Liemenė','Kita'],size:'Dydis',weight:'—'},
+ other:{n:'Kita',one:'Daiktas',types:['Kita'],size:'Dydis',weight:'Svoris'}
+};
+const TRIPTYPES=['Spiningas iš kranto','Spiningas iš valties','Trolingas','Žieminė žvejyba'];
+const SPECIES=['Lydeka','Ešerys','Starkis','Šamas','Upėtakis','Šapalas','Vėgėlė','Kuoja','Karšis','Kita'];
+const DIRS=['','Š','ŠR','R','PR','P','PV','V','ŠV'];
+const SKY=['','Giedra','Dalinai debesuota','Debesuota','Lietus','Sniegas','Rūkas'];
+const TREND=['','Kyla','Stabilus','Krenta'];
+
+/* ---------- state & data layer ---------- */
+const TARGETS=['Lydeka','Ešerys','Starkis','Šamas','Vėgėlė','Kuoja','Karšis'];
+const S={tab:'today',more:'',activeTrip:null,gear:[],trips:[],waters:[],hyp:[],briefs:[],cat:'all',q:'',sub:'fish',fish:'lydeka',gsub:'src',
+  plan:{date:today(),time:'',end:'',type:TRIPTYPES[0],waterId:'',species:['Lydeka'],recent:'',temp:'',pressure:'',trend:'',wind:'',dir:'',sky:'',wtemp:''},
+  brief:null,out:{},dbOK:null};
+let db=null;
+const COLL=['gear','trips','waters','hyp','briefs'];
+
+function norm(d){const x=typeof d.data==='function'?d.data():(d.data&&typeof d.data==='object'?d.data:d);return {...x,id:d.id||x.id}}
+function rows(s){if(!s)return[];if(Array.isArray(s))return s.map(norm);const out=[];if(s.docs)s.docs.forEach(d=>out.push(norm(d)));else if(s.forEach)s.forEach(d=>out.push(norm(d)));return out}
+function rawColl(c){return c==='trips'?[...S.trips,...(S.activeTrip?[S.activeTrip]:[])]:[...S[c]]}
+function setColl(c,list){if(c==='trips'){S.activeTrip=list.find(t=>t.active)||null;S.trips=list.filter(t=>!t.active)}else S[c]=list}
+async function initDb(){
+  try{db=await (window.claude&&claude.use?claude.use('db'):null)}catch(e){db=null}
+  if(!db){S.dbOK=false;$('#sync').textContent='tik šiam seansui';renderAll();return}
+  S.dbOK=true;$('#sync').textContent='saugoma';
+  COLL.forEach(c=>{try{db.collection(c).onSnapshot(s=>{setColl(c,rows(s));renderLive()},()=>{})}catch(e){}});
+  setTimeout(renderAll,50);
+}
+async function save(c,o){
+  o.id=o.id||uid();o.updated=Date.now();if(!o.created)o.created=o.updated;
+  const clean=JSON.parse(JSON.stringify(o));
+  if(db){try{await db.doc(c+'/'+clean.id).set(clean)}catch(e){toast('Nepavyko išsaugoti: '+(e.message||e));return false}}
+  else{const a=rawColl(c);const i=a.findIndex(x=>x.id===clean.id);if(i>=0)a[i]=clean;else a.push(clean);setColl(c,a);renderLive()}
+  return clean;
+}
+async function removeDoc(c,id){
+  if(db){try{await db.doc(c+'/'+id).delete()}catch(e){toast('Nepavyko ištrinti');return}}
+  else{setColl(c,rawColl(c).filter(x=>x.id!==id));renderLive()}
+}
+/* ---------- AI ---------- */
+async function ai(prompt,images){
+  const s=await (window.claude&&claude.use?claude.use('sample'):null);
+  if(!s)throw new Error('Claude funkcija šiame lange nepasiekiama. Atidaryk puslapį per claude.ai.');
+  const opts={modelTier:'default',cache:false};
+  if(images&&images.length){let lim=null;try{lim=await s.limits()}catch(e){}
+    if(!lim||!lim.images)throw new Error('Nuotraukų atpažinimas šiame lange nepasiekiamas.');opts.images=images}
+  const r=await s(prompt,opts);return r.text||'';
+}
+function parseJSON(t){const a=Math.min(...['[','{'].map(c=>{const i=t.indexOf(c);return i<0?1e9:i}));
+  const b=Math.max(t.lastIndexOf(']'),t.lastIndexOf('}'));if(a>=1e9||b<0)throw new Error('Atsakymas be duomenų, bandyk dar kartą.');return JSON.parse(t.slice(a,b+1))}
+
+/* ---------- derived data ---------- */
+const gl=g=>[g.brand,g.model,g.name].filter(Boolean).join(' ')||g.type||'Daiktas';
+function glFull(g){return gl(g)+[g.size,g.weight,g.color].filter(Boolean).map(x=>' '+x).join('')}
+function dur(t){if(!t.start||!t.end)return 0;const [a,b]=[t.start,t.end].map(x=>{const[h,m]=x.split(':').map(Number);return h*60+(m||0)});let d=b-a;if(d<0)d+=1440;return d/60}
+function moon(ds){const d=new Date(ds+'T12:00:00Z');const syn=29.530588853;let a=((d-Date.UTC(2000,0,6,18,14))/864e5)%syn;if(a<0)a+=syn;
+  const names=['Jaunatis','Jaunas, auga','Pirmas ketvirtis','Auga','Pilnatis','Senėja','Paskutinis ketvirtis','Senas, senėja'];
+  return {name:names[Math.round(a/syn*8)%8],ill:Math.round((1-Math.cos(2*Math.PI*a/syn))/2*100)}}
+function lureLabel(c){const g=S.gear.find(x=>x.id===c.lureId);return g?gl(g):(c.lureText||'')}
+const wline=w=>w?[w.temp!==''&&w.temp!=null?w.temp+'°C':'',w.pressure?w.pressure+' hPa'+(w.trend?' ('+w.trend.toLowerCase()+')':''):'',w.wind?(w.dir||'')+' '+w.wind+' m/s':'',w.sky].filter(Boolean).join(' · '):'';
+function tripsFish(){return S.trips.reduce((a,t)=>a+(t.catches||[]).length,0)}
+
+/* ---------- views ---------- */
+const TABS=[['today','Šiandien'],['trip','Žvejyba'],['more','Daugiau']];
+function renderTabs(){$('#tabs').innerHTML=TABS.map(([k,n])=>`<button data-act="tab" data-v="${k}" aria-current="${S.tab===k}">${n}</button>`).join('')}
+function renderAll(){S._anim=true;renderTabs();renderMain()}
+function renderLive(){if(S.tab==='more'&&S.more==='guide')return;const a=document.activeElement;if(a&&/^(INPUT|SELECT|TEXTAREA)$/.test(a.tagName)&&$('#main').contains(a))return;renderMain()}
+function renderMain(){const v=VIEWS[S.tab]();const m=$('#main');if(S._anim){m.classList.remove('enter');void m.offsetWidth;m.classList.add('enter');S._anim=false}m.innerHTML=(S.dbOK===false?'<div class="banner">Duomenų bazė šiame lange nepasiekiama, todėl viskas dings uždarius puslapį. Atidaryk įrankį per claude.ai, kad duomenys išliktų.</div>':'')+v}
+
+/* šaltinio žymė su patikimumu */
+function srcChip(id){const s=SRC[id];if(!s)return '';return `<button class="src g-${s.g.replace('-','m')}" data-act="srcgo" data-v="${id}" title="${esc(s.t)}">${id} · ${s.g}</button>`}
+function srcChips(ids){return (ids||[]).map(srcChip).join('')}
+const waterById=id=>S.waters.find(w=>w.id===id);
+const statusPill=w=>{const s=(w.legal&&w.legal.status)||'';if(!s)return '<span class="pill warn">statusas nežinomas</span>';
+  const cls={'neišnuomotas':'good','ekologinis':'good','išnuomotas':'bad','limituota':'bad','uždraustas':'bad'}[s]||'warn';return `<span class="pill ${cls}">${esc(s)}</span>`};
+
+const VIEWS={
+gear(){
+  const cats=Object.keys(CATS);const q=S.q.toLowerCase();
+  const list=S.gear.filter(g=>(S.cat==='all'||g.cat===S.cat)&&(!q||JSON.stringify(g).toLowerCase().includes(q)));
+  return `<div class="row between"><h2>Žvejybos spinta</h2><span class="badge">${S.gear.length} daiktų</span></div>
+  <div class="row"><button class="btn primary" data-act="gearPhoto">Nufotografuoti</button><button class="btn" data-act="gearManual">Įvesti ranka</button></div>
+  <input id="gq" type="search" placeholder="Ieškoti spintoje" value="${esc(S.q)}" style="border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:9px 12px;width:100%">
+  <div class="chips"><button class="chip" data-act="cat" data-v="all" aria-pressed="${S.cat==='all'}">Viskas</button>${cats.map(c=>{const n=S.gear.filter(g=>g.cat===c).length;return n?`<button class="chip" data-act="cat" data-v="${c}" aria-pressed="${S.cat===c}">${CATS[c].n} ${n}</button>`:''}).join('')}</div>
+  <div class="list" id="gearList">${gearListHTML(list)}</div>
+  ${gapsHTML()}`},
+waters(){
+  const missing=KB_WATERS.filter(k=>!S.waters.some(w=>normName(w.name)===normName(k.name)));
+  return `<div class="row between"><h2>Vandenys</h2><button class="btn primary" data-act="newWater">Pridėti</button></div>
+  ${missing.map(k=>`<div class="card row between"><div><b>${esc(k.name)}</b><div class="muted small">Žinių bazėje yra profilis su šaltiniais (${esc(k.region)})</div></div><button class="btn primary" data-act="kbImport" data-v="${esc(k.name)}">Įkelti</button></div>`).join('')}
+  ${S.waters.length?`<div class="list">${S.waters.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(w=>{const n=S.trips.filter(t=>t.waterId===w.id||t.waterName===w.name).length;
+   return `<button class="item" data-act="editWater" data-v="${w.id}"><div class="grow"><div class="row between"><b>${esc(w.name)}</b><span class="row">${statusPill(w)}<span class="badge">${n} žvej.</span></span></div>
+   <div class="muted small">${[w.kind,w.region,w.area&&w.area+' ha',w.maxDepth&&'iki '+w.maxDepth+' m'].filter(Boolean).map(esc).join(' · ')}</div>
+   ${w.legal&&w.legal.checked?`<div class="small muted">Statusas tikrintas ${esc(w.legal.checked)}${w.legal.src?' ('+esc(w.legal.src)+')':''}</div>`:''}</div></button>`}).join('')}</div>`
+  :'<div class="card">Čia sudėk ežerus, upes ir tvenkinius, kuriuose žvejoji. Brifas teisinę dalį skaičiuoja iš telkinio statuso, todėl statusą (išnuomotas, neišnuomotas, limituotas) reikia nurodyti ir patikrinti ALIS.</div>'}`},
+
+stats(){return statsHTML()},
+
+guide(){
+  const subs=[['src','Šaltiniai'],['rules','Taisyklės'],['proc','Metodika'],['rules2','Principai']];
+  let body='';
+  const unv='<div class="banner">Šis skyrius yra bendra žvejybos praktika, o ne šaltiniais pagrįsta žinių bazė. Brifas jo nenaudoja. Šaltiniais pagrįsta dalis yra skyriai Šaltiniai, Taisyklės ir Metodika.</div>';
+  if(S.sub==='src'){
+    body=`<div class="small muted">Patikimumas: A recenzuotas ar oficialus teisės aktas, A- oficiali atmintinė, B institucijos pranešimas ar agregatorius, C magistro darbas ar spauda, D nepatikrinta. Taikomumas rodo, ar tyrimas tinka Lietuvos sąlygoms.</div>`+
+    Object.entries(SRC).map(([id,s])=>`<div class="card" id="src_${id}"><div class="row between"><b>${id}</b><span class="row"><span class="src g-${s.g.replace('-','m')}">patikimumas ${s.g}</span><span class="badge">taikomumas: ${s.ap}</span></span></div>
+      <p style="margin:6px 0">${esc(s.t)}</p><div class="small muted">${esc(s.n)}</div><a class="small" href="${esc(s.url)}" target="_blank" rel="noopener">Atidaryti šaltinį</a></div>`).join('')+
+    `<h3 style="margin-top:8px">Įrodymų lentelė, kuria remiasi brifas</h3>`+
+    EVID.map(e=>`<div class="card"><div class="row between"><b>${e.id} · ${esc(e.f)}</b><span class="badge">pasitikėjimas: ${e.conf}</span></div><p style="margin:6px 0">${esc(e.claim)}</p><div class="small muted">Taikomumas: ${esc(e.ap)}</div><div class="row" style="margin-top:6px">${srcChips(e.src)}</div></div>`).join('')}
+  else if(S.sub==='rules'){
+    body=`<div class="banner">Taisyklės įkeltos iš AAD atmintinių (${srcChips(['A1','A2','A3','A4','A5'])}). Pirminis teisės aktas (A6) NEPERSKAITYTAS. Prieš sprendimą dėl baudos ar ginčo remkis tik pirminiu tekstu.</div>
+    <div class="card scroll-x"><table><tr><th>Rūšis</th><th>Draudimas</th><th>Dydis cm</th><th>Per dieną</th></tr>${Object.entries(SPECIES_RULES).map(([k,r])=>`<tr><td>${k}</td><td>${r.closed.length?r.closed.map(c=>`${c[1]} ${MONTHS[c[0]-1].slice(0,3)}. – ${c[3]} ${MONTHS[c[2]-1].slice(0,3)}.`).join('; '):'–'}</td><td>${r.min?r.min+(r.max?'–'+r.max:''):'–'}</td><td>${r.limit||'–'}</td></tr>`).join('')}</table></div>
+    <div class="card"><h3>Bendros ribos</h3><p>${esc(WEIGHT_RULE)}</p><p>${esc(YEAR_BAN)}</p></div>
+    <div class="card"><h3>Draudžiami vandenys</h3><p>${esc(BANNED_WATERS)}</p><p>${esc(NEMUNAS_BAN_JUL_DEC)}</p></div>
+    <div class="card"><h3>Upės, uždraustos spalio 1 d. - gruodžio 31 d.</h3><p class="small">Mano įkeltas dalinis sąrašas (Vilniaus ir Trakų regionas): ${RIVER_BAN_OCT_DEC.join(', ')}. Pilnas sąrašas AAD puslapyje ${srcChip('A5')}.</p></div>
+    <div class="card"><h3>Ekologinės būklės gerinimo telkiniai</h3><p>${esc(ECO_RULES)}</p><p class="small">${Object.keys(ECO_WATERS).join(', ')}</p></div>`}
+  else if(S.sub==='proc')body=PROC.map(([a,b])=>`<div class="card"><h3>${a}</h3><p style="margin:6px 0 0">${esc(b)}</p></div>`).join('');
+  else if(S.sub==='fish'){const f=FISH.find(x=>x.id===S.fish)||FISH[0];
+    body=unv+`<div class="chips">${FISH.map(x=>`<button class="chip" data-act="fish" data-v="${x.id}" aria-pressed="${x.id===f.id}">${x.name}</button>`).join('')}</div>
+    <div class="card"><h3>${f.name} <span class="muted small" style="font-family:var(--body);font-style:italic">${f.lat}</span></h3><p>${f.intro}</p>
+    <div class="sect">Kur ieškoti</div><p>${f.where}</p>
+    <div class="sect">Pagal sezoną</div>${Object.entries(f.seasons).map(([k,v])=>`<p style="margin:4px 0"><b>${k}.</b> ${v}</p>`).join('')}
+    <div class="sect">Masalai</div><p>${f.lures}</p>
+    <div class="sect">Įranga</div><p>${f.tackle}</p>
+    <div class="sect">Oras ir slėgis</div><p>${f.weather}</p>
+    <div class="sect">Patarimai</div><p>${f.tips}</p>
+    <div class="sect">Dažnos klaidos</div><p>${f.mistakes}</p></div>`}
+  else if(S.sub==='knots')body=unv+KNOTS.map(k=>`<div class="card"><h3>${k.name}</h3><p class="muted" style="margin:2px 0 8px">${k.use}</p>${k.steps.map((s,i)=>`<div class="step"><b>${i+1}</b><span>${s}</span></div>`).join('')}</div>`).join('');
+  else body=unv+PRINCIPLES.map(([a,b])=>`<div class="card"><h3>${a}</h3><p style="margin:6px 0 0">${b}</p></div>`).join('');
+  return `<h2>Žinynas</h2><div class="chips">${subs.map(([k,n])=>`<button class="chip" data-act="gsub" data-v="${k}" aria-pressed="${S.sub===k}">${n}</button>`).join('')}</div>${body}`}
+};
+
+function gearListHTML(list){
+  if(!list.length)return '<div class="card muted">Nieko nerasta. Nufotografuok naują masalų pakuotę ar kitą daiktą, aš atpažinsiu ir įdėsiu į spintą.</div>';
+  return list.map(g=>`<button class="item" data-act="editGear" data-v="${g.id}">${g.thumb?`<img class="thumb" src="${g.thumb}" alt="">`:`<div class="thumb">${esc((g.brand||CATS[g.cat]?.one||'?')[0])}</div>`}
+   <div class="grow"><div class="row between"><b>${esc(gl(g))}</b>${(g.qty&&g.qty!=1)?`<span class="badge">×${esc(g.qty)}</span>`:''}</div>
+   <div class="muted small">${esc(CATS[g.cat]?.one||'')}${[g.type,g.size,g.weight,g.color].filter(Boolean).map(x=>' · '+esc(x)).join('')}</div>
+   ${g.specs?`<div class="small">${esc(g.specs)}</div>`:''}</div></button>`).join('')}
+function gapsHTML(){
+  const all=S.gear.map(g=>[g.brand,g.model,g.name,g.type,g.specs,g.notes].join(' ')).join(' | ');
+  const groups=[['Spiningavimas','spin'],['Žieminė žvejyba','ice'],['Žvejyba iš valties','boat']];
+  return `<div class="card"><h3>Ko gali trūkti</h3><p class="muted small" style="margin:4px 0 8px">Bazinis sąrašas, tikrinamas pagal tai, ką įrašei į spintą. Tai nėra šaltiniais pagrįstas sąrašas.</p>
+  ${groups.map(([n,k])=>`<div class="sect">${n}</div>${BASICS[k].map(([l,re])=>{const ok=re.test(all);return `<div class="check"><span class="pill ${ok?'good':'warn'}">${ok?'yra':'trūksta'}</span> ${l}</div>`}).join('')}`).join('')}
+  <div class="row" style="margin-top:12px"><button class="btn primary" data-act="shopGo">Pirkimų rekomendacijos su pagrindu</button></div>
+  <div class="prose" id="shopOut" style="margin-top:10px">${S.out.shop?md(S.out.shop):''}</div></div>`}
+
+/* ---------- naujos pagrindinės kortelės ---------- */
+const fmtDay=ds=>{try{const d=new Date(ds+'T12:00:00');return d.toLocaleDateString('lt-LT',{weekday:'long'})+', '+d.toLocaleDateString('lt-LT',{month:'long'})+' '+d.getDate()+' d.'}catch(e){return ds}};
+const TYPESHORT={'Spiningas iš kranto':'Iš kranto','Spiningas iš valties':'Iš valties','Trolingas':'Trolingas','Žieminė žvejyba':'Žiema'};
+const optHTML=(arr,v)=>arr.map(x=>`<option${x===v?' selected':''}>${esc(x)}</option>`).join('');
+const sortedWaters=()=>S.waters.slice().sort((a,b)=>a.name.localeCompare(b.name));
+const waterSelect=()=>`<label class="f big">Kur žvejosi<select data-p="waterId"><option value="">Pasirink vandenį</option>${sortedWaters().map(x=>`<option value="${x.id}"${x.id===S.plan.waterId?' selected':''}>${esc(x.name)}</option>`).join('')}</select></label>`;
+const typeChips=()=>`<div class="chips">${TRIPTYPES.map(x=>`<button class="chip" data-act="ptype" data-v="${x}" aria-pressed="${S.plan.type===x}">${TYPESHORT[x]||x}</button>`).join('')}</div>`;
+function noWatersHTML(){return `<div class="panel"><h3>Pradėk nuo vandens</h3><p class="muted" style="margin:6px 0 12px">Brifo taisyklės priklauso nuo telkinio statuso, todėl pirmiausia įkelk bent vieną vandenį.</p>
+  <div class="list"><button class="btn primary big" data-act="kbImport" data-v="Viesai">Pridėti Viesus (Trakų r.)</button><button class="btn big" data-act="newWater">Pridėti kitą vandenį</button></div></div>`}
+
+VIEWS.today=function(){
+  const p=S.plan;const open=!S.brief||S.planOpen;
+  const head=`<div class="hero"><div class="eyebrow">${esc(fmtDay(p.date))}</div><h1>Šiandien</h1>${wavesSVG()}</div>`;
+  if(!S.waters.length&&open)return head+noWatersHTML();
+  if(!open){const b=S.brief;
+    return head+`<div class="summary"><div class="mini">${(b.p.species||[]).slice(0,3).map(n=>idOfName(n)?fishSVG(idOfName(n),'mini'):'').join('')}</div><div class="grow"><b>${esc(b.water?b.water.name:'')}</b><div class="muted small">${esc(b.p.type)} · ${esc(b.p.date)}</div></div><button class="btn sm" data-act="planOpen">Keisti</button></div>`+briefHTML(b)}
+  return head+`<div class="panel list">
+    ${waterSelect()}${typeChips()}
+    <div><div class="sect" style="margin-bottom:8px">Ko ieškai</div><div class="ftiles">${Object.entries(FISH_NAME).map(([id,n])=>`<button class="ftile" data-act="tgt" data-v="${n}" aria-pressed="${p.species.includes(n)}" ${fishWater(id)}>${fishSVG(id)}<span>${n}</span></button>`).join('')}</div></div>
+    <details class="fold"><summary>Sąlygos <span class="muted small">neprivaloma</span></summary><div class="list" style="margin-top:10px">
+     <div class="grid3"><label class="f">Data<input type="date" data-p="date" value="${esc(p.date)}"></label>
+      <label class="f">Pradžia<input type="time" data-p="time" value="${esc(p.time)}"></label>
+      <label class="f">Pabaiga<input type="time" data-p="end" value="${esc(p.end)}"></label></div>
+     <div class="small muted">Prognozės puslapis pats nepasiima, įvesk skaičius.</div>
+     <div class="grid2"><label class="f">Oras °C<input inputmode="decimal" data-p="temp" value="${esc(p.temp)}"></label>
+      <label class="f">Vėjas m/s<input inputmode="decimal" data-p="wind" value="${esc(p.wind)}"></label>
+      <label class="f">Vėjo kryptis<select data-p="dir">${optHTML(DIRS,p.dir)}</select></label>
+      <label class="f">Dangus<select data-p="sky">${optHTML(SKY,p.sky)}</select></label>
+      <label class="f">Vandens temp. °C<input inputmode="decimal" data-p="wtemp" value="${esc(p.wtemp)}"></label>
+      <label class="f">Žvejota paskutines 2 d.<select data-p="recent">${['','daug','mažai','nežinau'].map(x=>`<option value="${x}"${x===p.recent?' selected':''}>${x||'nežinau'}</option>`).join('')}</select></label></div>
+    </div></details>
+    <button class="btn hot big" data-act="briefGo">Parengti brifą</button></div>
+    ${S.brief?'<button class="btn" data-act="planClose">Atgal į brifą</button>':''}`};
+
+function elapsedStr(t){try{const ms=Date.now()-new Date(t.date+'T'+t.start).getTime();const m=Math.max(0,Math.floor(ms/60000));return Math.floor(m/60)+':'+String(m%60).padStart(2,'0')}catch(e){return '0:00'}}
+const camSvg='<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>';
+
+VIEWS.trip=function(){
+  const A=S.activeTrip;
+  if(A){const c=A.catches||[];const rec=S.brief&&S.brief.rec&&S.brief.rec.sets?S.brief.rec.sets.slice(0,3).map(x=>{const g=S.gear.find(y=>y.id===x.lureId);return g?glFull(g):(x.lureText||'')}).filter(Boolean):[];
+    return `<div class="live">${wavesSVG('inlive')}<div class="eyebrow">Žvejoji dabar</div><h1>${esc(A.waterName||'Be vietos')}</h1>
+      <div class="elapsed" id="elapsed">${elapsedStr(A)}</div><div class="muted small">pradėta ${esc(A.start)} · ${esc(A.type||'')} · laimikių ${c.length}</div></div>
+     <button class="btn hot big cam" data-act="catchNow">${camSvg}<span>Laimikis</span></button>
+     <div class="small muted" style="margin-top:-6px">Nufotografuok žuvį su masalu. Laikas, vieta ir rūšis paimami iš nuotraukos.</div>
+     ${c.length?`<div class="list">${c.slice().reverse().slice(0,6).map(x=>`<div class="item static">${x.thumb?`<img class="thumb" src="${x.thumb}" alt="">`:`<div class="thumb">?</div>`}<div class="grow"><b>${esc(x.species||'Žuvis')}</b>${x.len?' '+esc(x.len)+' cm':''}<div class="muted small">${esc(x.time||'')} ${esc(lureLabel(x)||'masalas nenurodytas')}</div></div></div>`).join('')}</div>`:''}
+     ${rec.length?`<div class="small muted">Pagal brifą: ${rec.map(esc).join(', ')}</div>`:''}
+     <div class="row"><button class="btn" data-act="editTrip" data-v="${A.id}">Redaguoti</button><button class="btn" data-act="endTrip">Baigti žvejybą</button></div>`}
+  const ts=[...S.trips].sort((a,b)=>(b.date+(b.start||'')).localeCompare(a.date+(a.start||'')));
+  const hrs=S.trips.reduce((a,t)=>a+tripHours(t),0),fish=tripsFish();
+  return `<div class="hero"><div class="eyebrow">Žvejyba</div><h1>Pradėk žvejybą</h1></div>
+   <div class="panel list">${S.waters.length?waterSelect()+typeChips():'<div class="muted">Pirmiausia pridėk vandenį skiltyje Daugiau.</div>'}
+   <button class="btn hot big" data-act="startTrip">Pradėti dabar</button>
+   <button class="btn" data-act="newTrip">Įrašyti jau įvykusią žvejybą</button></div>
+   ${ts.length?`<div class="sect">Anksčiau <span class="muted small" style="font-family:var(--body);font-weight:400">· ${ts.length} žvejybų · ${fish} žuvų · ${fmt1(hrs)} val.</span></div>
+   <div class="list">${ts.map(t=>{const c=t.catches||[];
+    return `<button class="item" data-act="editTrip" data-v="${t.id}"><div class="grow"><div class="row between" style="flex-wrap:nowrap"><b>${esc(t.waterName||'be vietos')}</b><span class="badge">${c.length} ${c.length===1?'žuvis':'žuvų'}</span></div>
+     <div class="muted small">${esc(t.date)}${t.start?' · '+esc(t.start)+'–'+esc(t.end||'?'):''}${tripHours(t)?' · '+fmt1(tripHours(t))+' val.':''} · ${esc(t.type||'')}</div>
+     ${c.length?`<div class="thumbs">${c.slice(0,6).map(x=>x.thumb?`<img src="${x.thumb}" alt="">`:'').join('')}</div>`:''}</div></button>`}).join('')}</div>`:''}`};
+
+VIEWS.more=function(){
+  if(S.more&&VIEWS[S.more])return `<button class="btn sm" data-act="more" data-v="">← Daugiau</button>`+VIEWS[S.more]();
+  const rows=[['waters','Vandenys',S.waters.length+' telkinių','Teisinis statusas, bilietai, ežerų duomenys'],['gear','Spinta',S.gear.length+' daiktų','Masalai ir įranga, kurią brifas gali rekomenduoti'],
+    ['stats','Analizė',S.trips.length+' žvejybų','Statistika ir hipotezės iš šaltinių'],['guide','Žinynas','','Šaltiniai, taisyklės, metodika, žuvų rūšys']];
+  return `<div class="hero"><div class="eyebrow">Daugiau</div><h1>Nustatymai ir žinios</h1></div>
+   <div class="list">${rows.map(([k,n,c,d])=>`<button class="item more" data-act="more" data-v="${k}"><div class="grow"><div class="row between" style="flex-wrap:nowrap"><b>${n}</b><span class="muted small">${c}</span></div><div class="muted small">${d}</div></div></button>`).join('')}</div>
+   <button class="btn sm" data-act="exportData" style="align-self:flex-start">Eksportuoti duomenis</button>`};
+
+async function startTrip(){
+  if(S.activeTrip){S.tab='trip';renderAll();return}
+  const b=S.brief,p=b?b.p:S.plan;
+  if(!p.waterId){S.tab='trip';renderAll();toast('Pasirink vandenį');return}
+  const w=waterById(p.waterId);const t=newTrip();
+  t.active=true;t.date=today();t.start=nowHM();t.type=p.type;t.waterId=w?w.id:'';t.waterName=w?w.name:'';t.recent=p.recent||'';
+  ['temp','wind','dir','sky','wtemp','pressure'].forEach(k=>{if(p[k])t.w[k]=p[k]});
+  const r=await save('trips',t);if(!r)return;S.activeTrip=r;S.tab='trip';renderAll();window.scrollTo(0,0)}
+async function endTrip(btn){
+  const t=S.activeTrip;if(!t)return;if(!confirm_('Baigti žvejybą?',btn))return;
+  const T=JSON.parse(JSON.stringify(t));T.end=nowHM();T.active=false;
+  const w=S.waters.find(x=>x.id===T.waterId);const g=(T.catches||[]).filter(c=>c.lat);
+  if(w&&!w.coords&&g.length){await save('waters',{...w,coords:median(g.map(c=>c.lat)).toFixed(6)+', '+median(g.map(c=>c.lon)).toFixed(6),coordsSrc:'nuotraukų EXIF'})}
+  const r=await save('trips',T);if(!r)return;
+  setColl('trips',[...rawColl('trips').filter(x=>x.id!==r.id),r]);renderAll();toast('Žvejyba išsaugota. Laimikių rūšį ir masalą gali pataisyti paspaudęs žvejybą.',5000)}
+
+/* ---------- vizualiosios skiltys: žuvys, mazgai, perėjimai ---------- */
+const reduceMotion=()=>window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+const SEASONS=['Pavasaris','Vasara','Ruduo','Žiema'];
+const curSeason=()=>{const m=new Date().getMonth()+1;return m>=3&&m<=5?'Pavasaris':m>=6&&m<=8?'Vasara':m>=9&&m<=11?'Ruduo':'Žiema'};
+const MON=['sau','vas','kov','bal','geg','birž','liep','rugp','rugs','spal','lapkr','gruod'];
+const idOfName=n=>Object.keys(FISH_NAME).find(k=>FISH_NAME[k]===n);
+const fishWater=id=>`style="--a:${FISH_BG[id][0]};--b:${FISH_BG[id][1]}"`;
+const catchesOfSpecies=name=>{const out=[];S.trips.forEach(t=>(t.catches||[]).forEach(c=>{if(c.species===name)out.push({c,t})}));return out};
+
+function ruleChips(name){
+  const r=SPECIES_RULES[name];if(!r)return '';
+  const chips=[];
+  const closed=(r.closed||[]).map(([m1,d1,m2,d2])=>`${MON[m1-1]}. ${d1} – ${MON[m2-1]}. ${d2}`);
+  const isClosed=(r.closed||[]).some(rg=>dInRange(today(),rg));
+  chips.push(`<span class="pill ${isClosed?'bad':'good'}">šiandien ${isClosed?'draudžiama':'galima'}</span>`);
+  if(closed.length)chips.push(`<span class="chip-lite">draudimas ${closed.join(', ')}</span>`);
+  if(r.limit)chips.push(`<span class="chip-lite">limitas ${r.limit}</span>`);
+  if(r.min)chips.push(`<span class="chip-lite">${r.min}${r.max?'–'+r.max:'+'} cm</span>`);
+  return chips.join('');
+}
+
+/* perėjimas: kortelė išsiskleidžia į visą ekraną */
+function openStage(html,fromEl,after){
+  const st=$('#stage');
+  const show=()=>{if(fromEl)fromEl.style.viewTransitionName='';st.innerHTML=html;st.hidden=false;document.body.classList.add('noscroll');requestAnimationFrame(()=>st.classList.add('open'));initReveal();st.scrollTop=0;if(after)after()};
+  if(document.startViewTransition&&fromEl&&!reduceMotion()){fromEl.style.viewTransitionName='hero';const vt=document.startViewTransition(show);vt.finished.finally(()=>{const h=st.querySelector('[data-hero]');if(h)h.style.viewTransitionName=''})}
+  else show();
+}
+function closeStage(){const st=$('#stage');stopKnot();st.classList.remove('open');setTimeout(()=>{st.hidden=true;st.innerHTML='';document.body.classList.remove('noscroll')},reduceMotion()?0:260)}
+function initReveal(){
+  const els=[...document.querySelectorAll('#stage .rv')];
+  if(!('IntersectionObserver' in window)||reduceMotion()){els.forEach(e=>e.classList.add('in'));return}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{root:$('#stage'),threshold:.12});
+  els.forEach(e=>io.observe(e));
+}
+const bubbles=()=>Array.from({length:7},(_,i)=>`<i class="bub" style="left:${8+i*13}%;animation-delay:${(i*.7)%3}s;width:${5+(i%3)*4}px;height:${5+(i%3)*4}px"></i>`).join('');
+
+/* ---------- žuvys ---------- */
+VIEWS.fishes=function(){
+  const ids=Object.keys(FISH_NAME);
+  return `<div class="hero"><div class="eyebrow">Žinynas</div><h1>Žuvys</h1><div class="muted small" style="margin-top:4px">Paspausk žuvį ir pamatysi, kur jos ieškoti, kada kimba ir kokios taisyklės galioja.</div></div>
+  <div class="fgrid">${ids.map((id,i)=>{const n=catchesOfSpecies(FISH_NAME[id]);const last=n.length?n[n.length-1].c.thumb:'';
+   return `<button class="fcard ${i===0?'wide':''}" data-act="fishOpen" data-v="${id}" ${fishWater(id)}>
+     <i class="shine"></i><div class="fart">${fishSVG(id)}</div>
+     <div class="fmeta"><b>${FISH_NAME[id]}</b><span>${esc((FISH.find(f=>f.id===id)||{}).lat||'')}</span></div>
+     ${n.length?`<span class="fbadge">pagauta ${n.length}</span>`:''}${last?`<img class="fthumb" src="${last}" alt="">`:''}</button>`}).join('')}</div>`};
+
+function fishStage(id,fromEl){
+  const f=FISH.find(x=>x.id===id);if(!f)return;const name=FISH_NAME[id];
+  const caught=catchesOfSpecies(name);const lens=caught.map(x=>num(x.c.len)).filter(Boolean);
+  const sec=(t,body,cls='')=>`<section class="sec rv ${cls}"><h3>${t}</h3>${body}</section>`;
+  const season=curSeason();
+  const unv='<span class="chip-lite warn">bendra praktika, nepatikrinta šaltiniais</span>';
+  const html=`<div class="stage-scroll"><article class="fstage">
+   <header class="fs-hero" ${fishWater(id)}><button class="xbtn" data-act="stageClose" aria-label="Uždaryti">×</button><div class="bubs">${bubbles()}</div>
+     <div class="fs-art" data-hero style="view-transition-name:hero">${fishSVG(id,'big')}</div>
+     <h1>${name}</h1><div class="lat">${esc(f.lat)}</div><div class="chips2">${ruleChips(name)}</div></header>
+   <div class="fs-body">
+    ${sec('Apie',`<p>${f.intro}</p><div style="margin-top:8px">${unv}</div>`)}
+    ${sec('Kur ieškoti',`<p>${f.where}</p>`)}
+    ${sec('Pagal sezoną',`<div class="seg2" id="segS">${SEASONS.map(s=>`<button data-act="season" data-v="${s}" data-f="${id}" aria-pressed="${s===season}">${s}</button>`).join('')}</div><p class="swap" id="seasonBox">${f.seasons[season]}</p>`)}
+    ${sec('Masalai ir įranga',`<h4>Masalai</h4><p>${f.lures}</p><h4 style="margin-top:12px">Įranga</h4><p>${f.tackle}</p>`)}
+    ${sec('Oras',`<p>${f.weather}</p>`)}
+    ${sec('Patarimai ir klaidos',`<h4>Patarimai</h4><p>${f.tips}</p><h4 style="margin-top:12px">Dažnos klaidos</h4><p>${f.mistakes}</p>`)}
+    ${SPECIES_RULES[name]?sec('Taisyklės',`<div class="chips2 dark">${ruleChips(name)}</div>${SPECIES_RULES[name].note?`<p class="small muted" style="margin-top:8px">${esc(SPECIES_RULES[name].note)}</p>`:''}<p class="small" style="margin-top:8px">${srcChip(SPECIES_RULES[name].src)}</p>`):''}
+    ${sec('Tavo pagavimai',caught.length?`<div class="tiles"><div class="tile"><b>${caught.length}</b><span>pagauta</span></div><div class="tile"><b>${lens.length?Math.max(...lens):'–'}</b><span>didžiausia, cm</span></div></div><div class="thumbs big">${caught.slice(-8).reverse().map(x=>x.c.thumb?`<img src="${x.c.thumb}" alt="">`:'').join('')}</div>`:`<p class="muted">Dar nepagavai. Pirmoji nuotrauka su šia žuvimi atsiras čia.</p>`)}
+   </div></article></div>`;
+  openStage(html,fromEl);
+}
+
+/* ---------- mazgai ---------- */
+let KN=null;let knotTimer=null;
+function stopKnot(){clearInterval(knotTimer);knotTimer=null;KN=null}
+VIEWS.knots=function(){
+  return `<div class="hero"><div class="eyebrow">Žinynas</div><h1>Mazgai</h1><div class="muted small" style="margin-top:4px">Pasirink mazgą ir pažiūrėk, kaip jis veda žingsnis po žingsnio. Tai schemos, ne nuotraukos.</div></div>
+  <div class="list">${KNOTS.map((k,i)=>`<button class="item kcard" data-act="knotOpen" data-v="${i}" style="--d:${i*.06}s"><div class="kthumb">${(KNOT_ART[k.name]||[''])[ (KNOT_ART[k.name]||[]).length-1 ].replace('class="kscene"','class="kscene still"')}</div>
+   <div class="grow"><b>${k.name}</b><div class="muted small">${k.use}</div><div class="small" style="margin-top:6px"><span class="badge">${k.steps.length} žingsniai</span></div></div></button>`).join('')}</div>`};
+function knotStage(i,fromEl){
+  const k=KNOTS[i];if(!k)return;KN={i,s:0,play:true};
+  openStage(`<div class="stage-scroll"><article class="kstage"><header class="ks-top"><button class="xbtn dark" data-act="stageClose" aria-label="Uždaryti">×</button><div class="eyebrow">Mazgas</div><h1 data-hero style="view-transition-name:hero">${k.name}</h1><div class="muted small">${k.use}</div></header><div id="kbody"></div></article></div>`,fromEl,()=>{renderKnot();startKnotTimer()});
+}
+function renderKnot(){
+  if(!KN)return;const k=KNOTS[KN.i],art=KNOT_ART[k.name]||[];const n=k.steps.length;
+  const sc=art[Math.min(KN.s,art.length-1)]||'';
+  $('#kbody').innerHTML=`<div class="kstageBox">${sc}<div class="kprog">${k.steps.map((_,j)=>`<button data-act="knotGo" data-v="${j}" class="kdot ${j===KN.s?'on':j<KN.s?'done':''}" aria-label="Žingsnis ${j+1}"></button>`).join('')}</div></div>
+   <div class="kcap" key="${KN.s}"><div class="knum">${KN.s+1}<span>/${n}</span></div><p>${k.steps[KN.s]}</p></div>
+   <div class="row kctl"><button class="btn" data-act="knotStep" data-v="-1" ${KN.s===0?'disabled':''}>Atgal</button>
+   <button class="btn" data-act="knotPlay">${KN.play?'Sustabdyti':'Leisti'}</button>
+   <button class="btn primary" data-act="knotStep" data-v="1" ${KN.s===n-1?'disabled':''}>Toliau</button></div>`;
+}
+function startKnotTimer(){clearInterval(knotTimer);knotTimer=setInterval(()=>{if(!KN||!KN.play)return;const n=KNOTS[KN.i].steps.length;if(KN.s<n-1){KN.s++;renderKnot()}else{KN.play=false;renderKnot()}},3600)}
+
+/* ---------- Daugiau: meniu su vizualais ---------- */
+VIEWS.more=function(){
+  if(S.more&&VIEWS[S.more])return `<button class="btn sm" data-act="more" data-v="">← Daugiau</button>`+VIEWS[S.more]();
+  const rows=[['waters','Vandenys',S.waters.length+' telkinių','Teisinis statusas, bilietai, ežerų duomenys'],['gear','Spinta',S.gear.length+' daiktų','Masalai ir įranga, kurią brifas gali rekomenduoti'],
+    ['stats','Analizė',S.trips.length+' žvejybų','Statistika ir hipotezės iš šaltinių'],['guide','Žinynas','','Šaltiniai, taisyklės, metodika']];
+  return `<div class="hero"><div class="eyebrow">Daugiau</div><h1>Žinios ir nustatymai</h1></div>
+  <div class="duo"><button class="tile-big" data-act="more" data-v="fishes" ${fishWater('lydeka')}><div class="tart">${fishSVG('lydeka')}</div><b>Žuvys</b><span>7 rūšys</span></button>
+   <button class="tile-big knots" data-act="more" data-v="knots"><div class="tart">${KNOT_ART['Uni'][1].replace('class="kscene"','class="kscene still"')}</div><b>Mazgai</b><span>${KNOTS.length} mazgai</span></button></div>
+  <div class="list">${rows.map(([k,n,c,d])=>`<button class="item more" data-act="more" data-v="${k}"><div class="grow"><div class="row between" style="flex-wrap:nowrap"><b>${n}</b><span class="muted small">${c}</span></div><div class="muted small">${d}</div></div></button>`).join('')}</div>
+  <button class="btn sm" data-act="exportData" style="align-self:flex-start">Eksportuoti duomenis</button>`};
+
+/* vandens bangos */
+const _wp=y=>'M0 '+y+' '+Array.from({length:16},(_,i)=>(i===0?'Q50 '+(y-16)+' 100 '+y:'T'+(i+1)*100+' '+y)).join(' ')+' V40 H0Z';
+const wavesSVG=(cls='')=>`<div class="wavebox ${cls}"><svg class="waves" viewBox="0 0 1600 40" preserveAspectRatio="none" aria-hidden="true"><path class="w1" d="${_wp(20)}"/><path class="w2" d="${_wp(26)}"/></svg></div>`;
+
+/* ---------- stats ---------- */
+function barRows(rows,labelFn){
+  rows=rows.filter(r=>r.hours>0);if(!rows.length)return '<div class="muted small">Dar nėra duomenų (reikia žvejybų su pradžios ir pabaigos laiku).</div>';
+  const mx=Math.max(...rows.map(r=>r.fish/r.hours))||1;
+  return `<div class="bars">${rows.map(r=>{const rt=r.fish/r.hours;const cf=confLabel(r.trips,r.fish,r.hours);return `<div class="bar-row"><span>${esc(labelFn(r.k))}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.max(2,rt/mx*100)}%"></div></div><span class="small"><b>${fmt1(rt)}</b>/val. <span class="muted">(${r.fish} ž., ${r.trips} žv., ${fmt1(r.hours)} val.)</span> <span class="pill ${cf==='žemas'?'warn':cf==='vidutinis'?'':'good'}" ${cf==='vidutinis'?'style="background:var(--muted)"':''}>${cf}</span></span></div>`}).join('')}</div>`}
+function grp(keyFn){const m={};S.trips.forEach(t=>{const k=keyFn(t);if(k==null||k==='')return;const o=m[k]||(m[k]={k,trips:0,hours:0,fish:0});o.trips++;o.hours+=tripHours(t);o.fish+=(t.catches||[]).length});return Object.values(m)}
+const fmtRR=r=>fmt1(r);
+function hypCard(h){
+  const r=evalHyp(h,S.trips,S.waters);const snaps=S.hyp.filter(x=>x.hid===h.id).sort((a,b)=>b.date.localeCompare(a.date)||(b.created||0)-(a.created||0));
+  const vcls={'palaiko':'good','prieštarauja':'bad','neapibrėžta':'warn','nepakanka duomenų':'warn'}[r.verdict];
+  const body=r.res.ok?`Santykis (RR) ${fmtRR(r.res.rr)}, 95% intervalas ${fmtRR(r.res.lo)}–${fmtRR(r.res.hi)}. ${esc(r.labA)}: ${r.fishA} ž. per ${fmt1(r.hA)} val. (${fmt1(r.fishA/r.hA)}/val.). ${esc(r.labB)}: ${r.fishB} ž. per ${fmt1(r.hB)} val. (${fmt1(r.fishB/r.hB)}/val.).`
+    :`${esc(r.res.why||'')}. Šiuo metu: ${r.n.A||0} ir ${r.n.B||0} žvejybų, ${r.fishA+r.fishB} žuvų.`;
+  return `<details class="card hyp"><summary><span class="grow">${h.id} · ${esc(h.text.length>70?h.text.slice(0,68)+'…':h.text)}</span><span class="pill ${vcls}">${r.verdict}</span></summary>
+   <p style="margin:10px 0 6px">${esc(h.text)}</p>
+   <div class="small muted">Pagrindas: ${h.ev.map(e=>{const ev=EVID.find(x=>x.id===e);return e+' ('+ev.src.join(', ')+')'}).join('; ')}. Tikėtina kryptis: ${h.exp==='+'?'daugiau pirmoje grupėje':'mažiau pirmoje grupėje'}.</div>
+   <div class="small" style="margin:6px 0">${body}</div>
+   ${snaps.length?`<div class="small muted">Įrašyta ${snaps.length} kart. Paskutinis: ${esc(snaps[0].date)}, ${esc(snaps[0].verdict)}${snaps[0].fishA!=null?' ('+(snaps[0].fishA+snaps[0].fishB)+' ž.)':''}${snaps.length>1&&snaps[1].verdict!==snaps[0].verdict?'; anksčiau: '+esc(snaps[1].verdict):''}.</div>`:''}
+   <button class="btn sm" data-act="hypSave" data-v="${h.id}">Įvertinti ir įrašyti</button></details>`}
+function statsHTML(){
+  const n=S.trips.length;
+  if(n<1)return '<h2>Analizė</h2><div class="card">Analizė atsiras, kai įrašysi pirmas žvejybas su pradžios ir pabaigos laiku bei laimikių nuotraukomis. Hipotezės (žemiau) neįvertinamos, kol imtis nepasiekia mažiausios ribos.</div><h3>Hipotezės</h3>'+HYP.map(hypCard).join('');
+  const fish=tripsFish(),hrs=S.trips.reduce((a,t)=>a+tripHours(t),0);
+  const mn=t=>t.date?MONTHS[+t.date.slice(5,7)-1]:null;
+  const lureMap={};S.trips.forEach(t=>(t.catches||[]).forEach(c=>{const k=lureLabel(c)||'(masalas nenurodytas)';lureMap[k]=(lureMap[k]||0)+1}));
+  const lures=Object.entries(lureMap).sort((a,b)=>b[1]-a[1]);
+  const hist={};S.trips.forEach(t=>(t.catches||[]).forEach(c=>{if(!c.time)return;const h=+c.time.split(':')[0];hist[h]=(hist[h]||0)+1}));
+  const hk=Object.keys(hist).map(Number);let hh='';
+  if(hk.length){const a=Math.min(...hk),b=Math.max(...hk),mx=Math.max(...Object.values(hist));
+    hh='<div class="hist">'+Array.from({length:b-a+1},(_,i)=>{const h=a+i,v=hist[h]||0;return `<div><span>${v||''}</span><i style="height:${v/mx*80}%"></i><span>${h}</span></div>`}).join('')+'</div>'}
+  const sp={};S.trips.forEach(t=>(t.catches||[]).forEach(c=>{if(c.species)sp[c.species]=(sp[c.species]||0)+1}));
+  const sec=(t,b)=>`<div class="card"><h3>${t}</h3><div style="margin-top:10px">${b}</div></div>`;
+  const cf=confLabel(n,fish,hrs);
+  return `<h2>Analizė</h2>
+  <div class="banner">Imtis: ${n} žvejybų, ${fish} žuvų, ${fmt1(hrs)} valandų. Bendras pasitikėjimas: <b>${cf}</b>. Žemas reiškia mažiau nei 5 žvejybų, 10 žuvų ar 10 valandų, vidutinis mažiau nei 10 žvejybų ar 30 žuvų (mano slenksčiai, ne iš literatūros).</div>
+  <h3>Hipotezės iš šaltinių</h3>${HYP.map(hypCard).join('')}
+  ${sec('Ant ko kimba (tik pagavimai)',lures.length?`<div class="small muted" style="margin-bottom:8px">Čia nėra bandymų skaičiaus, nes masalų keitimo neloguoji. Lentelė rodo, ką naudoji ir kas pagavo, bet NERODO, kuris masalas efektyvesnis.</div><div class="scroll-x"><table><tr><th>Masalas</th><th>Pagavimai</th></tr>${lures.map(l=>`<tr><td>${esc(l[0])}</td><td>${l[1]}</td></tr>`).join('')}</table></div>`:'<div class="muted small">Dar nėra pagavimų.</div>')}
+  ${sec('Rūšys',Object.keys(sp).length?`<div class="chips">${Object.entries(sp).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<span class="badge">${esc(k)} ${v}</span>`).join('')}</div>`:'<div class="muted small">Dar nėra pagautų žuvų.</div>')}
+  ${sec('Kibimai pagal valandą',hh||'<div class="muted small">Pagavimų laikas paimamas iš nuotraukų EXIF.</div>')}
+  ${sec('Pagal mėnesį',barRows(grp(mn).sort((a,b)=>MONTHS.indexOf(a.k)-MONTHS.indexOf(b.k)),k=>k))}
+  ${sec('Pagal vandenį',barRows(grp(t=>t.waterName).sort((a,b)=>b.fish/(b.hours||1)-a.fish/(a.hours||1)),k=>k))}
+  ${sec('Pagal žvejybos tipą',barRows(grp(t=>t.type),k=>k))}
+  <div class="row"><button class="btn" data-act="exportData">Eksportuoti duomenis (JSON)</button></div>`}
+
+/* ---------- compact data for AI ---------- */
+function gearSummary(cats){return S.gear.filter(g=>!cats||cats.includes(g.cat)).map(g=>`${g.id} | ${CATS[g.cat]?.one||g.cat}: ${glFull(g)}${g.type?' ['+g.type+']':''}${g.qty&&g.qty!=1?' x'+g.qty:''}${g.specs?' ('+g.specs+')':''}`).join('\n')||'(spinta tuščia)'}
+function waterHistory(w){
+  const ts=S.trips.filter(t=>t.waterId===w.id||t.waterName===w.name);if(!ts.length)return 'Šiame vandenyje žvejybų žurnale dar nėra.';
+  const sp={},lu={};ts.forEach(t=>(t.catches||[]).forEach(c=>{sp[c.species]=(sp[c.species]||0)+1;const k=lureLabel(c);if(k)lu[k]=(lu[k]||0)+1}));
+  const h=ts.reduce((a,t)=>a+tripHours(t),0);
+  return `${ts.length} žvejybų, ${fmt1(h)} val.; pagavimai pagal rūšį: ${Object.entries(sp).map(([k,v])=>k+' '+v).join(', ')||'nėra'}; pagavimai pagal masalą: ${Object.entries(lu).map(([k,v])=>k+' '+v).join(', ')||'nėra'}`}
+function tripsSummary(){return S.trips.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,60).map(t=>`${t.date} ${t.waterName||''} | ${t.type||''} ${t.start||''}-${t.end||''} | ${wline(t.w)} | vand. ${t.w?.wtemp||'?'}°C | kibimai: ${(t.catches||[]).map(c=>[c.species,c.len&&c.len+'cm',c.time,lureLabel(c)].filter(Boolean).join(' ')).join('; ')||'nieko'}`).join('\n')||'(žurnalas tuščias)'}
+const SYS='Tu padedi Lietuvos žvejui Arnui. Atsakyk lietuviškai, tiesmukai, be įžangos, be emoji ir be tuščių frazių. Nespėliok faktų ir skaičių; jei duomenų ar šaltinio nėra, taip ir pasakyk.\n';
+
+async function runAI(btn,outId,key,promptFn){
+  const out=$('#'+outId);btn.disabled=true;const old=btn.textContent;btn.textContent='Galvoju…';out.hidden=false;out.textContent='';
+  try{const t=await ai(promptFn());S.out[key]=t;out.innerHTML=md(t)}catch(e){out.textContent=e.message||String(e)}
+  btn.disabled=false;btn.textContent=old}
+
+/* ---------- brifas ---------- */
+const LVL={stop:['draudimas','bad'],warn:['patikrinti','warn'],ok:['galima','good'],info:['taisyklė','']};
+function legalHTML(items){
+  const order=['stop','warn','ok','info'];const stops=items.filter(i=>i.lvl==='stop');
+  const head=stops.length?`<div class="banner" style="border-left-color:var(--bad)"><b>Yra draudimų (${stops.length}).</b> Nežvejok, kol jų nepatikrinai.</div>`:'';
+  return head+order.flatMap(l=>items.filter(i=>i.lvl===l)).map(i=>`<div class="lrow"><span class="pill ${LVL[i.lvl][1]}" ${i.lvl==='info'?'style="background:var(--muted)"':''}>${LVL[i.lvl][0]}</span><span>${esc(i.text)} ${i.src?srcChip(i.src):''}</span></div>`).join('')}
+function condHTML(rows){
+  if(!rows.length)return '<div class="muted small">Įvesk datą, pradžios laiką ir prognozę, tada pamatysi, ką apie jas sako šaltiniai.</div>';
+  const st={'+':['palaiko','good'],'-':['nepalankus','bad'],'0':['neutralu',''],'info':['info','']};
+  return rows.map(r=>`<div class="lrow"><span class="pill ${st[r.state][1]}" ${!st[r.state][1]?'style="background:var(--muted)"':''}>${st[r.state][0]}</span><span><b>${esc(r.e.f)}.</b> ${esc(r.txt)} <span class="muted small">Šaltinio teiginys: ${esc(r.e.claim)} (pasitikėjimas ${r.e.conf}).</span> ${srcChips(r.e.src)}</span></div>`).join('')}
+function recHTML(r){
+  if(!r)return '<div class="muted small">Masalų ir sistemos rekomendacija dar neparuošta.</div>';
+  if(r.error)return `<div class="banner">${esc(r.error)}</div>`;
+  const lab=id=>{const g=S.gear.find(x=>x.id===id);return g?glFull(g):''};
+  const basis=x=>{const ev=(x.evid||[]).filter(e=>EVID.some(v=>v.id===e));
+    const chips=ev.map(e=>{const v=EVID.find(q=>q.id===e);return `<span class="src g-${v.conf==='vidutinis'?'A':'C'}" title="${esc(v.claim)}">${e}</span> ${srcChips(v.src)}`}).join(' ');
+    const b=x.basis==='pagavimai'?'<span class="pill" style="background:var(--muted)">tavo pagavimai</span>':x.basis==='metodinis'?'<span class="pill" style="background:var(--muted)">metodinis sprendimas, ne literatūra</span>':'';
+    const none=!ev.length&&!b?'<span class="pill warn">nepatvirtinta šaltiniu</span>':'';return `<div class="row" style="margin-top:6px">${chips}${b}${none}</div>`};
+  const roleN={'pagrindinis':'Pagrindinis','atsarginis':'Atsarginis','tyrimui':'Duomenims rinkti'};
+  return `${(r.sets||[]).map(x=>{const nm=lab(x.lureId)||x.lureText||'?';const inGear=!!lab(x.lureId);
+     return `<div class="card"><div class="row between"><b>${esc(nm)}</b><span class="row"><span class="badge">${roleN[x.role]||esc(x.role||'')}</span>${inGear?'':'<span class="pill warn">nėra spintoje</span>'}</span></div>
+     ${x.target?`<div class="small muted">Tikslas: ${esc(x.target)}</div>`:''}
+     ${x.presentation?`<div class="small">${esc(x.presentation)}</div>`:''}
+     <div class="small" style="margin-top:4px">${esc(x.why||'')}</div>
+     <div class="small muted">Pasitikėjimas: ${esc(x.confidence||'žemas')}</div>${basis(x)}</div>`}).join('')}
+   ${(r.rig||[]).length?`<h3>Sistema</h3>`+r.rig.map(x=>`<div class="card"><b>${esc(x.item||'')}</b><div class="small" style="margin-top:4px">${esc(x.why||'')}</div>${basis(x)}</div>`).join(''):''}
+   ${(r.gaps||[]).length?`<h3>Ko trūksta spintoje šiai išvykai</h3><div class="card">${r.gaps.map(g=>`<div class="small">• ${esc(g)}</div>`).join('')}</div>`:''}
+   ${(r.unknowns||[]).length?`<h3>Ko nežinau</h3><div class="card">${r.unknowns.map(g=>`<div class="small">• ${esc(g)}</div>`).join('')}</div>`:''}`}
+function verdictHTML(b){
+  const stops=b.legal.filter(i=>i.lvl==='stop'),warns=b.legal.filter(i=>i.lvl==='warn');
+  const cls=stops.length?'bad':warns.length?'warn':'good';
+  const title=stops.length?'Yra draudimų':warns.length?'Galima, bet patikrink':'Teisiškai kliūčių nerasta';
+  const sub=stops.length?'Nežvejok, kol jų nepatikrinai.':warns.length?'Šie dalykai priklauso nuo tavo bilieto ar vandens statuso.':'Pagal įvestus duomenis ir AAD atmintines.';
+  const lines=(stops.length?stops:warns).slice(0,3);
+  return `<div class="verdict ${cls}"><div class="vt">${title}</div><div class="small">${sub}</div>
+   ${lines.map(i=>`<div class="vl">${esc(i.text)} ${i.src?srcChip(i.src):''}</div>`).join('')}
+   <details><summary>Visos taisyklės (${b.legal.length})</summary><div class="small muted" style="margin:6px 0">Skaičiuojama taisyklėmis iš AAD atmintinių, ne dirbtiniu intelektu.</div>${legalHTML(b.legal)}</details></div>`}
+function recSumHTML(b){
+  if(b.loading)return '<div class="panel muted">Renku masalus iš tavo spintos…</div>';
+  const r=b.rec;if(!r)return '';
+  if(r.error)return `<div class="banner">${esc(r.error)}</div>`;
+  const lab=id=>{const g=S.gear.find(x=>x.id===id);return g?glFull(g):''};
+  const roleN={'pagrindinis':'pagrindinis','atsarginis':'atsarginis','tyrimui':'duomenims'};
+  const sets=(r.sets||[]);
+  return `<div class="panel"><h3>Ką imti</h3>${sets.map(x=>{const nm=lab(x.lureId)||x.lureText||'?';
+    return `<div class="pick"><div class="row between" style="flex-wrap:nowrap"><b>${esc(nm)}</b><span class="badge">${roleN[x.role]||esc(x.role||'')}</span></div>
+    <div class="small muted clamp">${esc(x.why||'')}</div></div>`}).join('')||'<div class="muted small">Rekomendacijos nėra.</div>'}
+   ${(r.rig||[]).length?`<h3 style="margin-top:14px">Sistema</h3>${r.rig.map(x=>`<div class="pick"><b>${esc(x.item||'')}</b></div>`).join('')}`:''}
+   ${(r.gaps||[]).length?`<div class="small" style="margin-top:12px"><span class="pill warn">spintoje trūksta</span> ${r.gaps.map(esc).join('; ')}</div>`:''}</div>`}
+function briefHTML(b){
+  return `${verdictHTML(b)}<div id="recSum">${recSumHTML(b)}</div>
+  ${b.rec&&!b.rec.error?`<details class="fold"><summary>Kodėl šie masalai, pagrindas ir ko nežinau</summary><div class="list" style="margin-top:10px">${recHTML(b.rec)}</div></details>`:''}
+  <details class="fold"><summary>Sąlygos pagal šaltinius</summary><div style="margin-top:8px">${condHTML(b.cond)}</div></details>
+  <button class="btn hot big" data-act="startTrip">Pradėti žvejybą</button>`}
+
+function briefPrompt(p,w,cond){
+  const cats=/žiemin/i.test(p.type)?['ice','lure','terminal','line']:['lure','terminal','line'];
+  const ev=EVID.map(e=>`${e.id} [${e.f}; pasitikėjimas ${e.conf}; taikomumas: ${e.ap}] ${e.claim} (šaltiniai ${e.src.join(',')||'nėra'})`).join('\n');
+  return `Tu padedi Arnui paruošti žvejybos brifo dalį "masalų komplektas ir sistema". Grąžink TIK JSON, be kito teksto.
+GRIEŽTOS TAISYKLĖS:
+1. Masalus renkiesi TIK iš žemiau pateiktos spintos, naudok jų id. Jei reikiamo nėra, įrašyk į "gaps" (tipas ir parametrai, ne prekės ženklas).
+2. Kiekvienas pasirinkimas privalo turėti "evid" (įrodymų ID iš sąrašo žemiau) arba "basis". Jei įrodymo nėra, "evid":[] ir nieko nerašyk apie veiksmingumą.
+3. Konkretaus masalo veiksmingumui (spalva, tipas, dydis) literatūros įrodymų NĖRA (EV13). Todėl masalų parinkimo pagrindas yra: "pagavimai" (jo paties pagavimai šiame vandenyje, žemiau) arba "metodinis" (komplektas turi apimti skirtingus pateikimo būdus: skirtingą greitį ir gylį, kad jo duomenys sužinotų daugiau). Neteigk, kad konkretus masalas "kimba geriau" be duomenų.
+4. Nespėliok gylių, vedimo greičių, spalvų ar sezoninių taisyklių, kurių nepagrindžia pateikti įrodymai. Jei nežinai, įrašyk į "unknowns".
+5. "confidence" yra "vidutinis" tik jei evid įrašo pasitikėjimas vidutinis; visais kitais atvejais "žemas".
+6. Sistemai (rig) lydekai ir kietiesiems masalams naudok EV8. Atsižvelk į teisinius apribojimus: iš viso iki 6 kabliukų, gumos iki 40 cm, jei ledas ir žvejoji su žuvele, tik iki 2 įrankių su žuvele.
+7. Rekomenduok 2-4 masalus: vieną "pagrindinis", vieną "atsarginis", pagal poreikį "tyrimui" (kitoks pateikimas, kad atsirastų duomenų).
+SCHEMA: {"sets":[{"role":"pagrindinis|atsarginis|tyrimui","lureId":"id iš spintos arba ''","lureText":"jei lureId tuščias","target":"rūšis","presentation":"trumpai, tik jei pagrįsta","why":"1-2 sakiniai","evid":["EV.."],"basis":"pagavimai|metodinis|''","confidence":"žemas|vidutinis"}],"rig":[{"item":"","why":"","evid":["EV8"],"basis":""}],"gaps":[""],"unknowns":[""]}
+
+IŠVYKA: ${p.date} ${p.time||'?'}-${p.end||'?'}, ${p.type}, tikslas: ${(p.species||[]).join(', ')||'nenurodyta'}.
+VANDUO: ${w?`${w.name}, ${w.kind||''}, ${w.area||'?'} ha, didž. gylis ${w.maxDepth||'?'} m, vid. gylis ${w.meanDepth||'?'} m. ${w.notes||''}`:'nepasirinktas'}
+JO PAGAVIMAI ŠIAME VANDENYJE: ${w?waterHistory(w):'—'}
+PROGNOZĖ: oras ${p.temp||'?'}°C, vėjas ${p.dir||''} ${p.wind||'?'} m/s, ${p.sky||''}, vandens temp. ${p.wtemp||'?'}°C. Žvejotas paskutines 2 d.: ${p.recent||'nežinoma'}.
+SĄLYGŲ VERTINIMAS (programos): ${cond.map(c=>c.ev+':'+c.state).join(', ')||'—'}
+ĮRODYMAI:\n${ev}
+SPINTA (id | daiktas):\n${gearSummary(cats)}`}
+
+async function briefGo(btn){
+  const p={...S.plan,species:[...S.plan.species]};
+  if(!p.waterId){toast('Pirmiausia pasirink vandenį');return}
+  if(!p.date)p.date=today();
+  const w=waterById(p.waterId);
+  const br={p,water:w,legal:legal(w,p.type,p.date,p.species),cond:condEval(p,w),rec:null,loading:true,ts:Date.now()};
+  S.brief=br;S.planOpen=false;renderMain();window.scrollTo(0,0);
+  try{
+    const t=await ai(briefPrompt(p,w,br.cond));const r=parseJSON(t);
+    r.sets=(r.sets||[]).map(x=>({...x,lureId:S.gear.some(g=>g.id===x.lureId)?x.lureId:'',evid:(x.evid||[]).filter(e=>EVID.some(v=>v.id===e))}));
+    r.rig=(r.rig||[]).map(x=>({...x,evid:(x.evid||[]).filter(e=>EVID.some(v=>v.id===e))}));
+    br.rec=r;
+  }catch(e){br.rec={error:e.message||String(e)}}
+  br.loading=false;
+  if(S.brief===br&&S.tab==='today')renderMain();
+  if(br.rec&&!br.rec.error){const slim={date:p.date,time:p.time,end:p.end,type:p.type,waterId:p.waterId,species:p.species,recent:p.recent,wx:{temp:p.temp,wind:p.wind,dir:p.dir,sky:p.sky,wtemp:p.wtemp,pressure:p.pressure},
+      recLures:(br.rec.sets||[]).map(x=>({role:x.role,lureId:x.lureId,lureText:x.lureText,evid:x.evid,basis:x.basis,confidence:x.confidence})),legalStops:br.legal.filter(i=>i.lvl==='stop').map(i=>i.text)};
+    await save('briefs',slim)}
+}
+
+/* ---------- modal ---------- */
+let M=null; // {kind, data}
+function openModal(html){const m=$('#modal');m.innerHTML=`<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;m.hidden=false;document.body.style.overflow='hidden'}
+function closeModal(){M=null;$('#modal').hidden=true;$('#modal').innerHTML='';document.body.style.overflow=''}
+
+/* gear batch */
+function gfld(i,f,label,v,extra=''){return `<label class="f">${label}<input data-g="${i}.${f}" value="${esc(v)}" ${extra}></label>`}
+function gearFormHTML(g,i){const c=CATS[g.cat]||CATS.other;
+  return `<div class="card list" data-gi="${i}"><div class="row between">${g.thumb?`<img class="thumb" src="${g.thumb}" alt="">`:''}<div class="grow"></div>${g.confidence&&g.confidence!=='high'?`<span class="pill warn">${g.confidence==='low'?'netikra':'patikrink'}</span>`:''}<button class="btn sm danger" data-act="gdrop" data-v="${i}">Išmesti</button></div>
+  <div class="grid2"><label class="f">Kategorija<select data-g="${i}.cat" data-recat="1">${Object.entries(CATS).map(([k,v])=>`<option value="${k}"${k===g.cat?' selected':''}>${v.n}</option>`).join('')}</select></label>
+  <label class="f">Tipas<input data-g="${i}.type" list="dl_${g.cat}" value="${esc(g.type)}"><datalist id="dl_${g.cat}">${c.types.map(t=>`<option>${t}</option>`).join('')}</datalist></label>
+  ${gfld(i,'brand','Gamintojas',g.brand)}${gfld(i,'model','Modelis',g.model)}${gfld(i,'size',c.size,g.size)}${gfld(i,'weight',c.weight,g.weight)}
+  ${gfld(i,'color','Spalva',g.color)}${gfld(i,'qty','Kiekis',g.qty||1,'inputmode="numeric"')}</div>
+  <label class="f">Specifikacijos (veikimas, gylis, galia, perdavimai)<input data-g="${i}.specs" value="${esc(g.specs)}"></label>
+  <label class="f">Pastabos (kur pirkta, kaina, būklė)<input data-g="${i}.notes" value="${esc(g.notes)}"></label></div>`}
+function renderBatch(){const b=M.data;
+  openModal(`<div class="bar"><h3>${b.length===1&&b[0].id?'Redaguoti daiktą':'Nauji daiktai spintai'}</h3><button class="btn sm" data-act="mclose">Uždaryti</button></div>
+  ${b.map(gearFormHTML).join('')||'<div class="muted">Nėra daiktų.</div>'}
+  <div class="row"><button class="btn" data-act="gphoto2">Pridėti nuotrauką</button><button class="btn" data-act="gmore">Dar vienas ranka</button>${b.length===1&&b[0].id?'<button class="btn danger" data-act="gdel">Ištrinti iš spintos</button>':''}</div>
+  <button class="btn primary" data-act="gsave" ${b.length?'':'disabled'}>Išsaugoti ${b.length>1?b.length+' daiktus':''}</button>`)}
+function newGear(o={}){return {cat:'lure',type:'',brand:'',model:'',size:'',weight:'',color:'',qty:1,specs:'',notes:'',...o}}
+
+async function prep(file){
+  const img=await new Promise((res,rej)=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('Nepavyko atidaryti nuotraukos'));i.src=u});
+  const sc=mx=>{const r=Math.min(1,mx/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*r);c.height=Math.round(img.height*r);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c};
+  const blob=await new Promise(r=>sc(1400).toBlob(r,'image/jpeg',.85));
+  return {blob,thumb:sc(160).toDataURL('image/jpeg',.7)}}
+async function recognize(files){
+  const found=[];
+  for(let n=0;n<files.length;n++){
+    toast(`Atpažįstu ${n+1} iš ${files.length}…`,60000);
+    const {blob,thumb}=await prep(files[n]);
+    const t=await ai(`Tu atpažįsti žvejybos įrangą nuotraukoje (pakuotė, masalas, meškerė, ritė, valas, valtis, variklis ir t.t.). Perskaityk visą tekstą ant pakuotės. Grąžink TIK JSON masyvą, be jokio kito teksto. Kiekvienas elementas:
+{"cat":"rod|reel|line|lure|terminal|ice|boat|motor|sonar|tool|clothing|other","type":"lietuviškai, pvz. Vobleris, Gumytė, Blizgė, Pintas, Mormyška","brand":"","model":"","size":"ilgis cm / dydis / skersmuo, kaip parašyta","weight":"g ar kitas svoris, kaip parašyta","color":"spalva ar spalvos kodas","qty":1,"specs":"veikimas (plūduriuojantis/skęstantis), nardymo gylis, galia, testas ir kita, kas parašyta","notes":"","confidence":"high|medium|low"}
+Jei nuotraukoje keli skirtingi daiktai, grąžink kiekvienam atskirą elementą. Jei lauko ant daikto nematyti, palik "" ir nespėliok. qty yra kiekis pakuotėje, jei matyti.`,[blob]);
+    parseJSON(t).forEach(x=>found.push(newGear({...x,thumb})));
+  }
+  return found}
+/* trip modal */
+function newTrip(){return {date:today(),start:'',end:'',waterName:'',type:TRIPTYPES[0],recent:'',w:{temp:'',pressure:'',trend:'',wind:'',dir:'',sky:'',wtemp:'',clarity:'',level:'',ice:''},catches:[],misses:'',notes:'',rating:''}}
+function setPath(o,p,v){const k=p.split('.');let x=o;for(let i=0;i<k.length-1;i++)x=x[k[i]]=x[k[i]]||{};x[k[k.length-1]]=v}
+function catchHTML(c,i){const lures=S.gear.filter(g=>['lure','ice'].includes(g.cat));
+  return `<div class="catchrow"><div class="row" style="align-items:flex-start;flex-wrap:nowrap">${c.thumb?`<img class="thumb big" src="${c.thumb}" alt="">`:''}
+  <div class="grow list" style="gap:8px;min-width:0">
+   <div class="grid2"><label class="f">Rūšis<select data-c="${i}.species">${SPECIES.map(s=>`<option${s===c.species?' selected':''}>${s}</option>`).join('')}</select></label>
+   <label class="f">Masalas<select data-c="${i}.lureId"><option value="">${c.lureText?esc(c.lureText):'nenurodyta'}</option>${lures.map(g=>`<option value="${g.id}"${g.id===c.lureId?' selected':''}>${esc(glFull(g))}</option>`).join('')}</select></label></div>
+   ${c.conf&&c.conf!=='high'?`<div class="small"><span class="pill warn">${c.conf==='low'?'atpažinimas netikras':'patikrink atpažinimą'}</span></div>`:''}
+   <details><summary>Laikas, ilgis, pastaba</summary><div class="grid2" style="margin-top:8px">
+   <label class="f">Laikas${c.exif?' (iš nuotraukos)':''}<input type="time" data-c="${i}.time" value="${esc(c.time)}"></label>
+   <label class="f">Ilgis cm<input inputmode="decimal" data-c="${i}.len" value="${esc(c.len)}"></label>
+   <label class="f">Masalas tekstu<input data-c="${i}.lureText" value="${esc(c.lureText)}"></label>
+   <label class="f">Pastaba<input data-c="${i}.note" value="${esc(c.note)}"></label></div>
+   ${c.lat?`<div class="small muted">Vieta iš nuotraukos: ${fmt1(c.lat)}, ${fmt1(c.lon)}</div>`:''}</details></div></div>
+  <div class="row between"><label class="check"><input type="checkbox" data-c="${i}.released"${c.released?' checked':''}> Paleista</label><button class="btn sm danger" data-act="cdrop" data-v="${i}">Pašalinti</button></div></div>`}
+function tripBody(){const T=M.data,w=T.w||{};const sel=(p,arr,v)=>`<select data-t="${p}">${arr.map(x=>`<option${x===v?' selected':''}>${esc(x)}</option>`).join('')}</select>`;
+  const mo=T.date?moon(T.date):null;
+  return `<label class="f">Vandens telkinys<input data-t="waterName" list="wl2" value="${esc(T.waterName)}"><datalist id="wl2">${S.waters.map(x=>`<option>${esc(x.name)}</option>`).join('')}</datalist></label>
+  <div class="grid3"><label class="f">Data<input type="date" data-t="date" value="${esc(T.date)}"></label>
+  <label class="f">Pradžia<input type="time" data-t="start" value="${esc(T.start)}"></label>
+  <label class="f">Pabaiga<input type="time" data-t="end" value="${esc(T.end)}"></label></div>
+  <div class="sect">Laimikiai</div>
+  <div class="list" id="catches">${(T.catches||[]).map(catchHTML).join('')}</div>
+  <div class="row"><button class="btn primary" data-act="cphoto">Pridėti nuotrauka</button><button class="btn" data-act="cadd">Be nuotraukos</button></div>
+  <details class="fold"><summary>Sąlygos ir pastabos</summary><div class="list" style="margin-top:10px">
+  <label class="f">Žvejybos tipas${sel('type',TRIPTYPES,T.type)}</label>
+  <label class="f">Žvejota paskutines 2 dienas (kitų žvejų spaudimas)${sel('recent',['','daug','mažai','nežinau'],T.recent)}</label>
+  <div class="grid2"><label class="f">Oras °C<input inputmode="decimal" data-t="w.temp" value="${esc(w.temp)}"></label>
+  <label class="f">Vėjas m/s<input inputmode="decimal" data-t="w.wind" value="${esc(w.wind)}"></label>
+  <label class="f">Vėjo kryptis${sel('w.dir',DIRS,w.dir)}</label>
+  <label class="f">Dangus${sel('w.sky',SKY,w.sky)}</label>
+  <label class="f">Vandens temp. °C<input inputmode="decimal" data-t="w.wtemp" value="${esc(w.wtemp)}"></label>
+  <label class="f">Slėgis hPa<input inputmode="decimal" data-t="w.pressure" value="${esc(w.pressure)}"></label>
+  <label class="f">Skaidrumas${sel('w.clarity',['','Skaidrus','Šiek tiek drumstas','Drumstas'],w.clarity)}</label>
+  <label class="f">Ledo storis cm<input inputmode="decimal" data-t="w.ice" value="${esc(w.ice)}"></label></div>
+  <div class="small muted" id="moonL">${mo?'Mėnulis: '+mo.name+', '+mo.ill+'%':''}</div>
+  <label class="f">Papasakok laisvu tekstu${M.mic?' arba balsu':''}, užpildysiu sąlygas
+   <textarea id="freeText" rows="2" placeholder="Pvz. vėjas pietvakarių 4, vanduo 7 laipsnių, ežeras tuščias"></textarea></label>
+  <div class="row">${M.mic?'<button class="btn" id="micBtn" data-act="mic">Diktuoti</button>':''}<button class="btn" data-act="tripAI">Užpildyti sąlygas</button></div>
+  <label class="f">Pastabos<textarea data-t="notes" rows="2">${esc(T.notes)}</textarea></label></div></details>`}
+function renderTrip(){const T=M.data;openModal(`<div class="bar"><h3>${T.id?'Žvejyba':'Nauja žvejyba'}</h3><button class="btn sm" data-act="mclose">Uždaryti</button></div><div id="tripBody" class="list">${tripBody()}</div>
+  <button class="btn primary" data-act="tsave">Išsaugoti</button>${T.id?'<button class="btn danger" data-act="tdel">Ištrinti žvejybą</button>':''}`)}
+
+/* nuotraukos laimikis: EXIF + atpažinimas */
+async function prepCatch(file){
+  const buf=await file.arrayBuffer();const ex=parseExif(buf);
+  const {blob}=await prep(file);
+  const img=await new Promise((res,rej)=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>res(i);i.onerror=()=>rej(new Error('Nepavyko atidaryti nuotraukos'));i.src=u});
+  const r=Math.min(1,220/Math.max(img.width,img.height));const c=document.createElement('canvas');c.width=Math.round(img.width*r);c.height=Math.round(img.height*r);c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+  return {blob,thumb:c.toDataURL('image/jpeg',.7),ex}}
+async function addCatchPhotos(files){
+  const T=M.data;const lures=S.gear.filter(g=>['lure','ice'].includes(g.cat));
+  for(let n=0;n<files.length;n++){
+    toast(`Skaitau nuotrauką ${n+1} iš ${files.length}…`,60000);
+    const {blob,thumb,ex}=await prepCatch(files[n]);
+    const c={time:ex.time||'',date:ex.date||'',exif:!!ex.time,species:'Lydeka',len:'',lureId:'',lureText:'',note:'',released:true,thumb,lat:ex.lat||null,lon:ex.lon||null,conf:'medium'};
+    try{
+      const t=await ai(`Nuotraukoje žvejo laimikis. Grąžink TIK JSON objektą be kito teksto: {"species":"${SPECIES.join('|')}","lureId":"id iš sąrašo, tik jei nuotraukoje aiškiai matomas būtent tas masalas","lureText":"jei masalas matomas, bet jo nėra sąraše, aprašyk trumpai (tipas, spalva, dydis); kitaip ''","len":"ilgis cm TIK jei nuotraukoje matyti matuoklė ar liniuotė su skale; kitaip ''","conf":"high|medium|low"}
+Nespėliok: jei masalo nematyti, palik lureId ir lureText tuščius. Žuvies ilgio iš akies NEVERTINK.
+Masalai spintoje (id = pavadinimas):\n${lures.map(g=>g.id+' = '+glFull(g)).join('\n')||'(nėra)'}`,[blob]);
+      const o=parseJSON(t);if(SPECIES.includes(o.species))c.species=o.species;if(o.lureId&&lures.some(g=>g.id===o.lureId))c.lureId=o.lureId;else if(o.lureText)c.lureText=String(o.lureText);
+      if(o.len)c.len=String(o.len);c.conf=['high','medium','low'].includes(o.conf)?o.conf:'medium';
+    }catch(e){c.conf='low';c.note='Atpažinimas nepavyko: '+(e.message||e)}
+    T.catches.push(c);
+    if(c.date&&T.date&&c.date!==T.date)toast('Nuotraukos data '+c.date+' skiriasi nuo žvejybos datos '+T.date,6000);
+  }
+  toast('Pridėta '+files.length+'. Patikrink rūšį ir masalą.');
+  if($('#catches'))$('#catches').innerHTML=T.catches.map(catchHTML).join('')}
+
+/* vandens langas */
+function waterModal(w){M={kind:'water',data:w};w.legal=w.legal||{};
+  const f=(k,l,ph='')=>`<label class="f">${l}<input data-w="${k}" value="${esc(k.split('.').reduce((o,x)=>o&&o[x],w)??'')}" placeholder="${ph}"></label>`;
+  const L=w.legal;
+  openModal(`<div class="bar"><h3>${w.id?'Vanduo':'Naujas vanduo'}</h3><button class="btn sm" data-act="mclose">Uždaryti</button></div>
+  <div class="grid2">${f('name','Pavadinimas')}<label class="f">Tipas<select data-w="kind">${['Ežeras','Upė','Tvenkinys','Kūdra','Kita'].map(x=>`<option${x===w.kind?' selected':''}>${x}</option>`).join('')}</select></label>
+  ${f('region','Rajonas / vieta')}${f('area','Plotas ha')}${f('maxDepth','Didžiausias gylis m')}${f('meanDepth','Vidutinis gylis m')}${f('bottom','Dugnas / struktūra')}${f('coords','Koordinatės (lat, lon)','54.633432, 24.796452')}</div>
+  <div class="sect">Teisinis statusas (nuo jo priklauso brifas)</div>
+  <div class="grid2"><label class="f">Statusas<select data-w="legal.status">${['','neišnuomotas','išnuomotas','limituota','ekologinis','uždraustas'].map(x=>`<option value="${x}"${x===(L.status||'')?' selected':''}>${x||'nežinomas'}</option>`).join('')}</select></label>
+  ${f('legal.tenant','Nuomininkas / leidimo davėjas')}${f('legal.ticket','Reikalingas dokumentas')}${f('legal.boat','Valtis ir variklis')}
+  <label class="f">Statusas patikrintas<input type="date" data-w="legal.checked" value="${esc(L.checked||'')}"></label>
+  <label class="f">Šaltinis<select data-w="legal.src">${['','A3','A5','B1','A6'].map(x=>`<option${x===(L.src||'')?' selected':''}>${x}</option>`).join('')}</select></label></div>
+  <label class="check"><input type="checkbox" data-w="legal.verifiedPrimary"${L.verifiedPrimary?' checked':''}> Patikrinta pirminiame teisės akte ar ALIS</label>
+  <label class="f">Dar reikia patikrinti<input data-w="legal.todo" value="${esc(L.todo||'')}"></label>
+  <label class="f">Pastabos (kur ką pagavai, geriausios vietos, ko vengti)<textarea data-w="notes" rows="3">${esc(w.notes)}</textarea></label>
+  <div class="sect">Teisinė suvestinė šiandien (spiningas)</div><div id="wLegal">${legalHTML(legal(w,'Spiningas iš kranto',today(),['Lydeka','Starkis']))}</div>
+  <button class="btn primary" data-act="wsave">Išsaugoti</button>${w.id?'<button class="btn danger" data-act="wdel">Ištrinti</button>':''}`)}
+
+/* ---------- events ---------- */
+let pendingFiles='';
+const nowHM=()=>{const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')};
+document.addEventListener('click',async e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,v=b.dataset.v;
+  switch(a){
+   case 'tab':S.tab=v;if(v==='more')S.more='';S._anim=true;renderAll();window.scrollTo(0,0);break;
+   case 'more':S.more=v;S._anim=true;renderMain();window.scrollTo(0,0);break;
+   case 'ptype':S.plan.type=v;if(/žiemin/i.test(v)){if(!S.plan.species.length)S.plan.species=['Ešerys']}renderMain();break;
+   case 'fishOpen':fishStage(v,b);break;
+   case 'stageClose':closeStage();break;
+   case 'season':{const f=FISH.find(x=>x.id===b.dataset.f);const box=$('#seasonBox');if(f&&box){document.querySelectorAll('#segS button').forEach(x=>x.setAttribute('aria-pressed',x===b));box.classList.remove('swap');void box.offsetWidth;box.textContent=f.seasons[v];box.classList.add('swap')}break}
+   case 'knotOpen':knotStage(+v,b);break;
+   case 'knotStep':if(KN){KN.s=Math.max(0,Math.min(KNOTS[KN.i].steps.length-1,KN.s+ +v));KN.play=false;renderKnot()}break;
+   case 'knotGo':if(KN){KN.s=+v;KN.play=false;renderKnot()}break;
+   case 'knotPlay':if(KN){const n=KNOTS[KN.i].steps.length;if(!KN.play&&KN.s>=n-1)KN.s=0;KN.play=!KN.play;renderKnot()}break;
+   case 'planClose':S.planOpen=false;renderMain();break;
+   case 'planOpen':S.planOpen=true;renderMain();break;
+   case 'startTrip':startTrip();break;
+   case 'endTrip':endTrip(b);break;
+   case 'catchNow':window._camTarget='active';$('#cfile').click();break;
+   case 'cat':S.cat=v;renderMain();break;
+   case 'gsub':S.sub=v;renderMain();break;
+   case 'fish':S.fish=v;renderMain();window.scrollTo(0,0);break;
+   case 'srcgo':{S.tab='more';S.more='guide';S.sub='src';renderAll();const el=$('#src_'+v);if(el){el.scrollIntoView({block:'center'});el.style.outline='2px solid var(--hot)'}break}
+   case 'tgt':{const s=S.plan.species;const i=s.indexOf(v);i>=0?s.splice(i,1):s.push(v);b.setAttribute('aria-pressed',i<0);break}
+   case 'mclose':closeModal();break;
+   case 'gearPhoto':pendingFiles='new';$('#file').click();break;
+   case 'gphoto2':pendingFiles='add';$('#file').click();break;
+   case 'gearManual':M={kind:'gear',data:[newGear()]};renderBatch();break;
+   case 'gmore':M.data.push(newGear());renderBatch();break;
+   case 'gdrop':M.data.splice(+v,1);if(!M.data.length)closeModal();else renderBatch();break;
+   case 'editGear':{const g=S.gear.find(x=>x.id===v);if(g){M={kind:'gear',data:[{...g}]};renderBatch()}break}
+   case 'gsave':{b.disabled=true;let n=0;for(const g of M.data){if(!g.brand&&!g.model&&!g.type&&!g.name)continue;const r=await save('gear',{...g,qty:num(g.qty)||1});if(r)n++}closeModal();toast(n+' išsaugota');break}
+   case 'gdel':if(confirm_('Ištrinti šį daiktą iš spintos?',b)){await removeDoc('gear',M.data[0].id);closeModal()}break;
+   case 'newTrip':{const t=newTrip();const pl=S.plan;if(S.brief&&S.brief.p){t.date=S.brief.p.date||t.date;t.type=S.brief.p.type||t.type;t.waterName=S.brief.water?S.brief.water.name:'';t.recent=S.brief.p.recent||'';
+       ['temp','wind','dir','sky','wtemp','pressure'].forEach(k=>{if(S.brief.p[k])t.w[k]=S.brief.p[k]})}
+     M={kind:'trip',data:t,mic:false};initMic();renderTrip();break}
+   case 'editTrip':{const t=S.trips.find(x=>x.id===v)||(S.activeTrip&&S.activeTrip.id===v?S.activeTrip:null);if(t){M={kind:'trip',data:JSON.parse(JSON.stringify({...newTrip(),...t,w:{...newTrip().w,...(t.w||{})}})),mic:false};initMic();renderTrip()}break}
+   case 'now':{M.data[v]=nowHM();const i=$(`[data-t="${v}"]`);if(i)i.value=M.data[v];break}
+   case 'cphoto':$('#cfile').click();break;
+   case 'cadd':{const T=M.data;T.catches=T.catches||[];T.catches.push({time:'',species:'Lydeka',len:'',lureId:'',lureText:'',note:'',released:true,exif:false});$('#catches').innerHTML=T.catches.map(catchHTML).join('');break}
+   case 'cdrop':M.data.catches.splice(+v,1);$('#catches').innerHTML=M.data.catches.map(catchHTML).join('');break;
+   case 'tsave':{const T=M.data;if(!T.date){toast('Įrašyk datą');return}b.disabled=true;
+     let w=S.waters.find(x=>normName(x.name)===normName(T.waterName));
+     if(!w&&T.waterName&&T.waterName.trim()){w=await save('waters',{name:T.waterName.trim(),kind:'Ežeras'})}
+     if(w){T.waterId=w.id;T.waterName=w.name;
+       const g=(T.catches||[]).filter(c=>c.lat);if(!w.coords&&g.length){const lat=median(g.map(c=>c.lat)),lon=median(g.map(c=>c.lon));await save('waters',{...w,coords:lat.toFixed(6)+', '+lon.toFixed(6),coordsSrc:'nuotraukų EXIF'})}}
+     const r=await save('trips',T);closeModal();if(r)toast('Žvejyba išsaugota');break}
+   case 'tdel':if(confirm_('Ištrinti šią žvejybą?',b)){await removeDoc('trips',M.data.id);closeModal()}break;
+   case 'newWater':waterModal({name:'',kind:'Ežeras',region:'',area:'',maxDepth:'',meanDepth:'',bottom:'',coords:'',notes:'',legal:{}});break;
+   case 'editWater':{const w=S.waters.find(x=>x.id===v);if(w)waterModal(JSON.parse(JSON.stringify(w)));break}
+   case 'wsave':{if(!M.data.name.trim()){toast('Įrašyk pavadinimą');return}await save('waters',M.data);closeModal();break}
+   case 'wdel':if(confirm_('Ištrinti vandenį? Žvejybos išliks.',b)){await removeDoc('waters',M.data.id);closeModal()}break;
+   case 'kbImport':{const k=KB_WATERS.find(x=>x.name===v);if(k){await save('waters',JSON.parse(JSON.stringify({...k,kbSeed:true})));toast(k.name+' įkeltas. Statusą prieš žvejybą patikrink ALIS.',6000)}break}
+   case 'tripAI':tripFromText(b);break;
+   case 'mic':toggleMic(b);break;
+   case 'briefGo':briefGo(b);break;
+   case 'hypSave':{const h=HYP.find(x=>x.id===v);const r=evalHyp(h,S.trips,S.waters);
+     await save('hyp',{hid:h.id,date:today(),verdict:r.verdict,rr:r.res.ok?r.res.rr:null,lo:r.res.ok?r.res.lo:null,hi:r.res.ok?r.res.hi:null,fishA:r.fishA,fishB:r.fishB,hA:r.hA,hB:r.hB,nA:r.n.A,nB:r.n.B,labA:r.labA||'',labB:r.labB||''});toast(h.id+' įrašyta');break}
+   case 'exportData':{const dump=JSON.stringify({exported:new Date().toISOString(),gear:S.gear.map(({thumb,...g})=>g),waters:S.waters,trips:S.trips.map(t=>({...t,catches:(t.catches||[]).map(({thumb,...c})=>c)})),hyp:S.hyp,briefs:S.briefs},null,1);
+     openModal(`<div class="bar"><h3>Duomenų eksportas</h3><button class="btn sm" data-act="mclose">Uždaryti</button></div><textarea id="dump" rows="14" readonly style="width:100%;font-family:monospace;font-size:.75rem">${esc(dump)}</textarea><button class="btn primary" data-act="dumpCopy">Pažymėti viską ir kopijuoti</button><div class="small muted">Nuotraukų miniatiūros į eksportą neįtraukiamos.</div>`);break}
+   case 'dumpCopy':{const t=$('#dump');t.select();try{await navigator.clipboard.writeText(t.value);toast('Nukopijuota')}catch(e){toast('Pažymėta, nukopijuok rankiniu būdu (Ctrl+C)')}break}
+   case 'shopGo':runAI(b,'shopOut','shop',()=>SYS+`Išanalizuok mano spintą ir žurnalą ir pasakyk, ko galiu pirkti. Kiekvienai rekomendacijai privalai nurodyti PAGRINDĄ iš trijų: "taisyklės" (pvz. teisinis reikalavimas, smaigai ant ledo), "tavo duomenys" (pagal žurnalą ir spintą), arba "bendra praktika (nepatvirtinta)". Neišgalvok prekių: nurodyk tipą ir parametrus, ne modelį. Jei duomenų neužtenka, pasakyk. Žiemos ir saugos daiktus rašyk pirmiausia. Atsižvelk į teisinius apribojimus (iki 6 kabliukų, gumos iki 40 cm, ledui du smaigai).\n\nMANO SPINTA:\n${gearSummary()}\n\nŽURNALAS:\n${tripsSummary()}`);break;
+  }
+});
+function confirm_(msg,btn){if(btn.dataset.sure==='1')return true;btn.dataset.sure='1';btn.textContent='Paspausk dar kartą';setTimeout(()=>{btn.dataset.sure='';},3000);return false}
+
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!$('#stage').hidden)closeStage()});
+document.addEventListener('input',e=>{
+  const el=e.target;const val=el.type==='checkbox'?el.checked:el.value;
+  if(el.id==='gq'){S.q=el.value;const list=S.gear.filter(g=>(S.cat==='all'||g.cat===S.cat)&&(!S.q||JSON.stringify(g).toLowerCase().includes(S.q.toLowerCase())));$('#gearList').innerHTML=gearListHTML(list);return}
+  if(el.dataset.p){S.plan[el.dataset.p]=val;return}
+  if(!M)return;
+  if(el.dataset.g){const[i,f]=el.dataset.g.split('.');M.data[+i][f]=val;if(el.dataset.recat)renderBatch();return}
+  if(el.dataset.t){setPath(M.data,el.dataset.t,val);if(el.dataset.t==='date'&&val){const m=moon(val);$('#moonL').textContent='· mėnulis: '+m.name+', '+m.ill+'%'}return}
+  if(el.dataset.c){const[i,f]=el.dataset.c.split('.');M.data.catches[+i][f]=val;return}
+  if(el.dataset.w){setPath(M.data,el.dataset.w,val);if(el.dataset.w.startsWith('legal.')||el.dataset.w==='kind'||el.dataset.w==='name'){const x=$('#wLegal');if(x)x.innerHTML=legalHTML(legal(M.data,'Spiningas iš kranto',today(),['Lydeka','Starkis']))}}
+});
+$('#file').addEventListener('change',async e=>{
+  const files=[...e.target.files];e.target.value='';if(!files.length)return;
+  try{const items=await recognize(files);toast(items.length?'Atpažinta: '+items.length+'. Patikrink ir išsaugok.':'Nieko neatpažinau, įvesk ranka.');
+    if(pendingFiles==='add'&&M&&M.kind==='gear')M.data.push(...items);else M={kind:'gear',data:items.length?items:[newGear()]};renderBatch()}
+  catch(err){toast(err.message||String(err),6000)}
+});
+$('#cfile').addEventListener('change',async e=>{
+  const files=[...e.target.files];e.target.value='';if(!files.length)return;
+  try{
+    if(M&&M.kind==='trip'){await addCatchPhotos(files);return}
+    if(S.activeTrip){const keep=M;M={kind:'trip',data:JSON.parse(JSON.stringify(S.activeTrip))};
+      await addCatchPhotos(files);const r=await save('trips',M.data);M=keep;if(r&&!db){renderMain()}}
+  }catch(err){toast(err.message||String(err),6000)}
+});
+/* aprašymas -> sąlygos */
+async function tripFromText(btn){
+  const txt=($('#freeText')||{}).value||'';if(txt.trim().length<5){toast('Parašyk ar padiktuok, kokios buvo sąlygos');return}
+  btn.disabled=true;btn.textContent='Skaitau…';
+  try{
+    const t=await ai(`Iš žvejo aprašymo ištrauk žvejybos sąlygas. Grąžink TIK JSON objektą, be teksto. Nespėliok: ko neminėta, palik "". Šiandien ${today()}. Laikus rašyk 24 val. formatu HH:MM.
+Schema: {"date":"YYYY-MM-DD","start":"","end":"","waterName":"","type":"${TRIPTYPES.join('|')}","recent":"daug|mažai|nežinau|","w":{"temp":"","pressure":"","wind":"","dir":"${DIRS.filter(Boolean).join('|')}","sky":"${SKY.filter(Boolean).join('|')}","wtemp":"","clarity":"Skaidrus|Šiek tiek drumstas|Drumstas","ice":""},"notes":""}
+Vandenys: ${S.waters.map(w=>w.name).join(', ')||'(nėra)'}
+Aprašymas: """${txt}"""`);
+    const o=parseJSON(t);const T=M.data;
+    ['date','start','end','waterName','type','recent','notes'].forEach(k=>{if(o[k])T[k]=String(o[k])});
+    Object.entries(o.w||{}).forEach(([k,v])=>{if(v!==''&&v!=null)T.w[k]=String(v)});
+    $('#tripBody').innerHTML=tripBody();toast('Užpildyta. Patikrink laukus ir išsaugok.');
+  }catch(err){toast(err.message||String(err),6000);btn.disabled=false;btn.textContent='Užpildyti sąlygas iš aprašymo'}
+}
+
+/* dictation */
+let dict=null;
+async function initMic(){try{dict=await (window.claude&&claude.use?claude.use('dictation'):null)}catch(e){dict=null}
+  if(dict&&M&&M.kind==='trip'){M.mic=true;const tb=$('#tripBody');if(tb){const ft=$('#freeText')?.value;tb.innerHTML=tripBody();if($('#freeText'))$('#freeText').value=ft||''}}}
+function toggleMic(b){
+  if(!dict)return;
+  if(b.dataset.on==='1'){dict.stop();return}
+  const ta=$('#freeText');let base=ta.value?ta.value+' ':'';
+  dict.onPartial(({text})=>{ta.value=base+text});
+  dict.onFinal(({text})=>{base+=text+' ';ta.value=base});
+  dict.onState(({state})=>{b.dataset.on=state==='listening'?'1':'';b.textContent=state==='listening'?'Sustabdyti':'Diktuoti'});
+  dict.start().catch(()=>toast('Mikrofono leidimas nesuteiktas, rašyk ranka.'));
+}
+
+/* ---------- boot ---------- */
+renderAll();
+initDb();
+setInterval(()=>{const el=$('#elapsed');if(el&&S.activeTrip)el.textContent=elapsedStr(S.activeTrip)},20000);
+
+</script></body></html>
