@@ -373,7 +373,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.5 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.6 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2163,21 +2163,28 @@ function compassOpen(lat,lon,name){
     const a=Math.sin((f2-f1)/2)**2+Math.cos(f1)*Math.cos(f2)*Math.sin(dl/2)**2,m=12742000*Math.asin(Math.sqrt(a));
     dist.textContent=m<1000?Math.round(m)+' m':fmt1(Math.round(m/100)/10)+' km';
     const h=head==null?0:head;arrow.style.transform=`rotate(${brg-h}deg)`;rose.style.transform=`rotate(${-h}deg)`;
+    if(pos.launch)return;
     sub.innerHTML=m<=Math.max(15,pos.acc||0)?'<b>Esi vietoje</b> (GPS tikslumo ribose)':`Kryptis ${card(brg)} ${Math.round(brg)}° · GPS ±${Math.round(pos.acc||0)} m`;
     note.textContent=head==null?'Telefono krypties nėra: laikyk telefoną viršumi į šiaurę, rodyklė rodo kryptį nuo šiaurės.':''};
   const onOri=e=>{let h=null;if(typeof e.webkitCompassHeading==='number')h=e.webkitCompassHeading;else if(e.absolute&&e.alpha!=null)h=360-e.alpha;
     if(h!=null){head=(h+(screen.orientation&&screen.orientation.angle||0))%360;dirB.hidden=true;draw()}};
   const startOri=()=>{if('ondeviceorientationabsolute' in window)addEventListener('deviceorientationabsolute',onOri);else addEventListener('deviceorientation',onOri)};
   if(typeof DeviceOrientationEvent!=='undefined'){startOri();if(typeof DeviceOrientationEvent.requestPermission==='function')dirB.hidden=false}
-  if(!navigator.geolocation){sub.textContent='Šiame naršyklės lange vieta neprieinama. Koordinatės apačioje.'}
+  /* Be GPS: kryptis ir atstumas nuo artimiausios pažymėtos įleidimo vietos, plaukti pagal telefono Compass programą */
+  const fromLaunch=why=>{const near=(S.launches||[]).map(l=>({l,d:Math.hypot((l.lat-lat)*111,(l.lon-lon)*111*Math.cos(lat*R))})).filter(x=>x.d<6).sort((a,b)=>a.d-b.d)[0];
+    if(!near){sub.textContent=why+' Pažymėk įleidimo vietą šiame ežere: tada parodysiu kryptį ir atstumą nuo jos.';dist.textContent='–';return}
+    const L=near.l;pos={lat:L.lat,lon:L.lon,acc:0,launch:L.name||'įleidimo vieta'};head=null;draw();
+    sub.innerHTML=`Nuo „${esc(pos.launch)}“: plauk <b>${card(brg)} ${Math.round(brg)}°</b>`;
+    note.textContent=why+' Kryptį laikyk pagal telefono Compass programą: rodyklė čia rodo kryptį nuo šiaurės.';dirB.hidden=true};
+  if(!navigator.geolocation)fromLaunch('GPS šiame lange neprieinamas.');
   else watch=navigator.geolocation.watchPosition(p=>{pos={lat:p.coords.latitude,lon:p.coords.longitude,acc:p.coords.accuracy};draw()},
-    e=>{sub.textContent=e.code===1?'Vieta neleidžiama (naršyklė arba šis langas jos neduoda). Koordinatės apačioje.':'Vietos gauti nepavyko. Koordinatės apačioje.';dist.textContent='–'},
+    e=>fromLaunch(e.code===1?'Claude programa šiam langui GPS neduoda.':'GPS vietos gauti nepavyko.'),
     {enableHighAccuracy:true,maximumAge:2000,timeout:20000});
   const close=()=>{if(watch!=null)navigator.geolocation.clearWatch(watch);removeEventListener('deviceorientationabsolute',onOri);removeEventListener('deviceorientation',onOri);removeEventListener('keydown',key);ov.remove();document.body.style.overflow=prevOv};
   const key=e=>{if(e.key==='Escape')close()};addEventListener('keydown',key);
   ov.addEventListener('click',e=>{const b=e.target.closest('[data-x]');if(!b)return;
     if(b.dataset.x==='close')close();
-    else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else note.textContent='Krypties leidimas nesuteiktas.'}).catch(()=>{note.textContent='Telefono kryptis šiame lange neprieinama.'})});
+    else if(b.dataset.x==='dir')DeviceOrientationEvent.requestPermission().then(r=>{if(r==='granted')dirB.hidden=true;else{dirB.hidden=true;note.textContent='Claude programa šiam langui telefono krypties neduoda. Naudok telefono Compass programą.'}}).catch(()=>{dirB.hidden=true;note.textContent='Telefono kryptis šiame lange neprieinama. Naudok telefono Compass programą.'})});
   q('[data-x="close"]').focus()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-compass]');if(!b)return;const [la,lo]=b.dataset.compass.split(',').map(Number);compassOpen(la,lo,b.dataset.name||'Vieta')});
 /* Valties įleidimo vietos: žymi patys (bendra kolekcija launches), duomenų iš kitur nėra */
