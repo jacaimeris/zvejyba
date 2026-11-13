@@ -21,12 +21,7 @@
   /* echolotas: prietaiso ekranas abiejose temose */
   --sonar-top:#0e3a44; --sonar-deep:#061a1f; --sonar-hi:#ffcf6b; --sonar-mid:#e2672c; --sonar-low:#4a160d; --sonar-ink:#cfe9e2;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#101a18; --surface:#182623; --ink:#e6eeeb; --muted:#8fa39d; --line:#27403b;
-  --accent:#5cbf9f; --accent-ink:#08201a; --hot:#ee8a58; --good:#63c28b; --warn:#e2b255; --bad:#ec8472; --soft:#1e312d; color-scheme:dark;}}
-:root[data-theme="dark"]{
-  --bg:#101a18; --surface:#182623; --ink:#e6eeeb; --muted:#8fa39d; --line:#27403b;
-  --accent:#5cbf9f; --accent-ink:#08201a; --hot:#ee8a58; --good:#63c28b; --warn:#e2b255; --bad:#ec8472; --soft:#1e312d; color-scheme:dark;}
+/* Visada šviesi smėlio tema: tamsi tema išjungta sąmoningai (vartotojo pasirinkimas 2026-11-13). */
 *{box-sizing:border-box}
 .bmapw{position:relative;cursor:zoom-in;border-radius:10px}
 .bmapw:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -359,7 +354,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.9 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.1 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>

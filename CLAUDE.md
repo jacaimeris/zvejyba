@@ -91,3 +91,8 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - Artifact'o db atskiras nuo Netlify Blobs: duomenys tarp jų nesusiję. Dalijimasis: tik per puslapio Share meniu (Arnas).
 - Patikrinta: puslapis kraunasi, db "saugoma", ežerų sąrašas ir žemėlapis. NEPATIKRINTA: AI/nuotraukos (reikia vartotojo sutikimo pirmam iškvietimui), dictation, bendras db tarp Arno ir Roko, viešas nuorodos dalijimasis.
 - netlify.toml `ignore`: deploy praleidžiamas, jei nepasikeitė public/, netlify/, package.json ar netlify.toml (taupo Netlify kreditus, 15 už deploy).
+
+## Peržiūra, kuri visada rodo naujausią GitHub versiją
+- Terminale: `python3 server.py --sync`. Serveris kas 30 s daro `git fetch` ir, jei vietinis medis švarus ir šaka tik atsilieka, `merge --ff-only origin/main`. Su vietiniais pakeitimais ar išsiskyrusia šaka NIEKO neperrašo, tik parodo būseną.
+- Puslapyje (tik vietiniame preview) apačioje kairėje rodoma `main@<commit> · būsena`; pasikeitus commit'ui langas persikrauna pats (`/api/version`, tikrina kas 8 s).
+- `.claude/launch.json`: `zvejo-preview` = vietinis serveris (jį paleisti terminale, ne iš programos: macOS blokuoja ~/Desktop), `zvejo-production` = https://zvejybele.netlify.app (visada naujausias main po Netlify deploy, bet deploy vyksta tik pasikeitus public/, netlify/, package.json ar netlify.toml).

@@ -6,9 +6,13 @@
       "url": "http://127.0.0.1:8765"
     },
     {
+      "name": "zvejo-production",
+      "url": "https://zvejybele.netlify.app"
+    },
+    {
       "name": "zvejo",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["server.py"],
+      "runtimeArgs": ["server.py", "--sync"],
       "port": 8765
     }
   ]
