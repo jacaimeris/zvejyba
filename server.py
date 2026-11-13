@@ -111,7 +111,10 @@ class H(BaseHTTPRequestHandler):
     def do_GET(self):
         path = unquote(urlparse(self.path).path)
         if path == "/api/limits":
-            return self.send_json(200, {"images": True, "ai": bool(os.environ.get("ANTHROPIC_API_KEY")), "model": MODEL})
+            return self.send_json(200, {"images": True, "ai": bool(os.environ.get("ANTHROPIC_API_KEY")), "model": MODEL, "ready": True, "pin": False})
+        if path == "/api/db":  # visos kolekcijos viena užklausa (kaip Netlify funkcija)
+            with LOCK:
+                return self.send_json(200, {c: list(read_coll(c).values()) for c in sorted(COLLS)})
         if path.startswith("/api/db/"):
             c, _ = self.db_target(path.split("/"))
             if not c:

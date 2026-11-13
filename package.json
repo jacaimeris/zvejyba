@@ -1,0 +1,9 @@
+{
+  "name": "zvejyba",
+  "private": true,
+  "type": "module",
+  "description": "Žvejo žurnalas: statinis frontendas (public/) + Netlify Functions (netlify/functions/)",
+  "dependencies": {
+    "@netlify/blobs": "^8.2.0"
+  }
+}

@@ -72,3 +72,10 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
 - Be backend'o (Netlify dabar) veikia tik skaitymas: db ir AI grąžina null, programa rodo savo "nepasiekiama" pranešimą. Toliau: Netlify Functions (/api/sample su raktu ir PIN, /api/weather), Netlify Blobs vietoj `data/store`, tada shim rodys į juos.
 
 - Versija rodoma viršuje (`#appVer` public/index.html antraštėje, pvz. "v0.4 · 2026-11-13"). Keisk ranka prieš kiekvieną reikšmingą push.
+
+## Backend Netlify'ui (netlify/functions/api.mjs)
+- Viena funkcija `/api/*` (Functions v2): `GET /api/limits` (viešas), `GET /api/db` (visos kolekcijos viena užklausa), `PUT|DELETE /api/db/<kolekcija>/<id>`, `POST /api/sample` (Anthropic). Duomenys: Netlify Blobs, saugyklos `zvejo-<kolekcija>`.
+- Viskas, išskyrus limits, reikalauja antraštės `x-zvejo-pin` = env `ZVEJO_PIN`. Be `ZVEJO_PIN` API uždarytas (fail closed). Env kintamuosius (`ZVEJO_PIN`, `ANTHROPIC_API_KEY`, nebūtinai `ZVEJO_MODEL`) įveda tik Arnas: Netlify -> zvejybele -> Project configuration -> Environment variables. Po pakeitimo reikia naujo deploy.
+- `public/claude-shim.js`: viena bendra apklausa (lokaliai 4 s, Netlify 30 s + atnaujinimas grįžus į skirtuką), PIN klausiama per `prompt()` ir laikoma localStorage `zz_pin`.
+- Patikrinta: funkcijos logika su imituotomis Blobs/Anthropic (PIN, id/kolekcijų validacija, nuotraukų filtras). NEPATIKRINTA realiame Netlify: Blobs, deploy su function'u, tikras Anthropic. Lokaliame `server.py` PIN nereikia (127.0.0.1).
+- Netlify Functions apribojimai: nėra node lokaliai, todėl funkcijos negalima paleisti čia; testuoti deploy'intą.
