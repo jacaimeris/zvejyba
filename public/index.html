@@ -344,7 +344,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.6 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.4.7 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1200,10 +1200,10 @@ function refreshHero(){const h=document.querySelector('#main .hero-sun'),sa=h&&h
 VIEWS.today=function(){
   const p=S.plan;const open=!S.brief||S.planOpen;
   const head=heroSun({eyebrow:fmtDay(p.date),eyClass:'ey-day',title:'Naujas planas',ds:p.date,wid:p.waterId});
-  if(!S.waters.length&&open)return head+quickBox()+noWatersHTML();
+  if(!S.waters.length&&open)return head+wtBox()+quickBox()+noWatersHTML();
   if(!open){const b=S.brief;
     return head+`<div class="summary"><div class="mini">${(b.p.species||[]).slice(0,3).map(n=>idOfName(n)?fishSVG(idOfName(n),'mini'):'').join('')}</div><div class="grow"><b>${esc(b.water?b.water.name:'')}</b><div class="muted small">${esc(b.p.type)} · ${esc(b.p.date)}</div></div><button class="btn sm" data-act="planOpen">Keisti</button></div>`+briefHTML(b)}
-  return head+quickBox()+`<div class="panel list">
+  return head+wtBox()+quickBox()+`<div class="panel list">
     ${waterSelect()}${typeChips()}
     <div><div class="sect" style="margin-bottom:8px">Ko ieškai <span class="muted small" style="font-family:var(--body);font-weight:400">· gali rinktis kelias</span></div><div class="ftiles" role="group" aria-label="Ko ieškai">${Object.entries(FISH_NAME).map(([id,n])=>`<button class="ftile" data-act="tgt" data-v="${n}" aria-pressed="${p.species.includes(n)}" ${fishWater(id)}>${fishSVG(id)}<span>${n}</span></button>`).join('')}</div></div>
     <details class="fold"><summary>Sąlygos <span class="muted small">neprivaloma</span></summary><div class="list" style="margin-top:10px">
@@ -1710,8 +1710,18 @@ function fcLine(){const w=waterById(S.plan.waterId),f=fcFor(w,S.plan.date);
   if(!w)return '<div class="small muted">Pasirink vandenį – jei jam yra prognozė, ji bus įrašyta į brifą automatiškai.</div>';
   if(!f)return '<div class="small muted">Šiai dienai prognozės nėra, įvesk skaičius ranka.</div>';
   return `<div class="small"><span class="pill good">prognozė yra</span> ${esc(f.tMin+'…'+f.tMax+' °C · '+f.windDir+' '+f.windMs+' m/s · '+f.pressure+' · '+f.cloud)}. Tuščius laukus brifas užpildys pats.</div>`}
+/* vandens temperatūra aplink Vilnių: tik išmatuoti LHMT upių skaičiai, ežeruose nematuojama, todėl rodoma kaip įvertis */
+function wtInner(){const W=S.fcMeta&&S.fcMeta.water;const st=W&&(W.stations||[]).filter(x=>typeof x.t==='number');
+  if(!st||!st.length)return '<div class="small muted">Vandens temperatūros duomenų nėra.</div>';
+  const ts=st.map(x=>x.t),avg=ts.reduce((a,b)=>a+b,0)/ts.length,lo=Math.min(...ts),hi=Math.max(...ts);
+  const m=new Date(W.measured),age=Math.floor((Date.now()-m)/864e5);
+  const when=isNaN(m)?'':m.toLocaleString('lt-LT',{timeZone:'Europe/Vilnius',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  return `<div class="row between" style="flex-wrap:nowrap;align-items:baseline"><div><div class="sect">Vanduo aplink Vilnių</div><div class="muted small">vidurkis, įvertis</div></div><b style="font-size:30px;font-family:var(--display);white-space:nowrap">~${fmt1(avg)} °C</b></div>
+  <div class="small" style="margin-top:6px">${st.map(x=>`${esc(x.name)} ${fmt1(x.t)} °C`).join(' · ')}${st.length>1?` <span class="muted">(${fmt1(lo)}–${fmt1(hi)})</span>`:''}</div>
+  <div class="small muted" style="margin-top:4px">Matuota upėse${when?', '+esc(when):''}. Ežeruose LHMT nematuoja, todėl ežero paviršius gali skirtis.${age>=2?` <span class="pill warn">duomenys ${age} d. seni</span>`:''}</div>`}
+function wtBox(){return `<div class="panel" id="wtBox">${wtInner()}</div>`}
 S.fcFile=[];
-fetch('forecast.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.items)){S.fcFile=j.items;S.fcMeta=j;const x=document.getElementById('fcLine');if(x)x.innerHTML=fcLine();if(S.brief)renderLive()}}).catch(()=>{});
+fetch('forecast.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.items)){S.fcFile=j.items;S.fcMeta=j;const x=document.getElementById('fcLine');if(x)x.innerHTML=fcLine();const y=document.getElementById('wtBox');if(y)y.innerHTML=wtInner();if(S.brief)renderLive()}}).catch(()=>{});
 const dosFor=w=>w?S.dossiers.find(d=>wkey(w).startsWith(String(d.waterId||'~')))||null:null;
 function fcText(p,w){const f=fcFor(w,p.date);if(!f)return '(prognozės šiai dienai bazėje nėra)';
   return `šaltinis ${f.source}; t ${f.tMin}..${f.tMax} °C; debesys ${f.cloud}; vėjas ${f.windDir}, ${f.windMs} m/s, gūsiai ${f.gustMs}; slėgis ${f.pressure}; krituliai ${f.precip}; matomumas ${f.visibility}; saulėtekis ${f.sunrise}, saulėlydis ${f.sunset}; vandens temp. ${f.waterTempEst}. ${f.notes||''}`}

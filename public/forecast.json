@@ -191,5 +191,20 @@
    },
    "fetchedAt": "2026-11-13T15:04+02:00"
   }
- ]
+ ],
+ "water": {
+  "measured": "2026-11-13T15:04+02:00",
+  "source": "LHMT upių hidrometrijos stotys (CC BY-SA 4.0)",
+  "note": "Artimiausios LHMT stotys Trakų kryptimi nuo Vilniaus. Ežeruose LHMT vandens temperatūros nematuoja.",
+  "stations": [
+   {
+    "name": "Strėva",
+    "t": 5.9
+   },
+   {
+    "name": "Spindžius",
+    "t": 8.3
+   }
+  ]
+ }
 }
