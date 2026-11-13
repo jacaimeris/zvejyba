@@ -354,7 +354,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.1 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.5.2 · 2026-11-13</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2024,15 +2024,54 @@ function bathyFor(w){if(!BATHY.lakes||!w)return null;const k=bkey(w.name);if(!k)
   const l=BATHY.lakes.find(l=>l.k===k)||BATHY.lakes.find(l=>l.k&&(k.startsWith(l.k+' ')||l.k.startsWith(k+' ')))||null;
   if(l&&!l._ok&&!l._err)loadLake(l);return l}
 const SPCOL={'Lydeka':'#c0392b','Ešerys':'#e08a00','Starkis':'#2e8b57','Žiema':'#34495e'};
-function spotsFor(lk,p){if(!lk)return [];
-  const want=new Set((p&&p.species||[]).filter(x=>SPCOL[x]));const ice=p&&/žiemin/i.test(p.type||'');
-  let s=lk.spots.filter(x=>x.sp==='Žiema'?ice:(!want.size||want.has(x.sp)));
+/* Sezoniniai gyliai: kur rūšis dažniau laikosi pagal metų laiką ir vandens temperatūrą.
+   METODINĖ prielaida iš bendrų žvejybos ir ežerų ekologijos dėsningumų (vanduo vėsta -> ešeriai ir starkiai
+   būriuojasi giliau; vasarą sluoksniuotame ežere gilumoje gali trūkti deguonies), ne recenzuotas Lietuvos ežerų tyrimas. */
+const SEASON_DEPTH={
+ spring:{n:'pavasaris',B:{Lydeka:[.5,3],Ešerys:[1,4],Starkis:[2,6]},why:'vanduo pirmiausia šyla seklumose ir įlankose, po neršto žuvys laikosi sekliau'},
+ summer:{n:'vasara',B:{Lydeka:[2,5],Ešerys:[3,7],Starkis:[5,10]},why:'vanduo šiltas ir sluoksniuotas, gilumoje gali trūkti deguonies, todėl žuvys laikosi virš termoklino, augmenijos pakraščiuose ir kritimuose'},
+ autumn:{n:'ankstyvas ruduo',B:{Lydeka:[2,6],Ešerys:[4,9],Starkis:[6,12]},why:'vanduo vėsta, augmenija nyksta, žuvys traukiasi nuo seklumų prie kritimų'},
+ late:{n:'vėlyvas ruduo',B:{Lydeka:[3,8],Ešerys:[6,14],Starkis:[8,16]},why:'vanduo šaltas ir po rudens apsivertimo išsimaišęs, deguonies yra ir gilumoje: ešeriai ir starkiai būriuojasi gilesniuose kritimuose ir duobėse, lydeka laikosi vidutinio gylio kritimuose'},
+ winter:{n:'žiema',B:{Lydeka:[2,6],Ešerys:[5,12],Starkis:[8,16]},why:'šilčiausias vanduo (~4 °C) prie dugno, žuvys mažiau aktyvios ir laikosi gilesnėse vietose bei kritimų papėdėse'}};
+function waterTempFor(p){const v=num(p&&p.wtemp);if(v!=null)return {t:v,src:'tavo įvestis'};
+  const W=S.fcMeta&&S.fcMeta.water,st=W&&(W.stations||[]).filter(x=>typeof x.t==='number');if(!st||!st.length)return null;
+  const d=new Date((p&&p.date)||today()),m=new Date(W.measured);if(isNaN(m)||Math.abs(d-m)>4*864e5)return null;
+  return {t:st.reduce((a,x)=>a+x.t,0)/st.length,src:'LHMT upių įvertis'}}
+function seasonOf(p){const d=new Date((p&&p.date)||today()),mo=(isNaN(d)?new Date():d).getMonth()+1,w=waterTempFor(p),t=w&&w.t;
+  let k=mo<=2||mo===12?'winter':mo<=5?'spring':mo<=8?'summer':mo<=10?'autumn':'late';
+  if(t!=null){if(t>=16)k='summer';else if(mo>=9&&mo<=11)k=t<9?'late':'autumn';else if(mo>=3&&mo<=5&&t>=14)k='summer'}
+  return {k,...SEASON_DEPTH[k],mo,w}}
+function bandFor(lk,se,sp){let [lo,hi]=se.B[sp];const md=lk.maxd||hi;if(lo>md*.7){lo=Math.max(.5,md*.5);hi=md}return [lo,Math.min(hi,md)]}
+/* Vietos pagal sezoną: izobatos sezono gylio juostoje, kur kritimas į gilesnį lygį statiausias.
+   Nuolydis = lygių skirtumas / atstumas iki artimiausio gilesnės izobatos taško (min. 8 m, todėl prisotinamas). */
+function seasonSpots(lk,sp,band,n){
+  const key=sp+band.join('-')+'|'+n+'|'+(lk._ssEx||[]).map(o=>o.lon+','+o.lat).join(';');lk._ss=lk._ss&&lk._ss.src===lk.cont?lk._ss:{src:lk.cont,c:{}};if(lk._ss.c[key])return lk._ss.c[key];
+  const lat0=(lk.bbox[1]+lk.bbox[3])/2,kx=111320*Math.cos(lat0*Math.PI/180),ky=110540,G=60;
+  const lv=[...new Set(lk.cont.map(c=>Math.abs(c[0])))].sort((a,b)=>a-b);
+  const grids={};lk.cont.forEach(([d,c])=>{const L=Math.abs(d),g=grids[L]=grids[L]||new Map();c.forEach(p=>{const x=p[0]*kx,y=p[1]*ky,h=Math.floor(x/G)+','+Math.floor(y/G);(g.get(h)||g.set(h,[]).get(h)).push([x,y])})});
+  const near=(g,x,y)=>{let best=1e9;const cx=Math.floor(x/G),cy=Math.floor(y/G);for(let r=0;r<=5;r++){for(let i=-r;i<=r;i++)for(let j=-r;j<=r;j++){if(Math.max(Math.abs(i),Math.abs(j))!==r)continue;const a=g.get((cx+i)+','+(cy+j));if(a)for(const q of a){const dd=(q[0]-x)**2+(q[1]-y)**2;if(dd<best)best=dd}}if(best<=(r*G)**2)break}return Math.sqrt(best)};
+  let use=lv.filter(L=>L>0&&L>=band[0]-1e-6&&L<=band[1]+1e-6&&lv.some(M=>M>L));
+  if(!use.length){const c=lv.filter(L=>L>0&&lv.some(M=>M>L)).sort((a,b)=>Math.abs(a-(band[0]+band[1])/2)-Math.abs(b-(band[0]+band[1])/2));use=c.slice(0,1)}
+  /* nuolydis = didžiausias kritimas į bet kurią gilesnę izobatą iki +8 m, kad tankūs lygiai (kas 1 m) nesiprisotintų */
+  const cand=[];use.forEach(L=>{const deeper=lv.filter(M=>M>L&&M<=L+8);
+    lk.cont.forEach(([d,c])=>{if(Math.abs(d)!==L)return;c.forEach(p=>{const x=p[0]*kx,y=p[1]*ky;let best=-1;
+      deeper.forEach(M=>{const dist=near(grids[M],x,y);if(dist<=400){const a=Math.atan((M-L)/Math.max(8,dist));if(a>best)best=a}});
+      if(best>0)cand.push({lon:p[0],lat:p[1],x,y,d:L,slope:best*180/Math.PI})})})});
+  cand.sort((a,b)=>b.slope-a.slope);const out=[],ex=(lk._ssEx||[]).map(o=>[o.lon*kx,o.lat*ky]);
+  for(const c of cand){if(out.length>=n)break;if(out.every(o=>(o.x-c.x)**2+(o.y-c.y)**2>150*150)&&ex.every(e=>(e[0]-c.x)**2+(e[1]-c.y)**2>100*100))out.push(c)}
+  return lk._ss.c[key]=out.map(o=>({sp,lon:+o.lon.toFixed(5),lat:+o.lat.toFixed(5),d:o.d,slope:Math.round(o.slope*10)/10,band}))}
+function spotsFor(lk,p){if(!lk||!(lk.cont&&lk.cont.length))return [];
+  const want=new Set((p&&p.species||[]).filter(x=>SPCOL[x]&&x!=='Žiema'));const se=seasonOf(p);
+  const ice=p&&p.type?/žiemin/i.test(p.type):se.k==='winter';
+  let s=[];lk._ssEx=[];['Lydeka','Ešerys','Starkis'].filter(x=>!want.size||want.has(x)).forEach(sp=>{const r=seasonSpots(lk,sp,bandFor(lk,se,sp),sp==='Lydeka'?5:4);lk._ssEx=lk._ssEx.concat(r);s.push(...r.map(x=>({...x,se:se.n})))});lk._ssEx=[];
+  if(ice)s.push(...lk.spots.filter(x=>x.sp==='Žiema'));
   s=s.filter((x,i,a)=>a.findIndex(y=>y.sp===x.sp&&Math.abs(y.lon-x.lon)<1e-5&&Math.abs(y.lat-x.lat)<1e-5)===i);
   return s.map((x,i)=>({...x,n:i+1}))}
+function seasonNote(lk,p){const se=seasonOf(p),mN=['sausis','vasaris','kovas','balandis','gegužė','birželis','liepa','rugpjūtis','rugsėjis','spalis','lapkritis','gruodis'][se.mo-1];
+  const b=['Lydeka','Ešerys','Starkis'].map(sp=>{const [lo,hi]=bandFor(lk,se,sp);return `${sp.toLowerCase()} ${fmt1(lo)}–${fmt1(hi)} m`}).join(', ');
+  return `Sezonas: <b>${se.n}</b> (${mN}${se.w?`, vanduo ~${fmt1(se.w.t)} °C, ${esc(se.w.src)}`:', vandens temperatūra nežinoma'}). Ieškoma gylių: ${b}. Kodėl: ${se.why}. Tai metodinė prielaida, ne įrodymas.`}
 const spotWhy=s=>s.sp==='Žiema'?`giliausia žinoma vieta (${fmt1(s.d)} m)`
-  :s.sp==='Lydeka'?`gylio kritimas ties ${fmt1(s.d)} m izobata, krantas ${s.shore} m: pasalos vieta tarp seklumos ir gilesnio vandens`
-  :s.sp==='Ešerys'?`${fmt1(s.d)} m kraštas su kritimu (~${s.slope}°): ešerių sekimo juosta prie nuolydžio`
-  :`${fmt1(s.d)} m kritimo kraštas (~${s.slope}°): starkio/gilesnė briauna`;
+  :`${fmt1(s.d)} m izobata, kritimas į gilesnį ~${s.slope}°${s.band?` (sezono juosta ${fmt1(s.band[0])}–${fmt1(s.band[1])} m)`:''}`;
 function bathyMapSVG(lk,spots,opt={}){
   if(!lk._ok)return `<div class="small muted panel" style="text-align:center;padding:40px 12px">${lk._err?'Gylių duomenys neužsikrovė: '+esc(lk._err):'Kraunami gyliai…'}</div>`;
   const {W,H,pad,X,Y}=bathyProj(lk),full=!!opt.full;
@@ -2150,13 +2189,14 @@ function bathyHTML(b){
   const sp=spotsFor(lk,b.p);
   return `<div class="panel"><h3>Gylių žemėlapis ir vietos</h3>${bathyMapSVG(lk,sp,{mine:mineOn(b.water,lk)})}
   <div class="list" style="margin-top:10px">${sp.map(s=>`<div class="pick" style="display:flex;gap:10px;align-items:flex-start"><span class="badge" style="background:${SPCOL[s.sp]};color:#fff">${s.n}</span><div class="small"><b>${esc(s.sp)}</b> · ${esc(spotWhy(s))}<div class="muted">${s.lat}, ${s.lon}</div></div></div>`).join('')||'<div class="muted small">Pagal pasirinktas rūšis vietų nėra.</div>'}</div>
-  <div class="small muted" style="margin-top:8px">Vietos išvestos iš izobatų (gylio kritimas, atstumas iki kranto), tai hipotezė, ne įrodymas, kad ten laikosi žuvis. Duomenų metai ${esc((lk.yr||[]).join(', ')||'?')}, tikslumas nepatikrintas, patikrink echolotu.</div></div>`}
+  <div class="small" style="margin-top:8px">${seasonNote(lk,b.p)}</div>
+  <div class="small muted" style="margin-top:8px">Vietos išvestos iš izobatų (sezono gylio juosta ir statiausias kritimas), tai hipotezė, ne įrodymas, kad ten laikosi žuvis. Duomenų metai ${esc((lk.yr||[]).join(', ')||'?')}, tikslumas nepatikrintas, patikrink echolotu.</div></div>`}
 function bathyText(w,p){
   if(!BATHY.lakes)return '(batimetrija dar neužkrauta)';
   const lk=bathyFor(w);if(!lk)return '(šio telkinio batimetrijos nėra, vietų pagal reljefą nesiūlyk ir neišgalvok)';
   if(!lk._ok)return '(gylių duomenys neužsikrovė, vietų pagal reljefą nesiūlyk ir neišgalvok)';
   const sp=spotsFor(lk,p);
-  return `Max gylis plane ${fmt1(lk.maxd)} m, planas ${(lk.yr||[]).join(',')}, tikslumas priklauso nuo seno plano. VIETOS (numeruotos, tik iš reljefo, ne iš pagavimų): ${sp.map(s=>`V${s.n} ${s.sp} ${fmt1(s.d)} m, ${s.lat},${s.lon}, ${spotWhy(s)}`).join(' | ')||'nėra'}. Vėjo planą (windPlan) susiek su šiomis vietomis numeriais (V1...), nurodyk, kuri pavėjinė/privėjinė, ir pažymėk, kad vietos yra hipotezė.`}
+  return `Max gylis plane ${fmt1(lk.maxd)} m, planas ${(lk.yr||[]).join(',')}, tikslumas priklauso nuo seno plano. ${seasonNote(lk,p).replace(/<[^>]+>/g,'')} VIETOS (numeruotos, tik iš reljefo ir sezono gylio juostos, ne iš pagavimų): ${sp.map(s=>`V${s.n} ${s.sp} ${fmt1(s.d)} m, ${s.lat},${s.lon}, ${spotWhy(s)}`).join(' | ')||'nėra'}. Vėjo planą (windPlan) susiek su šiomis vietomis numeriais (V1...), nurodyk, kuri pavėjinė/privėjinė, ir pažymėk, kad vietos yra hipotezė.`}
 
 /* ---------- Ežerai: paieška, žemėlapis, visa informacija apie telkinį ---------- */
 S.lake=S.lake||'';S.lq=S.lq||'';
@@ -2185,7 +2225,7 @@ function lakePage(id){
   const name=w?w.name:(lk?lk.name:'?');
   const trips=S.trips.filter(t=>wat&&(t.waterId===wat.id||bkey(t.waterName)===bkey(wat.name))).sort((a,b)=>b.date.localeCompare(a.date));
   const fish=trips.reduce((a,t)=>a+(t.catches||[]).length,0);
-  const sp=lk?spotsFor(lk,{species:['Lydeka','Ešerys','Starkis'],type:'Žiemos žūklė'}):[];
+  const sp=lk?spotsFor(lk,{date:today(),species:['Lydeka','Ešerys','Starkis']}):[];
   const pseudoB=wat?{water:wat,p:{date:today(),species:[]}}:null;
   return `<button class="btn sm" data-act="lakeBack">← Ežerai</button>
   <div class="hero"><div class="eyebrow">${esc((wat&&wat.region)||(lk&&lk.m)||'')}</div><h1>${esc(name)}</h1></div>
@@ -2193,7 +2233,7 @@ function lakePage(id){
     <div class="row" style="gap:6px;margin-top:8px;flex-wrap:wrap">${['Lydeka','Ešerys','Starkis','Žiema'].map(k=>`<span class="pill" style="background:${SPCOL[k]};color:#fff">${k}</span>`).join('')}<span class="pill">◆ tavo laimikiai</span></div>
     <div class="grid3" style="margin-top:10px">${[['max gylis',fmt1(lk.maxd)+' m'],['gylio taškų',lk.np],['izobatų',lk.nc]].map(([k,v])=>`<div class="pick" style="text-align:center"><b style="font-size:20px">${v}</b><div class="small muted">${k}</div></div>`).join('')}</div>
     <div class="small muted" style="margin-top:8px">Planas ${esc((lk.yr||[]).join(', ')||'?')} m. Šaltinis: ${esc((lk.src||[]).join('; ')||'?')}. Tikslumas priklauso nuo šaltinio plano ir nepatikrintas; senesni planai gali būti netikslūs.</div></div>
-    <div class="panel"><h3>Galimos vietos pagal reljefą</h3><div class="small muted" style="margin:4px 0 8px">Hipotezė iš izobatų, ne įrodymas. Tikrink echolotu. Brife rodomos tik pasirinktai žuviai.</div>
+    <div class="panel"><h3>Galimos vietos pagal reljefą</h3><div class="small" style="margin:4px 0 8px">${seasonNote(lk,{date:today()})}</div><div class="small muted" style="margin:0 0 8px">Hipotezė iš izobatų, ne įrodymas. Tikrink echolotu. Brife rodomos tik pasirinktai žuviai.</div>
     ${sp.map(s=>`<div class="pick" style="display:flex;gap:10px;align-items:flex-start"><span class="badge" style="background:${SPCOL[s.sp]};color:#fff">${s.n}</span><div class="small"><b>${esc(s.sp)}</b> · ${esc(spotWhy(s))}<div class="muted">${s.lat}, ${s.lon}</div></div></div>`).join('')||'<div class="muted small">Vietų išvesti nepavyko.</div>'}</div>`
    :`<div class="panel"><h3>Gylių žemėlapis</h3><div class="small muted">${BATHY.lakes?`LEU batimetrijos duomenyse šio telkinio nėra, todėl gylių nerodau ir neišgalvoju. Kas liko: ${esc((wat&&wat.maxDepth)?'didž. gylis pagal tavo įrašą '+wat.maxDepth+' m':'gylio duomenų nėra')}. Jei turi echolotą ar gylių plano nuotrauką, atsiųsk.`:'Kraunasi…'}</div></div>`}
   <div class="panel"><h3>Tavo žvejybos čia</h3>${trips.length?`<div class="small muted" style="margin:4px 0 8px">${trips.length} žvejybų, ${fish} žuvų.</div><div class="list">${trips.slice(0,8).map(t=>`<button class="item" data-act="editTrip" data-v="${t.id}"><div class="grow"><b>${esc(t.date)}</b> <span class="muted small">${(t.catches||[]).length} žuvų · ${esc(t.type||'')}</span>${t.debrief&&t.debrief.ai&&t.debrief.ai.summary?`<div class="small">${esc(t.debrief.ai.summary)}</div>`:''}</div></button>`).join('')}</div>`:'<div class="muted small">Dar nėra įrašų šiame vandenyje.</div>'}</div>
