@@ -59,3 +59,7 @@ build.py + head.html, data.js, kb.js, logic.js, art.js, imgs.js, app.js, p_*.js 
   - downloads -> naršyklės atsisiuntimas.
 - Patikrinta 2026-11-13: puslapis kraunasi, db išsaugo/ištrina/išlieka po perkrovimo. NEPATIKRINTA: AI atsakymai (nėra rakto), nuotraukų atpažinimas, diktavimas.
 - Atviri: forecast.json vis dar statinis (reikia naujo fetch į LHMT/Open-Meteo arba cron); duomenų importas iš artifact eksporto (`data/export.json`) dar nesukurtas; macOS: jei paleidžiant iš Claude programos pasirodo "Operation not permitted", paleisk `python3 server.py` savo terminale.
+
+## Peržiūra Claude programoje (visada testuoti čia)
+1. Terminalo skydelyje: `python3 server.py` (Claude programos paleistas procesas negali skaityti ~/Desktop: "Operation not permitted").
+2. `.claude/launch.json` konfigūracija `zvejo-preview` prisijungia prie veikiančio serverio (http://127.0.0.1:8765) naršyklės skydelyje.
