@@ -31,7 +31,8 @@
 .w-txt.w-bad{color:#b23a2a}.w-txt.w-warn{color:#8a5a00}.w-txt.w-ok{color:#1f5a3a}
 .dtile b{font-family:var(--display);font-size:20px;display:block;margin:2px 0}.dtile .small{font-size:12px}
 .extbox{margin-top:6px;padding:8px 10px;border-radius:10px;background:#fff3cd;color:#6b4700}.extu{user-select:all;-webkit-user-select:all;word-break:break-all;font-weight:600;color:var(--ink)}
-.stbox{margin:10px 0 4px;padding:10px;border-radius:10px;background:var(--soft)}
+.stbox{margin:10px 0 4px;padding:10px 12px;border-radius:10px;background:var(--soft);border-left:4px solid var(--line)}
+.stbox.st-neišnuomotas{background:#e3f4e8;border-left-color:#2e7d52}.stbox.st-leidimas{background:#fff3cd;border-left-color:#d4a017}.stbox.st-draudžiama{background:#fde2df;border-left-color:#b23a2a}
 .dwhy{margin:8px 0 10px;padding-left:20px;font-size:.92rem}.dwhy li{margin:3px 0}.dwhy li.w{color:var(--warn);font-weight:600}
 .btn.waze{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#33ccff;border-color:#33ccff;color:#06283a;font-weight:700;text-decoration:none;min-height:48px}
 .lu-r{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
@@ -387,7 +388,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.8 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.9 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2319,10 +2320,7 @@ function dashScore(c){const lk=c.lk,p={date:today(),species:dashSpecies()},se=se
   /* trys būsenos žvejui: laisvas / reikia leidimo (kortelė arba nuomininko leidimas) / draudžiama.
      Senos reikšmės iš vandenų įrašų: limituota, išnuomotas -> reikia leidimo; uždraustas -> draudžiama */
   const stN=st==='uždraustas'||st==='draudžiama'?'draudžiama':['limituota','išnuomotas','leidimas'].includes(st)?'leidimas':st;
-  if(stN==='draudžiama'){sc-=5;warn.push(`Žvejoti draudžiama${li&&li.date?` (pažymėta ${li.date})`:''}.`)}
-  else if(stN==='leidimas')warn.push(`Reikia leidimo${li&&li.date?` (pažymėta ${li.date})`:''}: kortelė arba nuomininko leidimas. Nusipirk prieš važiuodamas.`);
-  else if(!st)warn.push('Statusas nežinomas: patikrink ALIS ir pažymėk žemiau.');
-  if(!(li&&li.status)&&al)why.push(al.txt);
+  if(stN==='draudžiama')sc-=5; // būsena rodoma stLine langelyje, sąraše nekartojama
   return {sc,why,warn,sp,se}}
 function dashHTML(){
   if(!BATHY.lakes){if(!BATHY.err)loadBathy();return heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:''})+`<div class="panel small muted">${BATHY.err?'Ežerų duomenys neužsikrovė: '+esc(BATHY.err):'Kraunami ežerai…'}</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`}
@@ -2343,8 +2341,7 @@ function dashHTML(){
     ${!r.load&&wx&&wx.windMs>=3&&r.sp.some(x=>windSide(lk,x,wx))?`<div class="small" style="margin-top:8px">Pusėje, į kurią pučia vėjas: <b>${r.sp.filter(x=>windSide(lk,x,wx)).map(x=>x.n).join(', ')}</b> vietos. <span class="muted">Metodinis žymėjimas: vėjas ten neša paviršinį vandenį ir maistą.</span></div>`:''}
     <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
   ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
-    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),al=alisFor(lk),c0=(li&&li.status)||(al?al.st:''),cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0;return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date&&li.status?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:alisFor(lk)?`<span class="muted">pagal ALIS ${esc(S.alis.fetched||'')}</span>`:'<span class="muted">nepažymėta</span>'} · <a class="ext" href="https://alisas.lt/public-info/L03" target="_blank" rel="noopener">tikrinti ALIS</a></div>
-      <div class="chips" style="margin-top:6px">${[['neišnuomotas','Laisvas'],['leidimas','Reikia leidimo'],['draudžiama','Draudžiama']].map(([v,t])=>`<button class="chip" data-dash="status" data-v="${v}" data-lake="${lk.id}" aria-pressed="${cur===v}">${t}</button>`).join('')}</div></div>`})()}
+    ${stLine(lk)}
     <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
     <a class="btn waze ext" href="https://waze.com/ul?ll=${dest[0]},${dest[1]}&navigate=yes" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg> Važiuoti su Waze</a>
@@ -2356,6 +2353,7 @@ function dashHTML(){
   <button class="btn" style="margin-top:8px;align-self:center" data-act="planOpen">Planuoti kitaip</button>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-dash]');if(!b)return;const a=b.dataset.dash,v=b.dataset.v;
   if(a==='lake')S.dashLake=v;
+  else if(a==='stedit'){S.stEdit=S.stEdit||{};S.stEdit[b.dataset.lake]=!S.stEdit[b.dataset.lake]}
   else if(a==='status'){const L=(BATHY.lakes||[]).find(x=>x.id===b.dataset.lake);const old=(S.lakeinfo||[]).find(x=>x.lakeId===b.dataset.lake);
     const o={...(old||{}),lakeId:b.dataset.lake,lake:L?L.name:'',status:old&&(old.status===v||(v==='leidimas'&&['limituota','išnuomotas'].includes(old.status)))?'':v,date:today(),by:S.who||''};
     S.lakeinfo=[...(S.lakeinfo||[]).filter(x=>x.lakeId!==o.lakeId),o];save('lakeinfo',o).then(r=>{if(r){S.lakeinfo=[...S.lakeinfo.filter(x=>x.lakeId!==r.lakeId),r];renderLive()}})}
@@ -2369,6 +2367,15 @@ function alisFor(lk){const a=S.alis&&S.alis.lakes&&S.alis.lakes[lk.id];if(!a)ret
   if(a.leased)return {st:'leidimas',txt:`ALIS (${d}${where}): išnuomotas${a.until?' iki '+a.until:''}${a.limited?', limituota':''}. Reikia nuomininko leidimo.`};
   if(a.limited)return {st:'leidimas',txt:`ALIS (${d}${where}): limituota žvejyba. Reikia kortelės.`};
   return {st:'neišnuomotas',txt:`ALIS (${d}${where}): neišnuomotas ir ne limituotas. Užtenka mėgėjo bilieto.`}}
+/* Viena eilutė apie leidimą: tavo pažymėjimas arba ALIS. Mygtukai rodomi tik kai būsena nežinoma arba paspaudus „keisti“. */
+function stLine(lk){const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),al=alisFor(lk),c0=(li&&li.status)||(al?al.st:''),
+    cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0,own=!!(li&&li.status);
+  const a=S.alis&&S.alis.lakes&&S.alis.lakes[lk.id];
+  const txt=cur==='neišnuomotas'?'Mėgėjo bilietas':cur==='leidimas'?(own?'Reikia leidimo':a&&a.leased?`Išnuomotas${a.until?' iki '+a.until:''}: reikia nuomininko leidimo`:'Limituota žvejyba: reikia kortelės'):cur==='draudžiama'?'Žvejoti draudžiama':'';
+  const src=own?`pažymėta ${esc(li.date||'')}`:al?`ALIS ${esc(S.alis.fetched||'')}`:'';
+  const edit=!cur||(S.stEdit&&S.stEdit[lk.id]);
+  return `<div class="stbox st-${cur||'none'}">${cur?`<div class="row between" style="flex-wrap:nowrap;gap:8px"><span><b>${esc(txt)}</b> <span class="muted small" style="white-space:nowrap">${src}</span></span><button class="chip" data-dash="stedit" data-lake="${lk.id}" style="flex:0 0 auto">${edit?'baigti':'keisti'}</button></div>`:`<div class="small"><b>Ar galima žvejoti?</b> <span class="muted">nežinoma</span> · <a class="ext" href="https://alisas.lt/public-info/L03" target="_blank" rel="noopener">tikrinti ALIS</a></div>`}
+    ${edit?`<div class="chips" style="margin-top:8px">${[['neišnuomotas','Mėgėjo bilietas'],['leidimas','Reikia leidimo'],['draudžiama','Draudžiama']].map(([v,t])=>`<button class="chip" data-dash="status" data-v="${v}" data-lake="${lk.id}" aria-pressed="${own&&cur===v}">${t}</button>`).join('')}</div>`:''}</div>`}
 /* Išorinės nuorodos: Claude programa artifact'ui dažnai neleidžia atidaryti naujo lango.
    Bandome window.open; jei nepavyksta, parodome adresą nukopijuoti ir bandome įdėti jį į iškarpinę. */
 document.addEventListener('click',e=>{const a=e.target.closest('a.ext');if(!a)return;e.preventDefault();const u=a.href;let w=null;
