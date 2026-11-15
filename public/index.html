@@ -387,7 +387,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.7 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.8 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1775,6 +1775,7 @@ function wtInner(){const W=S.fcMeta&&S.fcMeta.water;const st=W&&(W.stations||[])
   <div class="small muted" style="margin-top:4px">Matuota upėse${when?', '+esc(when):''}. Ežeruose LHMT nematuoja, todėl ežero paviršius gali skirtis.${age>=2?` <span class="pill warn">duomenys ${age} d. seni</span>`:''}</div>`}
 function wtBox(){return `<div class="panel" id="wtBox">${wtInner()}</div>`}
 S.fcFile=[];
+S.alis=null;fetch('alis.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.lakes){S.alis=j;if(S.tab==='trip')renderLive()}}).catch(()=>{});
 fetch('forecast.json',{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&Array.isArray(j.items)){S.fcFile=j.items;S.fcMeta=j;const x=document.getElementById('fcLine');if(x)x.innerHTML=fcLine();const y=document.getElementById('wtBox');if(y)y.innerHTML=wtInner();if(S.brief)renderLive()}}).catch(()=>{});
 const dosFor=w=>w?S.dossiers.find(d=>wkey(w).startsWith(String(d.waterId||'~')))||null:null;
 function fcText(p,w){const f=fcFor(w,p.date);if(!f)return '(prognozės šiai dienai bazėje nėra)';
@@ -2314,13 +2315,14 @@ function dashScore(c){const lk=c.lk,p={date:today(),species:dashSpecies()},se=se
   if(tr.length>=2&&hrs>0){const r=fish/hrs;sc+=Math.min(2,r);why.push(`Jūsų žurnalas: ${tr.length} žvejybos, ${fmt1(r)} žuvies per valandą.`)}else why.push(tr.length?'Jūsų žurnalas: tik 1 žvejyba, išvadoms per mažai.':'Jūsų žurnale šio ežero dar nėra.');
   (ownDepthLine(lk,se)||[]).forEach(x=>why.push(x));
   const km=kmFrom(lk,VILNIUS);sc-=Math.min(2,km/50);why.push(`Apie ${Math.round(km)} km nuo Vilniaus tiesia linija.`);
-  const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),st=(li&&li.status)||(c.w&&c.w.legal&&c.w.legal.status)||'';
+  const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),al=alisFor(lk),st=(li&&li.status)||(c.w&&c.w.legal&&c.w.legal.status)||(al?al.st:'');
   /* trys būsenos žvejui: laisvas / reikia leidimo (kortelė arba nuomininko leidimas) / draudžiama.
      Senos reikšmės iš vandenų įrašų: limituota, išnuomotas -> reikia leidimo; uždraustas -> draudžiama */
   const stN=st==='uždraustas'||st==='draudžiama'?'draudžiama':['limituota','išnuomotas','leidimas'].includes(st)?'leidimas':st;
   if(stN==='draudžiama'){sc-=5;warn.push(`Žvejoti draudžiama${li&&li.date?` (pažymėta ${li.date})`:''}.`)}
   else if(stN==='leidimas')warn.push(`Reikia leidimo${li&&li.date?` (pažymėta ${li.date})`:''}: kortelė arba nuomininko leidimas. Nusipirk prieš važiuodamas.`);
   else if(!st)warn.push('Statusas nežinomas: patikrink ALIS ir pažymėk žemiau.');
+  if(!(li&&li.status)&&al)why.push(al.txt);
   return {sc,why,warn,sp,se}}
 function dashHTML(){
   if(!BATHY.lakes){if(!BATHY.err)loadBathy();return heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:''})+`<div class="panel small muted">${BATHY.err?'Ežerų duomenys neužsikrovė: '+esc(BATHY.err):'Kraunami ežerai…'}</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`}
@@ -2341,7 +2343,7 @@ function dashHTML(){
     ${!r.load&&wx&&wx.windMs>=3&&r.sp.some(x=>windSide(lk,x,wx))?`<div class="small" style="margin-top:8px">Pusėje, į kurią pučia vėjas: <b>${r.sp.filter(x=>windSide(lk,x,wx)).map(x=>x.n).join(', ')}</b> vietos. <span class="muted">Metodinis žymėjimas: vėjas ten neša paviršinį vandenį ir maistą.</span></div>`:''}
     <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
   ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
-    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),c0=li&&li.status||'',cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0;return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:'<span class="muted">nepažymėta</span>'} · <a class="ext" href="https://alisas.lt/public-info/L03" target="_blank" rel="noopener">tikrinti ALIS</a></div>
+    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),al=alisFor(lk),c0=(li&&li.status)||(al?al.st:''),cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0;return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date&&li.status?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:alisFor(lk)?`<span class="muted">pagal ALIS ${esc(S.alis.fetched||'')}</span>`:'<span class="muted">nepažymėta</span>'} · <a class="ext" href="https://alisas.lt/public-info/L03" target="_blank" rel="noopener">tikrinti ALIS</a></div>
       <div class="chips" style="margin-top:6px">${[['neišnuomotas','Laisvas'],['leidimas','Reikia leidimo'],['draudžiama','Draudžiama']].map(([v,t])=>`<button class="chip" data-dash="status" data-v="${v}" data-lake="${lk.id}" aria-pressed="${cur===v}">${t}</button>`).join('')}</div></div>`})()}
     <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
@@ -2362,6 +2364,11 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-dash]');if
   else if(a==='other'){S.tab='more';S.more='lakes';S.lake='';renderAll();window.scrollTo(0,0);return}
   else if(a==='back'){S.planOpen=false;window.scrollTo(0,0)}
   renderMain()});
+/* ALIS būsena iš public/alis.json (scripts/update_alis.py). Tavo pažymėjimas visada svarbesnis. */
+function alisFor(lk){const a=S.alis&&S.alis.lakes&&S.alis.lakes[lk.id];if(!a)return null;const d=S.alis.fetched||'',where=a.sav?`, ${a.sav}`:'';
+  if(a.leased)return {st:'leidimas',txt:`ALIS (${d}${where}): išnuomotas${a.until?' iki '+a.until:''}${a.limited?', limituota':''}. Reikia nuomininko leidimo.`};
+  if(a.limited)return {st:'leidimas',txt:`ALIS (${d}${where}): limituota žvejyba. Reikia kortelės.`};
+  return {st:'neišnuomotas',txt:`ALIS (${d}${where}): neišnuomotas ir ne limituotas. Užtenka mėgėjo bilieto.`}}
 /* Išorinės nuorodos: Claude programa artifact'ui dažnai neleidžia atidaryti naujo lango.
    Bandome window.open; jei nepavyksta, parodome adresą nukopijuoti ir bandome įdėti jį į iškarpinę. */
 document.addEventListener('click',e=>{const a=e.target.closest('a.ext');if(!a)return;e.preventDefault();const u=a.href;let w=null;

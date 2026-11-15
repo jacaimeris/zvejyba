@@ -6,7 +6,7 @@ todėl claude-shim.js išmetamas. Ežerų failai sujungiami į vieną lakes-all.
 (artifact'o publikavimas riboja failų skaičių, o 363 mažų failų nepatogu).
 
   python3 scripts/build_artifact.py <išvesties katalogas>
-Išvestis: index.html, forecast.json, lakes-index.json, lakes-all.json
+Išvestis: index.html, forecast.json, alis.json, lakes-index.json, lakes-all.json
 """
 import json, shutil, sys
 from pathlib import Path
@@ -33,6 +33,8 @@ def main(out):
             "lakesAll().then(a=>{if(!a[l.id])throw new Error('nėra duomenų');return a[l.id]})")
     (out / "index.html").write_text(h, encoding="utf-8")
     shutil.copy(PUB / "forecast.json", out / "forecast.json")
+    if (PUB / "alis.json").exists():
+        shutil.copy(PUB / "alis.json", out / "alis.json")
     shutil.copy(PUB / "lakes-index.json", out / "lakes-index.json")
     allm = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted((PUB / "lakes").glob("*.json"))}
     (out / "lakes-all.json").write_text(json.dumps(allm, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")

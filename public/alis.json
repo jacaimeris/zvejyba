@@ -1,0 +1,2535 @@
+{
+"fetched": "2026-11-15",
+"source": "ALIS (alisas.lt), viešoji informacija L03 ir vandens telkinių sąrašas",
+"note": "isnuomotas = reikia nuomininko leidimo; limituota = reikia kortelės. Ežerai sujungti pagal pavadinimą; dviprasmiški praleisti.",
+"lakes": {
+"Z0256": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Veisiejis",
+"code": "",
+"sav": "Lazdijų r. sav."
+},
+"Z0052": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Seirijis",
+"code": "10030210",
+"sav": "Lazdijų r. sav."
+},
+"Z0245": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Snaigynas",
+"code": "10030250",
+"sav": "Lazdijų r. sav."
+},
+"Z0135": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Akmena",
+"code": "12030220",
+"sav": "Trakų r. sav."
+},
+"Z0202": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ančia",
+"code": "10030001",
+"sav": "Lazdijų r. sav."
+},
+"Z0216": {
+"leased": true,
+"limited": false,
+"until": "2033-10-02",
+"alis": "Galstas",
+"code": "10030113",
+"sav": "Lazdijų r. sav."
+},
+"Z0100": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Zapsys",
+"code": "10030110",
+"sav": "Lazdijų r. sav."
+},
+"Z0034": {
+"leased": true,
+"limited": true,
+"until": "2029-05-08",
+"alis": "Malkėstas",
+"code": "12231949",
+"sav": "Molėtų r. sav."
+},
+"Z0083": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Spindžius",
+"code": "10030865",
+"sav": "Trakų r. sav."
+},
+"Z0198": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Tauragnas",
+"code": "12130170",
+"sav": "Utenos r. sav."
+},
+"Z0257": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vencavas",
+"code": "12230557",
+"sav": "Zarasų r. sav."
+},
+"Z0207": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baluošas",
+"code": "",
+"sav": "Ignalinos r. sav., Utenos r. sav."
+},
+"Z0253": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ūsiai",
+"code": "12130043",
+"sav": "Ignalinos r. sav."
+},
+"Z0170": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kauno HE tvenkinys",
+"code": "",
+"sav": "Birštono sav., Kaišiadorių r. sav., Kauno m. sav., Kauno r. sav., Prienų r. sav."
+},
+"Z0206": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Avilys",
+"code": "50030300",
+"sav": "Zarasų r. sav."
+},
+"Z0009": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Luokesai",
+"code": "12231932",
+"sav": "Molėtų r. sav."
+},
+"Z0277": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Širvėnos ežeras",
+"code": "42040061",
+"sav": "Biržų r. sav."
+},
+"Z0282": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Totoriškių tvenkinys",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0274": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Simno ežeras",
+"code": "15040124",
+"sav": "Alytaus r. sav."
+},
+"Z0217": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Galuonai",
+"code": "12130331",
+"sav": "Molėtų r. sav."
+},
+"Z0113": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Mažasis Gulbinas",
+"code": "12030117",
+"sav": "Vilniaus m. sav."
+},
+"Z0259": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vievis",
+"code": "12030300",
+"sav": "Elektrėnų sav."
+},
+"Z0211": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dringis",
+"code": "12131632",
+"sav": "Ignalinos r. sav."
+},
+"Z0155": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dūkštas",
+"code": "",
+"sav": "Ignalinos r. sav."
+},
+"Z0243": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Siesartis",
+"code": "12241850",
+"sav": "Molėtų r. sav."
+},
+"Z0010": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gulbis",
+"code": "12231939",
+"sav": "Molėtų r. sav."
+},
+"Z0086": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Aisetas",
+"code": "",
+"sav": "Molėtų r. sav., Utenos r. sav., Švenčionių r. sav."
+},
+"Z0079": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Galuonis",
+"code": "",
+"sav": "Molėtų r. sav., Utenos r. sav."
+},
+"Z0070": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Stirniai",
+"code": "12130311",
+"sav": "Molėtų r. sav."
+},
+"Z0093": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baltieji Lakajai ",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0123": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Juodieji Lakajai ",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0095": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vernijis",
+"code": "10030040",
+"sav": "Lazdijų r. sav."
+},
+"Z0239": {
+"leased": true,
+"limited": false,
+"until": "2034-04-11",
+"alis": "Rimietis",
+"code": "15040070",
+"sav": "Lazdijų r. sav."
+},
+"Z0103": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vilkinys",
+"code": "10030253",
+"sav": "Lazdijų r. sav."
+},
+"Z0238": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Prapuntas",
+"code": "10030016",
+"sav": "Lazdijų r. sav."
+},
+"Z0007": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šlavantėlis",
+"code": "10030009",
+"sav": "Lazdijų r. sav."
+},
+"Z0197": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Sartai",
+"code": "",
+"sav": "Rokiškio r. sav., Zarasų r. sav."
+},
+"Z0262": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Zalvė",
+"code": "",
+"sav": "Rokiškio r. sav., Zarasų r. sav."
+},
+"Z0196": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Asveja (Dubingių ežeras)",
+"code": "",
+"sav": "Molėtų r. sav., Vilniaus r. sav., Švenčionių r. sav."
+},
+"Z0133": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Asveja (Dubingių ežeras)",
+"code": "",
+"sav": "Molėtų r. sav., Vilniaus r. sav., Švenčionių r. sav."
+},
+"Z0124": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Asveja (Dubingių ežeras)",
+"code": "",
+"sav": "Molėtų r. sav., Vilniaus r. sav., Švenčionių r. sav."
+},
+"Z0043": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ažvintis",
+"code": "50030005",
+"sav": "Ignalinos r. sav."
+},
+"Z0219": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gavys",
+"code": "12130180",
+"sav": "Ignalinos r. sav."
+},
+"Z0220": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Giluitis",
+"code": "15030138",
+"sav": "Alytaus r. sav."
+},
+"Z0097": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Glėbas",
+"code": "11030190",
+"sav": "Varėnos r. sav."
+},
+"Z0169": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lavysas",
+"code": "11030250",
+"sav": "Varėnos r. sav."
+},
+"Z0072": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Pakalas",
+"code": "12130511",
+"sav": "Ignalinos r. sav."
+},
+"Z0025": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Luka",
+"code": "12030200",
+"sav": "Trakų r. sav."
+},
+"Z0039": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Olauka",
+"code": "12030225",
+"sav": "Trakų r. sav."
+},
+"Z0134": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Babrukas",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0116": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Širmukas ",
+"code": "12030224",
+"sav": "Trakų r. sav."
+},
+"Z0218": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Galvė",
+"code": "12030201",
+"sav": "Trakų r. sav."
+},
+"Z0235": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Pakasas",
+"code": "",
+"sav": "Ignalinos r. sav., Utenos r. sav."
+},
+"Z0156": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dysnykštis",
+"code": "50040001",
+"sav": "Ignalinos r. sav."
+},
+"Z0146": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rėkyva",
+"code": "",
+"sav": "Šiaulių m. sav., Šiaulių r. sav."
+},
+"Z0271": {
+"leased": true,
+"limited": false,
+"until": "",
+"alis": "Plinkšių ežeras",
+"code": "",
+"sav": "Mažeikių r. sav., Telšių r. sav."
+},
+"Z0174": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lukštas",
+"code": "",
+"sav": "Molėtų r. sav., Telšių r. sav., Zarasų r. sav., Šilalės r. sav."
+},
+"Z0058": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Obelija",
+"code": "",
+"sav": "Alytaus r. sav., Lazdijų r. sav."
+},
+"Z0131": {
+"leased": true,
+"limited": false,
+"until": "",
+"alis": "Arinas",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0273": {
+"leased": true,
+"limited": false,
+"until": "2033-12-21",
+"alis": "Siesikų ežeras",
+"code": "12242050",
+"sav": "Ukmergės r. sav."
+},
+"Z0029": {
+"leased": true,
+"limited": false,
+"until": "2034-01-05",
+"alis": "Lėnas",
+"code": "13040012",
+"sav": "Ukmergės r. sav."
+},
+"Z0042": {
+"leased": true,
+"limited": false,
+"until": "2033-12-21",
+"alis": "Kurėnų ežeras",
+"code": "12242014",
+"sav": "Ukmergės r. sav."
+},
+"Z0232": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Monis ",
+"code": "10030978",
+"sav": "Elektrėnų sav."
+},
+"Z0231": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Monaitis",
+"code": "",
+"sav": "Elektrėnų sav., Trakų r. sav."
+},
+"Z0026": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Antakmenių ežeras",
+"code": "10030651",
+"sav": "Trakų r. sav."
+},
+"Z0061": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Peršokšnai",
+"code": "12130359",
+"sav": "Švenčionių r. sav."
+},
+"Z0159": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Samavas",
+"code": "",
+"sav": "Molėtų r. sav., Zarasų r. sav."
+},
+"Z0107": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Grūtas",
+"code": "10030311",
+"sav": "Druskininkų sav."
+},
+"Z0210": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Čičirys",
+"code": "50030474",
+"sav": "Zarasų r. sav."
+},
+"Z0261": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Virintai",
+"code": "12241640",
+"sav": "Molėtų r. sav."
+},
+"Z0269": {
+"leased": true,
+"limited": false,
+"until": "2033-07-21",
+"alis": "Pikeliškių ežeras (Žalesas)",
+"code": "12030070",
+"sav": "Vilniaus r. sav."
+},
+"Z0167": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Luodis",
+"code": "",
+"sav": "Ignalinos r. sav., Zarasų r. sav."
+},
+"Z0073": {
+"leased": true,
+"limited": false,
+"until": "2033-12-11",
+"alis": "Lamėstas",
+"code": "12130073",
+"sav": "Utenos r. sav."
+},
+"Z0059": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Nevėža",
+"code": "12231654",
+"sav": "Anykščių r. sav."
+},
+"Z0141": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Asavas",
+"code": "12230015",
+"sav": "Zarasų r. sav."
+},
+"Z0152": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Apvardai",
+"code": "50030211",
+"sav": "Ignalinos r. sav."
+},
+"Z0091": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Papis",
+"code": "",
+"sav": "Trakų r. sav., Vilniaus r. sav., Šalčininkų r. sav."
+},
+"Z0163": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Tausalas",
+"code": "30040095",
+"sav": "Telšių r. sav."
+},
+"Z0122": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Kertuojai",
+"code": "12140320",
+"sav": "Molėtų r. sav."
+},
+"Z0179": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Aukštadvario HE tvenkinys",
+"code": "10050212",
+"sav": "Trakų r. sav."
+},
+"Z0254": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Utenas",
+"code": "12130110",
+"sav": "Utenos r. sav."
+},
+"Z0126": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baluošai",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0276": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Suosa (Jurgiškio ežeras)",
+"code": "",
+"sav": "Anykščių r. sav., Kupiškio r. sav."
+},
+"Z0150": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rūžas",
+"code": "50030201",
+"sav": "Ignalinos r. sav."
+},
+"Z0040": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Viešintas",
+"code": "41030053",
+"sav": "Anykščių r. sav."
+},
+"Z0019": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Asonas",
+"code": "",
+"sav": "Elektrėnų sav., Trakų r. sav."
+},
+"Z0092": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Berža",
+"code": "12130405",
+"sav": "Molėtų r. sav."
+},
+"Z0068": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ilgynas",
+"code": "12231914",
+"sav": "Molėtų r. sav."
+},
+"Z0035": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ilmėdas",
+"code": "12131528",
+"sav": "Molėtų r. sav."
+},
+"Z0051": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lizdų ežeras",
+"code": "10030486",
+"sav": "Alytaus r. sav."
+},
+"Z0006": {
+"leased": true,
+"limited": true,
+"until": "2028-05-16",
+"alis": "Lynelis",
+"code": "11030146",
+"sav": "Varėnos r. sav."
+},
+"Z0102": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Netečius",
+"code": "11030100",
+"sav": "Varėnos r. sav."
+},
+"Z0018": {
+"leased": true,
+"limited": false,
+"until": "2032-06-28",
+"alis": "Solis",
+"code": "10030659",
+"sav": "Trakų r. sav."
+},
+"Z0055": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Suvingis",
+"code": "11030231",
+"sav": "Alytaus r. sav."
+},
+"Z0024": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Veršiukas ",
+"code": "",
+"sav": "Prienų r. sav., Trakų r. sav."
+},
+"Z0021": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Skrebys",
+"code": "10030645",
+"sav": "Trakų r. sav."
+},
+"Z0272": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Sausas ežerėlis",
+"code": "12030116",
+"sav": "Vilniaus m. sav."
+},
+"Z0111": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alsas",
+"code": "12030115",
+"sav": "Vilniaus m. sav."
+},
+"Z0082": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žuvintas",
+"code": "",
+"sav": "Alytaus r. sav., Utenos r. sav."
+},
+"Z0178": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Bubių tvenkinys",
+"code": "41050040",
+"sav": "Šiaulių r. sav."
+},
+"Z0180": {
+"leased": true,
+"limited": false,
+"until": "2035-06-16",
+"alis": "Pailių tvenkinys",
+"code": "41050041",
+"sav": "Šiaulių r. sav."
+},
+"Z0075": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Svėdasas (Beragis)",
+"code": "12241519",
+"sav": "Anykščių r. sav."
+},
+"Z0118": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šulininkų ežeras",
+"code": "12030228",
+"sav": "Trakų r. sav."
+},
+"Z0049": {
+"leased": true,
+"limited": true,
+"until": "2033-10-18",
+"alis": "Glūkas",
+"code": "11030138",
+"sav": "Varėnos r. sav."
+},
+"Z0020": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gėlužis",
+"code": "",
+"sav": "Prienų r. sav., Utenos r. sav."
+},
+"Z0119": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kulpis",
+"code": "12030241",
+"sav": "Trakų r. sav."
+},
+"Z0090": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gruožys",
+"code": "11030050",
+"sav": "Trakų r. sav."
+},
+"Z0084": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Naujųjų Verkių ežeras",
+"code": "12030113",
+"sav": "Vilniaus m. sav."
+},
+"Z0233": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Mošia",
+"code": "10030650",
+"sav": "Trakų r. sav."
+},
+"Z0286": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Čižiūnų tvenkinys",
+"code": "10050214",
+"sav": "Trakų r. sav."
+},
+"Z0054": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Zaduojys",
+"code": "12230942",
+"sav": "Zarasų r. sav."
+},
+"Z0000": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gėjus",
+"code": "11030127",
+"sav": "Trakų r. sav."
+},
+"Z0260": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vilkokšnis",
+"code": "10030640",
+"sav": "Trakų r. sav."
+},
+"Z0237": {
+"leased": true,
+"limited": false,
+"until": "2036-06-08",
+"alis": "Pijuosas",
+"code": "11030128",
+"sav": "Trakų r. sav."
+},
+"Z0264": {
+"leased": true,
+"limited": false,
+"until": "2036-01-15",
+"alis": "Žiežmuo",
+"code": "11040124",
+"sav": "Trakų r. sav."
+},
+"Z0229": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Meduvys",
+"code": "11030004",
+"sav": "Trakų r. sav."
+},
+"Z0110": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baluosys",
+"code": "",
+"sav": "Trakų r. sav., Vilniaus r. sav."
+},
+"Z0201": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Elektrėnų tvenkinys",
+"code": "10050291",
+"sav": "Elektrėnų sav."
+},
+"Z0165": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Elektrėnų tvenkinys",
+"code": "10050291",
+"sav": "Elektrėnų sav."
+},
+"Z0069": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dūriai",
+"code": "12231913",
+"sav": "Molėtų r. sav."
+},
+"Z0071": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ukojas",
+"code": "",
+"sav": "Ignalinos r. sav., Utenos r. sav."
+},
+"Z0228": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Margis",
+"code": "10031010",
+"sav": "Trakų r. sav."
+},
+"Z0204": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Asalnykštis",
+"code": "12130005",
+"sav": "Ignalinos r. sav."
+},
+"Z0203": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Asalnai",
+"code": "12130004",
+"sav": "Ignalinos r. sav."
+},
+"Z0027": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alaušai",
+"code": "",
+"sav": "Molėtų r. sav., Ukmergės r. sav."
+},
+"Z0148": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Visaginas",
+"code": "50030172",
+"sav": "Visagino sav."
+},
+"Z0284": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Žaslių ežeras",
+"code": "12040495",
+"sav": "Kaišiadorių r. sav."
+},
+"Z0157": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Smalvas",
+"code": "50030107",
+"sav": "Zarasų r. sav."
+},
+"Z0139": {
+"leased": true,
+"limited": false,
+"until": "2033-06-22",
+"alis": "Apušys",
+"code": "14040071",
+"sav": "Kelmės r. sav."
+},
+"Z0138": {
+"leased": true,
+"limited": false,
+"until": "2033-06-22",
+"alis": "Bridvaišis",
+"code": "14030090",
+"sav": "Kelmės r. sav."
+},
+"Z0056": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Drabužis",
+"code": "10030863",
+"sav": "Trakų r. sav."
+},
+"Z0017": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Akis",
+"code": "",
+"sav": "Alytaus r. sav., Kaišiadorių r. sav., Trakų r. sav., Varėnos r. sav., Vilniaus m. sav., Vilniaus r. sav., Švenčionių r. sav."
+},
+"Z0012": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Senkiškės ežeras",
+"code": "10030861",
+"sav": "Trakų r. sav."
+},
+"Z0044": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Drabužaitis",
+"code": "10031030",
+"sav": "Trakų r. sav."
+},
+"Z0247": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šamukas",
+"code": "10030862",
+"sav": "Trakų r. sav."
+},
+"Z0014": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Spindžiukas",
+"code": "10030864",
+"sav": "Trakų r. sav."
+},
+"Z0032": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Spengla",
+"code": "",
+"sav": "Trakų r. sav., Varėnos r. sav."
+},
+"Z0067": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gruodiškis",
+"code": "",
+"sav": "Ignalinos r. sav., Zarasų r. sav."
+},
+"Z0001": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Strėvytė",
+"code": "10030860",
+"sav": "Trakų r. sav."
+},
+"Z0147": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Stanka",
+"code": "10040866",
+"sav": "Trakų r. sav."
+},
+"Z0149": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žilmas",
+"code": "50030202",
+"sav": "Ignalinos r. sav."
+},
+"Z0255": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vaisietis",
+"code": "",
+"sav": "Elektrėnų sav., Trakų r. sav."
+},
+"Z0137": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gauštvinis",
+"code": "14030070",
+"sav": "Kelmės r. sav."
+},
+"Z0109": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Aviris",
+"code": "10030319",
+"sav": "Druskininkų sav."
+},
+"Z0175": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Bagdononių HE tvenkinys",
+"code": "10050290",
+"sav": "Trakų r. sav."
+},
+"Z0005": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Balsis",
+"code": "10030021",
+"sav": "Lazdijų r. sav."
+},
+"Z0213": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dumblinis",
+"code": "",
+"sav": "Lazdijų r. sav., Rokiškio r. sav."
+},
+"Z0265": {
+"leased": true,
+"limited": false,
+"until": "2032-05-12",
+"alis": "Gailintėnų ežerėlis",
+"code": "10030413",
+"sav": "Alytaus r. sav."
+},
+"Z0045": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Giedavardys",
+"code": "10030225",
+"sav": "Druskininkų sav."
+},
+"Z0268": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Pabezninkų ežeras",
+"code": "11030167",
+"sav": "Varėnos r. sav."
+},
+"Z0078": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šaminis",
+"code": "",
+"sav": "Ignalinos r. sav., Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0142": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alksnas",
+"code": "",
+"sav": "Ignalinos r. sav., Molėtų r. sav., Utenos r. sav., Zarasų r. sav."
+},
+"Z0008": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Apsingis",
+"code": "10040410",
+"sav": "Alytaus r. sav."
+},
+"Z0062": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baltajis Bilsas",
+"code": "10030280",
+"sav": "Druskininkų sav."
+},
+"Z0117": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dvarčių ežeras",
+"code": "12030238",
+"sav": "Trakų r. sav."
+},
+"Z0215": {
+"leased": true,
+"limited": false,
+"until": "2032-05-12",
+"alis": "Gailintas",
+"code": "10030414",
+"sav": "Alytaus r. sav."
+},
+"Z0140": {
+"leased": true,
+"limited": false,
+"until": "2033-06-22",
+"alis": "Gilius",
+"code": "14030072",
+"sav": "Kelmės r. sav."
+},
+"Z0105": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Juodajis Bilsas",
+"code": "10030281",
+"sav": "Druskininkų sav."
+},
+"Z0226": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kiaunas",
+"code": "",
+"sav": "Ignalinos r. sav., Utenos r. sav."
+},
+"Z0151": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lazdinių ežeras",
+"code": "50040274",
+"sav": "Švenčionių r. sav."
+},
+"Z0060": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Sagavas",
+"code": "10030212",
+"sav": "Lazdijų r. sav."
+},
+"Z0248": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šaulys",
+"code": "10030325",
+"sav": "Druskininkų sav."
+},
+"Z0283": {
+"leased": true,
+"limited": true,
+"until": "2034-11-08",
+"alis": "Vabalių ežeras (Svaitingis)",
+"code": "10030379",
+"sav": "Alytaus r. sav."
+},
+"Z0258": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Verniejus",
+"code": "10030670",
+"sav": "Trakų r. sav."
+},
+"Z0011": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vilkas",
+"code": "",
+"sav": "Druskininkų sav., Lazdijų r. sav."
+},
+"Z0270": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Platelių ežeras",
+"code": "17040030",
+"sav": "Plungės r. sav."
+},
+"Z0176": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gruodys",
+"code": "12231712",
+"sav": "Molėtų r. sav."
+},
+"Z0028": {
+"leased": true,
+"limited": false,
+"until": "",
+"alis": "Kliepšių ežeras",
+"code": "",
+"sav": "Anykščių r. sav., Ukmergės r. sav."
+},
+"Z0267": {
+"leased": true,
+"limited": false,
+"until": "2033-12-12",
+"alis": "Klykių ežeras",
+"code": "12130220",
+"sav": "Utenos r. sav."
+},
+"Z0046": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kriaunelis",
+"code": "12230712",
+"sav": "Rokiškio r. sav."
+},
+"Z0036": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lukštynas",
+"code": "12130406",
+"sav": "Molėtų r. sav."
+},
+"Z0038": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Salotis",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0275": {
+"leased": true,
+"limited": true,
+"until": "2029-09-30",
+"alis": "Stavarygalos ežeras",
+"code": "12242178",
+"sav": "Širvintų r. sav."
+},
+"Z0064": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vadokšnas",
+"code": "12131715",
+"sav": "Molėtų r. sav."
+},
+"Z0050": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Varėnis",
+"code": "11030120",
+"sav": "Varėnos r. sav."
+},
+"Z0041": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žaugeda",
+"code": "12131211",
+"sav": "Molėtų r. sav."
+},
+"Z0188": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alksnas (Alksnaitis)",
+"code": "12130883",
+"sav": "Ignalinos r. sav."
+},
+"Z0191": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Angininkų ežeras",
+"code": "10030558",
+"sav": "Alytaus r. sav."
+},
+"Z0193": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Atesys",
+"code": "10040584",
+"sav": "Alytaus r. sav."
+},
+"Z0212": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dulgas",
+"code": "",
+"sav": "Druskininkų sav., Lazdijų r. sav."
+},
+"Z0214": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dusia",
+"code": "",
+"sav": "Alytaus r. sav., Lazdijų r. sav."
+},
+"Z0184": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gervinis",
+"code": "10030317",
+"sav": "Druskininkų sav."
+},
+"Z0195": {
+"leased": true,
+"limited": false,
+"until": "2034-04-05",
+"alis": "Stirtos ežeras",
+"code": "10040254",
+"sav": "Lazdijų r. sav."
+},
+"Z0281": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Teizų ežeras",
+"code": "15030130",
+"sav": "Lazdijų r. sav."
+},
+"Z0192": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vidugašlis",
+"code": "10030255",
+"sav": "Lazdijų r. sav."
+},
+"Z0089": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Amalvas",
+"code": "15040150",
+"sav": "Marijampolės sav."
+},
+"Z0221": {
+"leased": true,
+"limited": false,
+"until": "2036-05-04",
+"alis": "Gomerta",
+"code": "13030106",
+"sav": "Radviliškio r. sav."
+},
+"Z0194": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Liškiavis",
+"code": "",
+"sav": "Druskininkų sav., Varėnos r. sav."
+},
+"Z0230": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Metelys",
+"code": "",
+"sav": "Alytaus r. sav., Lazdijų r. sav."
+},
+"Z0185": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Tabaliukas",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0183": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Tabaliukas",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0280": {
+"leased": true,
+"limited": true,
+"until": "2027-02-14",
+"alis": "Tapelių ežeras",
+"code": "12030090",
+"sav": "Vilniaus m. sav."
+},
+"Z0186": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ūstas",
+"code": "12230253",
+"sav": "Zarasų r. sav."
+},
+"Z0187": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vaikėsas",
+"code": "12230153",
+"sav": "Utenos r. sav."
+},
+"Z0189": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žiegas",
+"code": "12230979",
+"sav": "Zarasų r. sav."
+},
+"Z0331": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alsėdžių ežeras",
+"code": "",
+"sav": "Plungės r. sav., Telšių r. sav."
+},
+"Z0308": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Alšia",
+"code": "10030751",
+"sav": "Prienų r. sav."
+},
+"Z0310": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Balčių ežeras",
+"code": "12130811",
+"sav": "Utenos r. sav."
+},
+"Z0295": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Baluošykštis",
+"code": "12132111",
+"sav": "Ignalinos r. sav."
+},
+"Z0322": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Delviai",
+"code": "12131616",
+"sav": "Molėtų r. sav."
+},
+"Z0302": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Draudenių ežeras",
+"code": "16030050",
+"sav": "Tauragės r. sav."
+},
+"Z0296": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Epušės ežeras",
+"code": "12030236",
+"sav": "Trakų r. sav."
+},
+"Z0317": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gailiekas",
+"code": "10030221",
+"sav": "Lazdijų r. sav."
+},
+"Z0309": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gelionių ežeras",
+"code": "",
+"sav": "Prienų r. sav., Trakų r. sav."
+},
+"Z0325": {
+"leased": true,
+"limited": false,
+"until": "2030-03-26",
+"alis": "Gelvės ežeras",
+"code": "12232080",
+"sav": "Širvintų r. sav."
+},
+"Z0329": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Germantas",
+"code": "30030146",
+"sav": "Telšių r. sav."
+},
+"Z0292": {
+"leased": true,
+"limited": false,
+"until": "2033-12-08",
+"alis": "Giedrys",
+"code": "12231128",
+"sav": "Utenos r. sav."
+},
+"Z0315": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Janavas",
+"code": "15040102",
+"sav": "Kalvarijos sav."
+},
+"Z0332": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kalčių ežeras",
+"code": "20040102",
+"sav": "Skuodo r. sav."
+},
+"Z0299": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kampuolis",
+"code": "12130282",
+"sav": "Švenčionių r. sav."
+},
+"Z0303": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kapstatas",
+"code": "17030080",
+"sav": "Klaipėdos r. sav."
+},
+"Z0305": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Keležeris",
+"code": "12230874",
+"sav": "Rokiškio r. sav."
+},
+"Z0297": {
+"leased": true,
+"limited": false,
+"until": "2033-12-21",
+"alis": "Kertušas",
+"code": "12242170",
+"sav": "Ukmergės r. sav."
+},
+"Z0294": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Liedis",
+"code": "",
+"sav": "Zarasų r. sav., Švenčionių r. sav."
+},
+"Z0319": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Mainia",
+"code": "11030142",
+"sav": "Alytaus r. sav."
+},
+"Z0304": {
+"leased": true,
+"limited": false,
+"until": "2036-07-14",
+"alis": "Nestrėvantys",
+"code": "10030867",
+"sav": "Elektrėnų sav."
+},
+"Z0307": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Obelių ežeras",
+"code": "",
+"sav": "Rokiškio r. sav., Ukmergės r. sav."
+},
+"Z0300": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Perūnas",
+"code": "12130458",
+"sav": "Švenčionių r. sav."
+},
+"Z0313": {
+"leased": true,
+"limited": false,
+"until": "2029-05-27",
+"alis": "Politiškių ežeras",
+"code": "12130222",
+"sav": "Utenos r. sav."
+},
+"Z0323": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rudesa",
+"code": "",
+"sav": "Molėtų r. sav."
+},
+"Z0301": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šakių ežerėlis",
+"code": "",
+"sav": "Vilkaviškio r. sav., Zarasų r. sav."
+},
+"Z0327": {
+"leased": true,
+"limited": false,
+"until": "2033-09-25",
+"alis": "Saločių ežeras",
+"code": "50030381",
+"sav": "Zarasų r. sav."
+},
+"Z0316": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Senkutis (Bagdononių ežeras)",
+"code": "15030122",
+"sav": "Lazdijų r. sav."
+},
+"Z0298": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Skarbelis",
+"code": "12030095",
+"sav": "Vilniaus m. sav."
+},
+"Z0324": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šona",
+"code": "30030031",
+"sav": "Kelmės r. sav."
+},
+"Z0312": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Srovinaitis",
+"code": "12142110",
+"sav": "Ignalinos r. sav."
+},
+"Z0321": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Suoselis",
+"code": "12131618",
+"sav": "Molėtų r. sav."
+},
+"Z0314": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Trikojis",
+"code": "10030251",
+"sav": "Lazdijų r. sav."
+},
+"Z0320": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Viesai",
+"code": "10031017",
+"sav": "Trakų r. sav."
+},
+"Z0290": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žaliasis",
+"code": "10030646",
+"sav": "Trakų r. sav."
+},
+"Z0311": {
+"leased": true,
+"limited": false,
+"until": "2031-06-29",
+"alis": "Zalvys",
+"code": "12230950",
+"sav": "Zarasų r. sav."
+},
+"Z0306": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žiegelis",
+"code": "12230978",
+"sav": "Zarasų r. sav."
+},
+"Z0293": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kuleinis",
+"code": "10030451",
+"sav": "Varėnos r. sav."
+},
+"Z0334": {
+"leased": true,
+"limited": false,
+"until": "2027-08-09",
+"alis": "Apidemis",
+"code": "12230150",
+"sav": "Zarasų r. sav."
+},
+"Z0333": {
+"leased": true,
+"limited": false,
+"until": "2029-04-23",
+"alis": "Ambraziškių ežeras",
+"code": "12231951",
+"sav": "Molėtų r. sav."
+},
+"Z0335": {
+"leased": true,
+"limited": false,
+"until": "2035-08-05",
+"alis": "Apvalasai",
+"code": "42030046",
+"sav": "Rokiškio r. sav."
+},
+"Z0336": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Čiaunas",
+"code": "",
+"sav": "Rokiškio r. sav., Utenos r. sav., Zarasų r. sav."
+},
+"Z0337": {
+"leased": true,
+"limited": false,
+"until": "2035-05-15",
+"alis": "Gelvanės ežeras",
+"code": "12242177",
+"sav": "Širvintų r. sav."
+},
+"Z0338": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gražutės ežeras",
+"code": "50030334",
+"sav": "Zarasų r. sav."
+},
+"Z0341": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Joskutis",
+"code": "12132109",
+"sav": "Ignalinos r. sav."
+},
+"Z0342": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kania",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0343": {
+"leased": true,
+"limited": false,
+"until": "2035-08-05",
+"alis": "Našys",
+"code": "12230714",
+"sav": "Rokiškio r. sav."
+},
+"Z0344": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Paneikiškis",
+"code": "",
+"sav": "Utenos r. sav., Zarasų r. sav."
+},
+"Z0345": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Paštys",
+"code": "",
+"sav": "Molėtų r. sav., Rokiškio r. sav., Utenos r. sav., Zarasų r. sav."
+},
+"Z0346": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Petriošiškio ežeras",
+"code": "12241512",
+"sav": "Rokiškio r. sav."
+},
+"Z0347": {
+"leased": true,
+"limited": false,
+"until": "",
+"alis": "Pilašius",
+"code": "",
+"sav": "Utenos r. sav., Zarasų r. sav."
+},
+"Z0348": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Plavys",
+"code": "12231037",
+"sav": "Zarasų r. sav."
+},
+"Z0349": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Praviršulis",
+"code": "14030100",
+"sav": "Radviliškio r. sav."
+},
+"Z0350": {
+"leased": true,
+"limited": false,
+"until": "2035-08-05",
+"alis": "Skaistė",
+"code": "42030032",
+"sav": "Rokiškio r. sav."
+},
+"Z0351": {
+"leased": true,
+"limited": false,
+"until": "",
+"alis": "Šlavinas",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0352": {
+"leased": true,
+"limited": true,
+"until": "2033-06-07",
+"alis": "Vasaknas",
+"code": "12240992",
+"sav": "Zarasų r. sav."
+},
+"Z0354": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vykas",
+"code": "12230944",
+"sav": "Zarasų r. sav."
+},
+"Z0356": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Zirnajys",
+"code": "12240877",
+"sav": "Zarasų r. sav."
+},
+"Z0357": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Sabališkių tvenkinys",
+"code": "12250359",
+"sav": "Širvintų r. sav."
+},
+"Z0358": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Papilio tvenkinys",
+"code": "42050060",
+"sav": "Biržų r. sav."
+},
+"Z0359": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Jucių tvenkinys",
+"code": "30051132",
+"sav": "Telšių r. sav."
+},
+"Z0360": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kairiškių tvenkinys",
+"code": "",
+"sav": "Akmenės r. sav., Mažeikių r. sav."
+},
+"Z0361": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kapėnų tvenkinys",
+"code": "",
+"sav": "Akmenės r. sav., Mažeikių r. sav."
+},
+"Z0225": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Juostinas",
+"code": "13030020",
+"sav": "Anykščių r. sav."
+},
+"Z0160": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Erzvėtas",
+"code": "50030223",
+"sav": "Ignalinos r. sav."
+},
+"A_12030092": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Balžis",
+"code": "12030092",
+"sav": "Vilniaus m. sav."
+},
+"Z0279": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Škilietų ežeras",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0278": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Škilietų ežeras",
+"code": "",
+"sav": "Trakų r. sav."
+},
+"Z0171": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Stervas",
+"code": "30040064",
+"sav": "Telšių r. sav."
+},
+"Z0144": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Biržulis",
+"code": "30040060",
+"sav": "Telšių r. sav."
+},
+"Z0023": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Didžiarauliškių ežeras",
+"code": "10031080",
+"sav": "Trakų r. sav."
+},
+"Z0172": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Beržoras",
+"code": "17030032",
+"sav": "Plungės r. sav."
+},
+"Z0130": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Balsys",
+"code": "12030127",
+"sav": "Vilniaus m. sav."
+},
+"Z0222": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gulbinas",
+"code": "",
+"sav": "Ignalinos r. sav., Vilniaus m. sav., Švenčionių r. sav."
+},
+"Z0136": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Akis",
+"code": "",
+"sav": "Alytaus r. sav., Kaišiadorių r. sav., Trakų r. sav., Varėnos r. sav., Vilniaus m. sav., Vilniaus r. sav., Švenčionių r. sav."
+},
+"Z0037": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rubikių ežeras",
+"code": "12241553",
+"sav": "Anykščių r. sav."
+},
+"Z0099": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Naudoris",
+"code": "",
+"sav": "Lazdijų r. sav."
+},
+"Z0088": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Uosis",
+"code": "10040157",
+"sav": "Lazdijų r. sav."
+},
+"Z0106": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Linkmenas",
+"code": "12130882",
+"sav": "Ignalinos r. sav."
+},
+"Z0177": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Mastis",
+"code": "30040090",
+"sav": "Telšių r. sav."
+},
+"Z0166": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Drūkšiai",
+"code": "",
+"sav": "Ignalinos r. sav., Visagino sav., Zarasų r. sav."
+},
+"Z0094": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Luokesaitis",
+"code": "12231947",
+"sav": "Molėtų r. sav."
+},
+"Z0081": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Nedzingis",
+"code": "",
+"sav": "Alytaus r. sav., Varėnos r. sav."
+},
+"Z0080": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kretuonas",
+"code": "12130044",
+"sav": "Švenčionių r. sav."
+},
+"Z0161": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Dysnai",
+"code": "50040002",
+"sav": "Ignalinos r. sav."
+},
+"Z0004": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Kamužėlis",
+"code": "12130188",
+"sav": "Molėtų r. sav."
+},
+"Z0227": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Lūšiai",
+"code": "12130041",
+"sav": "Ignalinos r. sav."
+},
+"Z0246": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šakarvai",
+"code": "12130002",
+"sav": "Ignalinos r. sav."
+},
+"Z0249": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Šlavantas",
+"code": "10030010",
+"sav": "Lazdijų r. sav."
+},
+"Z0168": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Vištytis",
+"code": "60030001",
+"sav": "Vilkaviškio r. sav."
+},
+"Z0066": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Almajas",
+"code": "12130086",
+"sav": "Ignalinos r. sav."
+},
+"Z0033": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Ažvintaitis",
+"code": "50030004",
+"sav": "Ignalinos r. sav."
+},
+"Z0065": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Malkėstaitis",
+"code": "12231916",
+"sav": "Molėtų r. sav."
+},
+"Z0087": {
+"leased": true,
+"limited": false,
+"until": "2034-04-05",
+"alis": "Babrų ežeras",
+"code": "15030120",
+"sav": "Lazdijų r. sav."
+},
+"Z0200": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Didžiulis (Daugų ežeras)",
+"code": "",
+"sav": "Alytaus r. sav., Varėnos r. sav."
+},
+"Z0242": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Savistas",
+"code": "",
+"sav": "Alytaus r. sav., Varėnos r. sav."
+},
+"Z0252": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Uolys",
+"code": "12230405",
+"sav": "Zarasų r. sav."
+},
+"Z0289": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Antalieptės HE tvenkinys",
+"code": "12250001",
+"sav": "Zarasų r. sav."
+},
+"Z0053": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rašia",
+"code": "",
+"sav": "Molėtų r. sav., Švenčionių r. sav."
+},
+"Z0145": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Bijotė ",
+"code": "",
+"sav": "Kelmės r. sav., Šiaulių r. sav."
+},
+"Z0121": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Išnarai",
+"code": "12130332",
+"sav": "Molėtų r. sav."
+},
+"Z0120": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Vašuokas",
+"code": "12130330",
+"sav": "Molėtų r. sav."
+},
+"Z0128": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Bebrusai",
+"code": "12231840",
+"sav": "Molėtų r. sav."
+},
+"Z0127": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rudesa",
+"code": "",
+"sav": "Molėtų r. sav."
+},
+"Z0209": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Birva",
+"code": "12030237",
+"sav": "Trakų r. sav."
+},
+"Z0048": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Rašai",
+"code": "",
+"sav": "Rokiškio r. sav., Zarasų r. sav."
+},
+"Z0205": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Auslas",
+"code": "50040301",
+"sav": "Zarasų r. sav."
+},
+"Z0263": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Žiezdras",
+"code": "12130510",
+"sav": "Ignalinos r. sav."
+},
+"Z0164": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Paršežeris",
+"code": "30030062",
+"sav": "Šilalės r. sav."
+},
+"Z0125": {
+"leased": false,
+"limited": true,
+"until": "",
+"alis": "Žvernas",
+"code": "12130112",
+"sav": "Molėtų r. sav."
+},
+"Z0251": {
+"leased": true,
+"limited": false,
+"until": "2033-10-11",
+"alis": "Ungurys",
+"code": "10031012",
+"sav": "Trakų r. sav."
+},
+"Z0104": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Unguraitis",
+"code": "10031013",
+"sav": "Trakų r. sav."
+},
+"Z0250": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Švenčius",
+"code": "",
+"sav": "Elektrėnų sav., Kaišiadorių r. sav., Trakų r. sav."
+},
+"Z0016": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gilandis",
+"code": "10030642",
+"sav": "Trakų r. sav."
+},
+"Z0015": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gilužis",
+"code": "",
+"sav": "Molėtų r. sav., Trakų r. sav., Utenos r. sav., Vilniaus r. sav., Zarasų r. sav."
+},
+"Z0236": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Paštys",
+"code": "",
+"sav": "Molėtų r. sav., Rokiškio r. sav., Utenos r. sav., Zarasų r. sav."
+},
+"Z0129": {
+"leased": true,
+"limited": true,
+"until": "2028-09-25",
+"alis": "Kirneilis",
+"code": "12231948",
+"sav": "Molėtų r. sav."
+},
+"Z0234": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Mūšėjus",
+"code": "12231562",
+"sav": "Anykščių r. sav."
+},
+"Z0266": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Gineitiškių ežeras",
+"code": "",
+"sav": "Vilniaus m. sav., Vilniaus r. sav."
+},
+"Z0241": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Salotė",
+"code": "12040143",
+"sav": "Vilniaus r. sav."
+},
+"Z0240": {
+"leased": false,
+"limited": false,
+"until": "",
+"alis": "Sągardas",
+"code": "50030006",
+"sav": "Ignalinos r. sav."
+}
+}
+}
