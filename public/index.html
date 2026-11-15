@@ -30,6 +30,7 @@
 .wnote{margin-top:8px;padding:8px 10px;border-radius:10px;font-size:.9rem}.wnote.w-bad{background:#fde2df;color:#7a1f14}.wnote.w-warn{background:#fff3cd;color:#6b4700}
 .w-txt.w-bad{color:#b23a2a}.w-txt.w-warn{color:#8a5a00}.w-txt.w-ok{color:#1f5a3a}
 .dtile b{font-family:var(--display);font-size:20px;display:block;margin:2px 0}.dtile .small{font-size:12px}
+.stbox{margin:10px 0 4px;padding:10px;border-radius:10px;background:var(--soft)}
 .dwhy{margin:8px 0 10px;padding-left:20px;font-size:.92rem}.dwhy li{margin:3px 0}.dwhy li.w{color:var(--warn);font-weight:600}
 .btn.waze{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#33ccff;border-color:#33ccff;color:#06283a;font-weight:700;text-decoration:none;min-height:48px}
 .lu-r{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
@@ -383,7 +384,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.3 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.4 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -1058,14 +1059,14 @@ const TREND=['','Kyla','Stabilus','Krenta'];
 
 /* ---------- state & data layer ---------- */
 const TARGETS=['Lydeka','Ešerys','Starkis','Šamas','Vėgėlė','Kuoja','Karšis'];
-const S={tab:'trip',more:'',activeTrip:null,gear:[],trips:[],waters:[],hyp:[],briefs:[],forecasts:[],dossiers:[],launches:[],marks:[],cat:'all',q:'',sub:'fish',fish:'lydeka',gsub:'src',
+const S={tab:'trip',more:'',activeTrip:null,gear:[],trips:[],waters:[],hyp:[],briefs:[],forecasts:[],dossiers:[],launches:[],marks:[],lakeinfo:[],cat:'all',q:'',sub:'fish',fish:'lydeka',gsub:'src',
   plan:{date:today(),time:'',end:'',type:TRIPTYPES[0],waterId:'',species:['Lydeka'],recent:'',temp:'',pressure:'',trend:'',wind:'',dir:'',sky:'',wtemp:''},
   brief:null,_used:new Set(),out:{},dbOK:null};
 let db=null;
 const OWNED=['gear','trips','briefs','hyp'],PEOPLE=['Arnas','Rokas'];const ALL={};
 try{S.who=localStorage.getItem('zz_who')||''}catch(e){S.who=''}
 if(!PEOPLE.includes(S.who))S.who='';
-const COLL=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks'];
+const COLL=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks','lakeinfo'];
 
 function norm(d){const x=typeof d.data==='function'?d.data():(d.data&&typeof d.data==='object'?d.data:d);return {...x,id:d.id||x.id}}
 function rows(s){if(!s)return[];if(Array.isArray(s))return s.map(norm);const out=[];if(s.docs)s.docs.forEach(d=>out.push(norm(d)));else if(s.forEach)s.forEach(d=>out.push(norm(d)));return out}
@@ -2307,8 +2308,10 @@ function dashScore(c){const lk=c.lk,p={date:today(),species:dashSpecies()},se=se
   if(tr.length>=2&&hrs>0){const r=fish/hrs;sc+=Math.min(2,r);why.push(`Jūsų žurnalas: ${tr.length} žvejybos, ${fmt1(r)} žuvies per valandą.`)}else why.push(tr.length?'Jūsų žurnalas: tik 1 žvejyba, išvadoms per mažai.':'Jūsų žurnale šio ežero dar nėra.');
   (ownDepthLine(lk,se)||[]).forEach(x=>why.push(x));
   const km=kmFrom(lk,VILNIUS);sc-=Math.min(2,km/50);why.push(`Apie ${Math.round(km)} km nuo Vilniaus tiesia linija.`);
-  const st=c.w&&c.w.legal&&c.w.legal.status||'';
-  if(['išnuomotas','limituota','uždraustas'].includes(st)){sc-=5;warn.push(`Statusas „${st}“: patikrink, ar galima žvejoti.`)}else if(!st)warn.push('Teisinis statusas nepatikrintas: pažiūrėk ALIS prieš važiuodamas.');
+  const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),st=(li&&li.status)||(c.w&&c.w.legal&&c.w.legal.status)||'';
+  if(st==='išnuomotas'||st==='uždraustas'){sc-=5;warn.push(`Statusas „${st}“${li&&li.date?` (pažymėta ${li.date})`:''}: čia žvejoti negalima arba reikia leidimo.`)}
+  else if(st==='limituota')warn.push(`Limituota žvejyba${li&&li.date?` (pažymėta ${li.date})`:''}: reikia kortelės.`);
+  else if(!st)warn.push('Statusas nežinomas: patikrink ALIS ir pažymėk žemiau.');
   return {sc,why,warn,sp,se}}
 function dashHTML(){
   if(!BATHY.lakes){if(!BATHY.err)loadBathy();return heroSun({eyebrow:fmtDay(today()),eyClass:'ey-day',title:'Kur šiandien?',ds:today(),wid:''})+`<div class="panel small muted">${BATHY.err?'Ežerų duomenys neužsikrovė: '+esc(BATHY.err):'Kraunami ežerai…'}</div><button class="btn hot big" data-act="planOpen">Planuoti išvyką</button>`}
@@ -2329,6 +2332,8 @@ function dashHTML(){
     ${!r.load&&wx&&wx.windMs>=3&&r.sp.some(x=>windSide(lk,x,wx))?`<div class="small" style="margin-top:8px">Pusėje, į kurią pučia vėjas: <b>${r.sp.filter(x=>windSide(lk,x,wx)).map(x=>x.n).join(', ')}</b> vietos. <span class="muted">Metodinis žymėjimas: vėjas ten neša paviršinį vandenį ir maistą.</span></div>`:''}
     <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
   ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
+    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),cur=li&&li.status||'';return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:'<span class="muted">nepažymėta</span>'} · <a href="https://alis.am.lt/" target="_blank" rel="noopener">tikrinti ALIS</a></div>
+      <div class="chips" style="margin-top:6px">${[['neišnuomotas','Laisvas'],['limituota','Reikia kortelės'],['išnuomotas','Išnuomotas']].map(([v,t])=>`<button class="chip" data-dash="status" data-v="${v}" data-lake="${lk.id}" aria-pressed="${cur===v}">${t}</button>`).join('')}</div></div>`})()}
     <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
     <a class="btn waze" href="https://waze.com/ul?ll=${dest[0]},${dest[1]}&navigate=yes" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l18-8-8 18-2-8z"/></svg> Važiuoti su Waze</a>
@@ -2340,6 +2345,9 @@ function dashHTML(){
   <button class="btn" style="margin-top:8px;align-self:center" data-act="planOpen">Planuoti kitaip</button>`}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-dash]');if(!b)return;const a=b.dataset.dash,v=b.dataset.v;
   if(a==='lake')S.dashLake=v;
+  else if(a==='status'){const L=(BATHY.lakes||[]).find(x=>x.id===b.dataset.lake);const old=(S.lakeinfo||[]).find(x=>x.lakeId===b.dataset.lake);
+    const o={...(old||{}),lakeId:b.dataset.lake,lake:L?L.name:'',status:old&&old.status===v?'':v,date:today(),by:S.who||''};
+    S.lakeinfo=[...(S.lakeinfo||[]).filter(x=>x.lakeId!==o.lakeId),o];save('lakeinfo',o).then(r=>{if(r){S.lakeinfo=[...S.lakeinfo.filter(x=>x.lakeId!==r.lakeId),r];renderLive()}})}
   else if(a==='clar'){S.clar=S.clar||{};S.clar[b.dataset.lake]=S.clar[b.dataset.lake]===v?'':v}
   else if(a==='fish'){const s=S.plan.species,i=s.indexOf(v);if(i>=0){if(dashSpecies().length>1||!dashSpecies().includes(v))s.splice(i,1)}else s.push(v)}
   else if(a==='other'){S.tab='more';S.more='lakes';S.lake='';renderAll();window.scrollTo(0,0);return}
@@ -2535,7 +2543,7 @@ function zipStore(files){const enc=new TextEncoder(),parts=[],cd=[];let off=0;
 async function exportProject(btn){
   const old=btn.textContent;btn.disabled=true;btn.textContent='Renku…';const files=[],miss=[];
   try{
-    const colls=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks'],dump={exported:new Date().toISOString(),note:'Visi savininkai (Arnas, Rokas). Su nuotraukų miniatiūromis.'};
+    const colls=['gear','trips','waters','hyp','briefs','forecasts','dossiers','launches','marks','lakeinfo'],dump={exported:new Date().toISOString(),note:'Visi savininkai (Arnas, Rokas). Su nuotraukų miniatiūromis.'};
     colls.forEach(c=>{dump[c]=(typeof ALL!=='undefined'&&ALL[c])?ALL[c]:(S[c]||[])});
     files.push({name:'data/export.json',data:JSON.stringify(dump,null,1)});
     for(const f of ['index.html','lakes-index.json','forecast.json']){
