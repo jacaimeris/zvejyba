@@ -379,7 +379,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.1 · 2026-11-14</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.2 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2253,6 +2253,10 @@ function lureAdvice(sp,band,clar,se){const cold=se.k==='late'||se.k==='winter',d
     A(`Gylis: ${deep}, kritimų papėdės`,'Sezono gylio juosta.','metodinis')}
   A(`Svoris: toks, kad jaustum dugną ${deep} gylyje`,'Galvutės svoris priklauso nuo gylio, vėjo ir valo; skaičiaus be tavo įrangos neduodu.','metodinis');
   if(cold)A('Vedimas: lėtai, su pauzėmis','Šaltame vandenyje žuvys mažiau aktyvios.','metodinis');
+  if(clar==='Skaidrus'){
+    A('Skaidrus vanduo: geriausias laikas prieblanda, debesuota ar vėjuota diena','Skaidriame vandenyje plėšrūnai matomi ir patys mato toli; daugiau kimba, kai šviesos mažiau. Tyrimo su meškerėmis neradau, tai praktika ir starkio giminaičio stebėjimai.','metodinis');
+    A(sp==='Lydeka'?'Toliau užmesk, plonesnis pavadėlis':'Toliau užmesk, plonesnis pavadėlis, mažesnis masalas','Skaidriame vandenyje žuvis anksčiau pastebi valtį ir valą.','metodinis');
+    A(`Ieškok giliau: apatinė juostos dalis (${fmt1((band[0]+band[1])/2)}–${fmt1(band[1])} m)`,'Šviesa skaidriame vandenyje prasiskverbia giliau, todėl žuvys dieną laikosi žemiau.','metodinis')}
   if(clar==='Skaidrus')A('Spalva: natūrali arba balta','Spalvos pranašumas neįrodytas; skaidriame vandenyje bandyme skirtumo tarp spalvų nebuvo, todėl rinkis natūralią.','EV16');
   else if(clar==='Drumstas')A('Spalva: ryški (geltona, chartreuse) arba tamsus siluetas','Starkio giminaičiui drumstame vandenyje žurnaluose sekėsi geltona, žydinčiame juoda. Preliminaru.','EV16');
   else if(clar)A('Spalva: paimk vieną natūralią ir vieną ryškią','Spalvos pranašumas neįrodytas; du kontrastingi variantai leidžia patikrinti patiems.','EV16');
