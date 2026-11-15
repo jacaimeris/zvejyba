@@ -385,7 +385,7 @@ input,textarea{caret-color:var(--hot)} input[type="checkbox"]{accent-color:var(-
 </style>
 </head>
 <body>
-<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.5 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
+<header class="top"><h1>Žvejo žurnalas <span class="ver" id="appVer">v0.7.6 · 2026-11-15</span></h1><small id="sync">kraunasi…</small></header>
 <main id="main"></main>
 <nav id="tabs" aria-label="Skyriai"></nav>
 <div id="modal" hidden></div>
@@ -2336,7 +2336,7 @@ function dashHTML(){
     ${!r.load&&wx&&wx.windMs>=3&&r.sp.some(x=>windSide(lk,x,wx))?`<div class="small" style="margin-top:8px">Pusėje, į kurią pučia vėjas: <b>${r.sp.filter(x=>windSide(lk,x,wx)).map(x=>x.n).join(', ')}</b> vietos. <span class="muted">Metodinis žymėjimas: vėjas ten neša paviršinį vandenį ir maistą.</span></div>`:''}
     <div class="row" style="gap:6px;margin-top:10px">${['Lydeka','Ešerys','Starkis'].map(k=>{const on=fishes.includes(k);return `<button class="chip" data-dash="fish" data-v="${k}" aria-pressed="${on}" style="${on?`background:${SPCOL[k]};border-color:${SPCOL[k]};color:#fff`:''}">${k}${r.se?` · ${fmt1(bandFor(lk,r.se,k)[0])}–${fmt1(bandFor(lk,r.se,k)[1])} m`:''}</button>`}).join('')}</div></div>
   ${r.load?'':`<div class="panel"><div class="row between"><h3>${cur===best?'Siūlau':'Kodėl'}: ${short(lk.name)}</h3>${cur===best?'<span class="pill good">geriausiai tinka</span>':''}</div>
-    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),c0=li&&li.status||'',cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0;return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:'<span class="muted">nepažymėta</span>'} · <a class="ext" href="https://alis.am.lt/" target="_blank" rel="noopener">tikrinti ALIS</a></div>
+    ${(()=>{const li=(S.lakeinfo||[]).find(x=>x.lakeId===lk.id),c0=li&&li.status||'',cur=c0==='uždraustas'?'draudžiama':['limituota','išnuomotas'].includes(c0)?'leidimas':c0;return `<div class="stbox"><div class="small"><b>Ar galima žvejoti?</b> ${li&&li.date?`<span class="muted">pažymėta ${esc(li.date)}${li.by?' · '+esc(li.by):''}</span>`:'<span class="muted">nepažymėta</span>'} · <a class="ext" href="https://alisas.lt/public-info/L03" target="_blank" rel="noopener">tikrinti ALIS</a></div>
       <div class="chips" style="margin-top:6px">${[['neišnuomotas','Laisvas'],['leidimas','Reikia leidimo'],['draudžiama','Draudžiama']].map(([v,t])=>`<button class="chip" data-dash="status" data-v="${v}" data-lake="${lk.id}" aria-pressed="${cur===v}">${t}</button>`).join('')}</div></div>`})()}
     <ul class="dwhy">${r.why.map(x=>`<li>${esc(x)}</li>`).join('')}${r.warn.map(x=>`<li class="w">${esc(x)}</li>`).join('')}</ul>
     <div class="small muted">Lyginu ${cs.length} ežerus: jūsų vandenis ir artimiausius Vilniui su gylių planu. Vertinu reljefą, sezono gylius, jūsų žurnalą ir atstumą. Apie žuvų kiekį ežere duomenų neturiu, todėl tai pasiūlymas, ne garantija.</div>
